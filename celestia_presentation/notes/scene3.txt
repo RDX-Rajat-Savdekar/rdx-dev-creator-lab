@@ -1,0 +1,61 @@
+=============================================================================
+SCENE 3: THE COORDINATE PIPELINE
+=============================================================================
+
+CONTEXT & OVERVIEW:
+This scene acts as the bridge between raw astrophysics data and game engine 
+rendering logic. It explains how we take standard catalog data (Right Ascension 
+and Declination) and use spherical trigonometry to place stars in exact 3D space 
+(X, Y, Z). The scene culminates in "The Great Migration," where our randomly 
+placed stars fluidly snap into their astronomically accurate positions.
+
+IMPORTANT PRE-RENDER CHECKLIST:
+Before running the final high-quality commands below, open `scene3.py` and 
+update the star count for the final, dense starfield:
+Change: OPTIMIZED_STARS = 600
+To:     OPTIMIZED_STARS = 6000
+
+NOTE: The final Great Migration clip will take a few minutes to calculate paths 
+for 6,000 stars before the render bar appears. This is completely normal!
+
+=============================================================================
+CLIP BREAKDOWN & HIGH-RESOLUTION RENDER COMMANDS
+=============================================================================
+NOTE: The commands below use the `-qh` flag (Quality High: 1080p, 60fps).
+
+-----------------------------------------------------------------------------
+CLIP 1: The Celestial Grid
+-----------------------------------------------------------------------------
+Description: Establishes the VR environment from Scene 2 but overlays a glowing 
+astronomical wireframe. Introduces Right Ascension (Longitude) and Declination 
+(Latitude) text markers.
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene3.py S3_Clip1_CelestialGrid
+
+-----------------------------------------------------------------------------
+CLIP 2: The Data Pipeline (Combined Data & Math)
+-----------------------------------------------------------------------------
+Description: Match cuts from Clip 1. A sleek UI window pops up showing raw 
+JSON data for a star (Sirius). The JSON slides over to reveal the spherical 
+to Cartesian conversion formulas (built completely LaTeX-free to avoid DVI errors).
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene3.py S3_Clip2_ThePipeline
+
+-----------------------------------------------------------------------------
+CLIP 3: The Great Migration (Finale)
+-----------------------------------------------------------------------------
+Description: Match cuts from Clip 2. As the celestial grid fades out, the script 
+applies the math to all 6,000 stars simultaneously. Using a slight lag ratio, 
+the stars swarm from random positions into their exact, real-world coordinates 
+to form accurate constellations as the camera pans.
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene3.py S3_Clip4_GreatMigration
+
+=============================================================================
+BATCH RENDER COMMAND (Render all 3 clips sequentially)
+=============================================================================
+If you want to render all high-quality clips at once while you step away:
+manim --renderer=opengl -qh --write_to_movie scene3.py -a

@@ -1,73 +1,52 @@
+# Manim Animations
 
-# Manim DSA & System Design Concepts
+A single [uv](https://docs.astral.sh/uv/) Python project (`manimations`) containing two
+independent [Manim](https://www.manim.community/) animation sub-projects.
 
-This repository is a collection of data structure, algorithm, and system design animations created with the [Manim](https://www.manim.community/) Python library.
+## Repository layout
 
-The primary goal is to not only *visualize* these concepts but also to build a **reusable open-source toolkit** (`manim_utils.py`) that makes creating complex DSA animations in Manim simpler and more robust.
+```
+.
+├── pyproject.toml            # uv project root (shared deps: manim >= 0.19)
+├── uv.lock
+├── .python-version
+│
+├── dsa_toolkit/              # Reusable DSA / system-design animation toolkit
+│   ├── manim_utils.py        #   the library: Base_DSA_Scene, LinkedList, helpers
+│   ├── scenes.py             #   "Intro to Linked Lists" + test scenes
+│   ├── title_card_scene.py   #   scrambled-title card scenes
+│   ├── code_snippets/        #   source shown on-screen inside animations
+│   └── manim.cfg
+│
+└── celestia_presentation/    # CelestiaVR technical-decision presentation (6 scenes)
+    ├── scene0.py … scene5.py #   logo, skybox, magnitude filter, coord pipeline,
+    │                         #   B-V color/twinkle, constellation graph/octree
+    ├── build_scene1.py       #   render + ffmpeg-stitch helper for Scene 1
+    ├── data/                 #   JSON fixtures generated/shown by the scenes
+    ├── notes/                #   per-scene narration + render-command notes
+    └── manim.cfg
+```
 
------
+## How to run
 
-## Project Goals
+Each sub-project is self-contained. **`cd` into the sub-project folder, then render** —
+the scenes use paths relative to their own folder (e.g. `data/sirius_data.json`,
+`./code_snippets/`).
 
-  * **Deep Learning:** To deeply understand Manim's core concepts by building a production-ready animation toolkit from scratch.
-  * **Open Source:** To create a high-quality `manim_utils.py` library that others can use to create their own DSA animations (e.g., `LinkedList`, `Grid`, `Base_DSA_Scene`).
-  * **Video Playlist:** To produce a full YouTube playlist of animations, starting with data structure fundamentals (Linked Lists) and moving to more complex algorithms (Pathfinding, Sorting).
+```bash
+# DSA toolkit
+cd dsa_toolkit
+uv run manim -pqh scenes.py IntroToLinkedListScene
 
------
+# Celestia presentation
+cd celestia_presentation
+uv run manim --renderer=opengl -qh scene3.py S3_Clip1_CelestialGrid
+```
 
-## The Toolkit: `manim_utils.py`
+`uv run` locates the shared `pyproject.toml`/`.venv` at the repo root automatically, so
+you do not need to activate the venv manually.
 
-The core of this project is the `manim_utils.py` library, which provides a set of powerful, "smart" Mobjects and Scenes:
-
-  * **`Base_DSA_Scene`:** A custom base class for all animations. It automatically sets up a dynamic three-zone layout:
-      * **`anim_zone`:** A dedicated area for the animation.
-      * **`listing`:** A code window for displaying and highlighting source code.
-      * **`log_zone`:** An output/status panel for showing status text or algorithm output.
-  * **`LinkedListNode` & `LinkedList`:** "Smart" Mobjects that can build and animate themselves. Instead of manually moving nodes, you can simply call methods like `my_list.create_pointer()` or `my_list.transfer_pointer()` and get animations in return.
-  * **Helpers:** Robust helper methods like `highlight_line()` (which won't go out of bounds) and `update_log_text()` (with a clean cross-fade).
-
------
-
-## Current Status
-
-### 1\. Core Toolkit
-
-  * [x] `Base_DSA_Scene` with dynamic 3-zone layout is complete.
-  * [x] `highlight_line()` utility is functional and bounds-checked.
-  * [x] `update_log_text()` utility is functional with text-wrapping and cross-fade.
-
-### 2\. Content
-
-  * **Linked Lists**
-      * [x] `LinkedListNode` Mobject.
-      * [x] `LinkedList` "factory" Mobject.
-      * [x] **Video 1: "Intro to Linked Lists"** - Complete. (Animates `Node` and `LinkedList` classes with code swapping).
-  * **Title Cards**
-      * [x] `create_scrambled_title()` utility (`TransformMatchingStrings`).
-  * **Pathfinding (In Progress)**
-      * [ ] `GridNode` and `Grid` Mobjects.
-      * [ ] `AStarTitleCard` prototype.
-
------
-
-## How to Run
-
-This project uses the Python library `manim` (community edition).
-
-1.  **Install dependencies:**
-
-    ```bash
-    pip install manim
-    ```
-
-2.  **Render a scene:**
-    To render one of the videos, use the `manim` command from your terminal.
-
-      * **For a high-quality (1080p) render:**
-        ```bash
-        manim -pqh scenes.py IntroToLinkedListScene
-        ```
-      * **For a quick low-quality preview:**
-        ```bash
-        manim -pql scenes.py TestFXScene
-        ```
+## Notes
+- Render output (`media/`) and `__pycache__/` are git-ignored.
+- See `celestia_presentation/notes/*.txt` for the full clip list and high-res render
+  commands per scene.

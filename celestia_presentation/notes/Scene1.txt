@@ -1,0 +1,67 @@
+=============================================================================
+SCENE 1: THE SKYBOX PROBLEM
+=============================================================================
+
+CONTEXT & OVERVIEW:
+This scene introduces the core geometrical challenge of VR environments: the "Skybox Problem." 
+It demonstrates how mapping a starry sky onto a standard 6-sided cubemap creates severe 
+visual distortion (pinching) at the poles when folded into a 3D box. The scene concludes 
+by resolving this issue using an inverted, perfect sphere wireframe, and proves the fix 
+by flying the camera inside the sphere and dynamically rotating the sky.
+
+IMPORTANT PRE-RENDER CHECKLIST:
+Before running the final commands below, ensure you open `scene1.py` and update the star count 
+for high-density rendering:
+Change: TOTAL_STARS = 120
+To:     TOTAL_STARS = 1200
+
+=============================================================================
+CLIP BREAKDOWN & HIGH-RESOLUTION RENDER COMMANDS
+=============================================================================
+NOTE: The commands below use the `-qh` flag (Quality High: 1080p, 60fps). 
+If you want full 4K resolution, replace `-qh` with `-qk`.
+
+-----------------------------------------------------------------------------
+CLIP 1: Immersion
+-----------------------------------------------------------------------------
+Description: The user is introduced to the 3D VR space. The starry sky appears, 
+and the camera executes a fluid VR pan to establish the environment.
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene1.py S1_Clip1_Immersion
+
+-----------------------------------------------------------------------------
+CLIP 2: Abstraction
+-----------------------------------------------------------------------------
+Description: A Match Cut from Clip 1. The camera pulls back, the environment 
+flattens out into a 2D 6-sided cross net, and the stars physically map themselves 
+onto the panels.
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene1.py S1_Clip2_Abstraction
+
+-----------------------------------------------------------------------------
+CLIP 3: The Fold
+-----------------------------------------------------------------------------
+Description: A Match Cut from Clip 2. The 2D net folds into a 3D cube. The camera 
+orbits the box to reveal the geometrical "pole distortion" at the corners.
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene1.py S1_Clip3_Fold
+
+-----------------------------------------------------------------------------
+CLIP 4: Sphere Solution
+-----------------------------------------------------------------------------
+Description: A Match Cut from Clip 3. The flawed folded cube crossfades into a 
+perfect spherical wireframe. The camera scales up and physically flies inside the 
+sphere, completing a VR pan before the skybox dynamically rotates on a diagonal 
+axis to simulate in-game mechanics.
+
+Final Render Command:
+manim --renderer=opengl -qh --write_to_movie scene1.py S1_Clip4_SphereSolution
+
+=============================================================================
+BATCH RENDER COMMAND (Render all 4 clips sequentially)
+=============================================================================
+If you want to render all four high-quality clips at once while you step away:
+manim --renderer=opengl -qh --write_to_movie scene1.py -a

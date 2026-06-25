@@ -8,3 +8,7 @@ wheels/
 media/
 # Virtual environments
 .venv
+
+# macOS
+.DS_Store
+**/.DS_Store

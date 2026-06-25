@@ -307,3 +307,55 @@ class TestLL(Scene):
         self.play(Transform(curr_ptr, new_curr_ptr), run_time = 2)
 
         self.wait(2)
+
+
+
+
+
+
+    
+
+
+
+
+
+    '''
+    
+    so the idea behind this project is to slowly build my youtube channel
+    which has a bunch of videos on data structures and algorithms
+
+    this is just the test video where i wanted to see the manim working and all
+
+    here 2 options i am unsure which to do:
+    1. make a good video where i plan every scene and then just add code based on each scene
+    to the main scenep.py file, ( basically having one big ugly file with all the scenes in it)
+    
+    2. I make small utils which i can reuse across scenes and then have each scene in its own file, which imports the utils and just has the code for that scene.
+    like here i have a linked list util, which when given just a input of a list of data, it creates the whole linked list with nodes and arrows and everything, and then in the scene file i just have to call that util and then add animations on top of it.
+    and i can adjust a few things accordingly so that it fits the scene, but the main logic of creating the linked list is all in the util and i can reuse it across multiple scenes.
+
+
+    what do u think i should go by.
+
+    also since i am learning algorithms and dsa to, i want to start from the basics and then 
+    go advance one video at a time,
+    I can have Ai do the voice on a script that i write, or i can do the voice myself if needed.
+
+    look for inspiration based on the other such manim style videos on youtube, and try to 
+    find a unique style that i can do which is different from the others, and also is 
+    engaging and fun to watch.
+
+
+    my inspiration is 
+Sebastian Lague
+1.39m subscribers
+https://www.youtube.com/c/SebastianLague, but i am not sure if he uses manim or not, 
+but his videos are really good and engaging, and i want to try to achieve something 
+similar in terms of quality and engagement.
+
+i am willing to use both manim and whatever he uses since my main aim is to create engaging 
+and high quality videos, and if that means using a combination of tools, then i am open to it.
+
+
+
+    '''
