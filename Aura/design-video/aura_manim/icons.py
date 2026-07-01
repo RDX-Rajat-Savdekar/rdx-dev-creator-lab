@@ -17,6 +17,10 @@ BELL = "bell"
 ALERT = "alert"
 AUDIO_WAVE = "audio-wave"
 MESSAGE = "message"
+CLOCK = "clock"
+LAPTOP = "laptop"
+MIC = "mic"
+PALETTE = "palette"
 
 
 def load_icon(name: str, *, color: str, height: float = 0.55) -> SVGMobject:

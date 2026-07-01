@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aura — VO Prompter</title>
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #141820;
+      --border: #2a3144;
+      --text: #eef0f5;
+      --muted: #8892a8;
+      --accent: #5b9cff;
+      --accent-glow: rgba(91, 156, 255, 0.35);
+      --done: #3dba7a;
+      --warn: #e8a838;
+      --mono: "SF Mono", "Fira Code", Consolas, monospace;
+      --sans: system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1rem;
+      padding: 0.55rem 1rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 { font-size: 0.9rem; margin: 0; font-weight: 600; }
+    header h1 a { color: var(--muted); text-decoration: none; font-weight: 400; }
+    header h1 a:hover { color: var(--accent); }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      align-items: center;
+      flex: 1;
+    }
+    label { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 0.35rem; }
+    select, button, input[type="range"] { font: inherit; }
+    select, button {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #0a0c10; font-weight: 600; }
+    button.active { outline: 2px solid var(--accent); }
+    input[type="range"] { width: 5rem; accent-color: var(--accent); }
+    .mode-tabs { display: flex; gap: 0.25rem; }
+    main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+    /* —— Pace trainer —— */
+    #paceView {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      gap: 1.25rem;
+      text-align: center;
+    }
+    .pace-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .pace-meta strong { color: var(--text); }
+    .timer-ring-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    .timer-ring {
+      transform: rotate(-90deg);
+      width: 120px;
+      height: 120px;
+    }
+    .timer-ring circle.bg { fill: none; stroke: var(--border); stroke-width: 8; }
+    .timer-ring circle.fg {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke 0.2s;
+    }
+    .timer-ring circle.fg.over { stroke: var(--warn); }
+    .timer-ring circle.fg.done { stroke: var(--done); }
+    .timer-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-label small { font-size: 0.65rem; color: var(--muted); font-weight: 400; }
+    .segment-bar {
+      display: flex;
+      gap: 4px;
+      max-width: 640px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .segment {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .segment.current {
+      background: var(--accent);
+      transform: scale(1.35);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .segment.done { background: var(--done); }
+    .narration {
+      font-size: clamp(1.25rem, 3.5vw, 2rem);
+      line-height: 1.45;
+      max-width: 52rem;
+      font-weight: 500;
+    }
+    .hints {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 52rem;
+    }
+    .hint-chip {
+      font-size: 0.72rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .hint-chip.onscreen { border-color: #4a5568; color: #b8c0d4; }
+    .hint-chip.visual { border-color: var(--accent-dim, #3d5a99); color: var(--accent); }
+    .pace-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .pace-actions button { min-width: 4.5rem; padding: 0.5rem 0.85rem; }
+    kbd {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 0.1rem 0.3rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    /* —— Scroll teleprompter —— */
+    #scrollView {
+      flex: 1;
+      min-height: 0;
+      display: none;
+      flex-direction: column;
+    }
+    #scrollView.active { display: flex; }
+    #paceView.hidden { display: none; }
+    .scroll-stage {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      mask-image: linear-gradient(transparent, black 8%, black 92%, transparent);
+    }
+    .scroll-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(90%, 42rem);
+      font-size: clamp(1.5rem, 4vw, 2.75rem);
+      line-height: 1.55;
+      font-weight: 500;
+      padding: 2rem 0 50vh;
+      will-change: transform;
+    }
+    .scroll-chapter {
+      font-size: 0.55em;
+      color: var(--accent);
+      margin: 2rem 0 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .scroll-controls {
+      padding: 0.65rem 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+    }
+    .banner {
+      display: none;
+      padding: 0.5rem 1rem;
+      background: #3d2a00;
+      color: #ffd88a;
+      font-size: 0.82rem;
+    }
+    .banner.show { display: block; }
+    footer {
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding: 0.3rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div id="banner" class="banner">
+    Run <code>python Aura/design-video/tools/serve.py</code> then reload.
+  </div>
+
+  <header>
+    <h1>VO Prompter · <a href="/">workspace</a></h1>
+    <div class="mode-tabs">
+      <button type="button" id="btnPace" class="active">Pace trainer</button>
+      <button type="button" id="btnScroll">Teleprompter</button>
+    </div>
+    <div class="controls">
+      <label>Chapter
+        <select id="chapterFilter"><option value="all">All</option></select>
+      </label>
+      <label>WPM <input type="range" id="wpm" min="110" max="170" value="140" /><span id="wpmVal">140</span></label>
+      <button type="button" id="exportBtn">Export .txt</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="paceView">
+      <div class="pace-meta">
+        <span><strong id="chLabel">Ch 0</strong></span>
+        <span>Line <strong id="lineNum">1</strong> / <strong id="lineTotal">1</strong></span>
+        <span><strong id="wordNum">0</strong> words · target <strong id="targetSec">0</strong>s</span>
+      </div>
+
+      <div class="segment-bar" id="segmentBar" aria-hidden="true"></div>
+
+      <div class="timer-ring-wrap">
+        <svg class="timer-ring" viewBox="0 0 120 120">
+          <circle class="bg" cx="60" cy="60" r="52" />
+          <circle class="fg" id="ringFg" cx="60" cy="60" r="52"
+            stroke-dasharray="326.7" stroke-dashoffset="326.7" />
+        </svg>
+        <div class="timer-label">
+          <span id="timeLeft">0.0</span>
+          <small>seconds</small>
+        </div>
+      </div>
+
+      <p class="narration" id="narrationText">Loading…</p>
+      <div class="hints" id="hints"></div>
+
+      <div class="pace-actions">
+        <button type="button" id="prevBtn">← Prev</button>
+        <button type="button" id="playBtn" class="primary">▶ Auto</button>
+        <button type="button" id="nextBtn">Next →</button>
+        <button type="button" id="doneBtn" title="Mark line practiced">✓ Done</button>
+      </div>
+    </div>
+
+    <div id="scrollView">
+      <div class="scroll-stage" id="scrollStage">
+        <div class="scroll-text" id="scrollText"></div>
+      </div>
+      <div class="scroll-controls">
+        <button type="button" id="scrollPlay">▶ Scroll</button>
+        <label>Speed <input type="range" id="scrollSpeed" min="20" max="120" value="55" /></label>
+        <button type="button" id="scrollReset">Top</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Pace: <kbd>Space</kbd> next · <kbd>Shift+Space</kbd> prev · <kbd>P</kbd> auto ·
+    Teleprompter: scroll mode for recording · Export for phone apps
+  </footer>
+
+  <script>
+    const CIRC = 2 * Math.PI * 52;
+    const state = {
+      lines: [],
+      filtered: [],
+      index: 0,
+      wpm: 140,
+      mode: "pace",
+      auto: false,
+      raf: null,
+      lineStart: 0,
+      elapsed: 0,
+      done: new Set(),
+      scrollY: 0,
+      scrolling: false,
+    };
+
+    const els = {
+      banner: document.getElementById("banner"),
+      chapterFilter: document.getElementById("chapterFilter"),
+      wpm: document.getElementById("wpm"),
+      wpmVal: document.getElementById("wpmVal"),
+      paceView: document.getElementById("paceView"),
+      scrollView: document.getElementById("scrollView"),
+      narrationText: document.getElementById("narrationText"),
+      hints: document.getElementById("hints"),
+      chLabel: document.getElementById("chLabel"),
+      lineNum: document.getElementById("lineNum"),
+      lineTotal: document.getElementById("lineTotal"),
+      wordNum: document.getElementById("wordNum"),
+      targetSec: document.getElementById("targetSec"),
+      timeLeft: document.getElementById("timeLeft"),
+      ringFg: document.getElementById("ringFg"),
+      segmentBar: document.getElementById("segmentBar"),
+      scrollText: document.getElementById("scrollText"),
+      scrollStage: document.getElementById("scrollStage"),
+    };
+
+    els.ringFg.style.strokeDasharray = CIRC;
+    els.ringFg.style.strokeDashoffset = CIRC;
+
+    async function loadLines() {
+      const wpm = state.wpm;
+      const res = await fetch(`/api/script/lines?wpm=${wpm}`);
+      if (!res.ok) throw new Error("API failed");
+      const data = await res.json();
+      state.lines = data.lines;
+      rebuildChapterFilter(data.chapters);
+      applyFilter();
+    }
+
+    function rebuildChapterFilter(chapters) {
+      const sel = els.chapterFilter;
+      const cur = sel.value;
+      sel.innerHTML = '<option value="all">All</option>';
+      for (const ch of chapters) {
+        const o = document.createElement("option");
+        o.value = String(ch.chapter);
+        o.textContent = `Ch ${ch.chapter} (${ch.words}w · ~${ch.seconds}s)`;
+        sel.appendChild(o);
+      }
+      if ([...sel.options].some((o) => o.value === cur)) sel.value = cur;
+    }
+
+    function applyFilter() {
+      const ch = els.chapterFilter.value;
+      state.filtered = ch === "all"
+        ? state.lines
+        : state.lines.filter((l) => l.chapter === Number(ch));
+      state.index = Math.min(state.index, Math.max(0, state.filtered.length - 1));
+      state.done.clear();
+      renderPace();
+      renderScrollText();
+      buildSegments();
+    }
+
+    function currentLine() {
+      return state.filtered[state.index];
+    }
+
+    function targetMs(line) {
+      return line.target_seconds * 1000;
+    }
+
+    function renderPace() {
+      const line = currentLine();
+      if (!line) {
+        els.narrationText.textContent = "No narration lines in SCRIPT.md for this chapter yet.";
+        return;
+      }
+      els.narrationText.textContent = line.narration;
+      els.chLabel.textContent = `Ch ${line.chapter} — ${line.chapter_title}`;
+      els.lineNum.textContent = String(state.index + 1);
+      els.lineTotal.textContent = String(state.filtered.length);
+      els.wordNum.textContent = String(line.word_count);
+      els.targetSec.textContent = String(line.target_seconds);
+
+      els.hints.innerHTML = "";
+      if (line.on_screen) {
+        const c = document.createElement("span");
+        c.className = "hint-chip onscreen";
+        c.textContent = `On screen: ${line.on_screen}`;
+        els.hints.appendChild(c);
+      }
+      if (line.visual) {
+        const c = document.createElement("span");
+        c.className = "hint-chip visual";
+        c.textContent = line.visual;
+        els.hints.appendChild(c);
+      }
+
+      resetTimer();
+      updateSegments();
+      startTick();
+    }
+
+    function buildSegments() {
+      els.segmentBar.innerHTML = "";
+      state.filtered.forEach((_, i) => {
+        const d = document.createElement("div");
+        d.className = "segment";
+        d.title = `Line ${i + 1}`;
+        d.addEventListener("click", () => { state.index = i; stopAuto(); renderPace(); });
+        els.segmentBar.appendChild(d);
+      });
+    }
+
+    function updateSegments() {
+      const dots = els.segmentBar.querySelectorAll(".segment");
+      dots.forEach((d, i) => {
+        d.classList.remove("current", "done");
+        if (state.done.has(i)) d.classList.add("done");
+        if (i === state.index) d.classList.add("current");
+      });
+    }
+
+    function resetTimer() {
+      state.elapsed = 0;
+      state.lineStart = performance.now();
+      const line = currentLine();
+      const t = line ? line.target_seconds : 0;
+      els.timeLeft.textContent = t.toFixed(1);
+      els.ringFg.style.strokeDashoffset = CIRC;
+      els.ringFg.classList.remove("over", "done");
+    }
+
+    function tickTimer(now) {
+      const line = currentLine();
+      if (!line) return;
+      state.elapsed = now - state.lineStart;
+      const target = targetMs(line);
+      const left = Math.max(0, (target - state.elapsed) / 1000);
+      const progress = Math.min(1, state.elapsed / target);
+
+      els.timeLeft.textContent = left.toFixed(1);
+      els.ringFg.style.strokeDashoffset = CIRC * (1 - progress);
+      els.ringFg.classList.toggle("over", state.elapsed > target);
+      els.ringFg.classList.toggle("done", progress >= 1 && state.elapsed <= target * 1.15);
+
+      if (state.auto && state.elapsed >= target) {
+        pulseNext();
+        return;
+      }
+      state.raf = requestAnimationFrame(tickTimer);
+    }
+
+    function pulseNext() {
+      els.ringFg.classList.add("done");
+      setTimeout(() => {
+        if (state.index < state.filtered.length - 1) {
+          state.done.add(state.index);
+          state.index++;
+          renderPace();
+          if (state.auto) startAuto();
+        } else {
+          stopAuto();
+        }
+      }, 280);
+    }
+
+    function startTick() {
+      cancelAnimationFrame(state.raf);
+      state.lineStart = performance.now();
+      state.raf = requestAnimationFrame(tickTimer);
+    }
+
+    function stopTick() {
+      cancelAnimationFrame(state.raf);
+    }
+
+    function startAuto() {
+      state.auto = true;
+      document.getElementById("playBtn").textContent = "⏸ Pause";
+      startTick();
+    }
+
+    function stopAuto() {
+      state.auto = false;
+      document.getElementById("playBtn").textContent = "▶ Auto";
+    }
+
+    function nextLine() {
+      if (state.index < state.filtered.length - 1) {
+        state.index++;
+        renderPace();
+      }
+    }
+
+    function prevLine() {
+      if (state.index > 0) {
+        state.index--;
+        renderPace();
+      }
+    }
+
+    function renderScrollText() {
+      let html = "";
+      let lastCh = null;
+      for (const line of state.filtered) {
+        if (line.chapter !== lastCh) {
+          lastCh = line.chapter;
+          html += `<div class="scroll-chapter">Chapter ${line.chapter} — ${line.chapter_title}</div>`;
+        }
+        html += `<p>${line.narration}</p>`;
+      }
+      els.scrollText.innerHTML = html || "<p>No lines yet.</p>";
+      state.scrollY = 0;
+      els.scrollText.style.transform = `translateX(-50%) translateY(0px)`;
+    }
+
+    let scrollRaf = null;
+    function scrollLoop() {
+      if (!state.scrolling) return;
+      const speed = Number(document.getElementById("scrollSpeed").value);
+      state.scrollY -= speed / 60;
+      els.scrollText.style.transform = `translateX(-50%) translateY(${state.scrollY}px)`;
+      scrollRaf = requestAnimationFrame(scrollLoop);
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      document.getElementById("btnPace").classList.toggle("active", mode === "pace");
+      document.getElementById("btnScroll").classList.toggle("active", mode === "scroll");
+      els.paceView.classList.toggle("hidden", mode !== "pace");
+      els.scrollView.classList.toggle("active", mode === "scroll");
+      if (mode === "scroll") stopAuto();
+      else if (mode === "pace" && currentLine()) startTick();
+    }
+
+    document.getElementById("btnPace").addEventListener("click", () => setMode("pace"));
+    document.getElementById("btnScroll").addEventListener("click", () => setMode("scroll"));
+    document.getElementById("prevBtn").addEventListener("click", () => { stopAuto(); prevLine(); });
+    document.getElementById("nextBtn").addEventListener("click", () => { stopAuto(); nextLine(); });
+    document.getElementById("playBtn").addEventListener("click", () => {
+      state.auto ? stopAuto() : startAuto();
+    });
+    document.getElementById("doneBtn").addEventListener("click", () => {
+      state.done.add(state.index);
+      updateSegments();
+      nextLine();
+    });
+
+    els.chapterFilter.addEventListener("change", () => { state.index = 0; applyFilter(); });
+    els.wpm.addEventListener("input", () => {
+      state.wpm = Number(els.wpm.value);
+      els.wpmVal.textContent = els.wpm.value;
+    });
+    els.wpm.addEventListener("change", async () => {
+      try { await loadLines(); } catch (e) { console.error(e); }
+    });
+
+    document.getElementById("exportBtn").addEventListener("click", async () => {
+      const ch = els.chapterFilter.value;
+      const q = ch === "all" ? "" : `?chapter=${ch}`;
+      const res = await fetch(`/api/script/teleprompter.txt${q}`);
+      const text = await res.text();
+      const blob = new Blob([text], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = ch === "all" ? "aura-teleprompter.txt" : `aura-teleprompter-ch${ch}.txt`;
+      a.click();
+    });
+
+    document.getElementById("scrollPlay").addEventListener("click", () => {
+      state.scrolling = !state.scrolling;
+      document.getElementById("scrollPlay").textContent = state.scrolling ? "⏸ Pause" : "▶ Scroll";
+      if (state.scrolling) scrollLoop();
+      else cancelAnimationFrame(scrollRaf);
+    });
+    document.getElementById("scrollReset").addEventListener("click", () => {
+      state.scrollY = 0;
+      els.scrollText.style.transform = `translateX(-50%) translateY(0px)`;
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (state.mode !== "pace") return;
+      if (e.code === "Space" && !e.shiftKey) { e.preventDefault(); stopAuto(); nextLine(); }
+      if (e.code === "Space" && e.shiftKey) { e.preventDefault(); stopAuto(); prevLine(); }
+      if (e.key === "p" || e.key === "P") { state.auto ? stopAuto() : startAuto(); }
+    });
+
+    loadLines().catch(() => els.banner.classList.add("show"));
+  </script>
+</body>
+</html>

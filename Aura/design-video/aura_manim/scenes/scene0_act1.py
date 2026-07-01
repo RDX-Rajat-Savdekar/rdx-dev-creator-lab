@@ -4,7 +4,7 @@ SCENE-PLAN: 0:00–0:15 · SCRIPT: "Speech and environmental sounds both carry c
 
 Learning workflow (this repo):
   scene0_act1.py              ← ACT 1 (this file)
-  scene0_act2.py              ← next, after you approve act 1
+  scene0_act3.py              ← ACT 3 (solo code honesty)
   …
   scene0_full.py              ← joins approved acts (last step)
   scene0_problem_REFERENCE.py ← old monolith — do not render
@@ -12,6 +12,9 @@ Learning workflow (this repo):
 Render:
   manim -ql scenes/scene0_act1.py Scene0Act1Layout   ← layout plop (step 1)
   manim -ql scenes/scene0_act1.py Scene0Act1          ← motion (step 2)
+
+Final (4K · 60 fps — after layout + motion approved):
+  ../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act1.py Scene0Act1
 
 ──────────────────────────────────────────────────────────────────────────────
 PLAY CHECKLIST — Scene0Act1Layout (layout plop, not story timing)

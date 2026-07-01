@@ -1,0 +1,7 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "manim-sideview.defaultManimPath": "${workspaceFolder}/.venv/bin/manim",
+  "manim-sideview.manimExecutableVersion": "v0.20.1",
+  "manim-sideview.commandLineArgs": "-ql -r 1280,720 --frame_rate 30",
+  "python-envs.pythonProjects": []
+}

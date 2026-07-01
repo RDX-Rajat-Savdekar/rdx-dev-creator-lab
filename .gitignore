@@ -5,10 +5,34 @@ build/
 dist/
 wheels/
 *.egg-info
-media/
+
 # Virtual environments
 .venv
 
 # macOS
 .DS_Store
 **/.DS_Store
+
+# Video — never commit renders, clips, or source footage (regenerate locally)
+**/*.mp4
+
+# ── Manim (all projects) ─────────────────────────────────────────────────────
+# Render cache + partial segments — never commit; re-run manim to regenerate.
+**/media/
+**/partial_movie_files/
+.manim-rendering/
+
+# ── Aura · design video (scene0_actN workflow) ───────────────────────────────
+# Source we keep: aura_manim/scenes/, icons, assets/icons/*.svg, theme.py
+# Outputs we ignore: previews, assemblies, Sideview renders
+Aura/design-video/output/
+Aura/design-video/aura_manim/media/
+
+# ── Aura · 60s recruiter clip ────────────────────────────────────────────────
+Aura/manim/media/
+Aura/output/
+# MP3 beds only — commit README + *-license.txt (Pixabay proof for YouTube)
+Aura/music/*.mp3
+
+# ── Project notes / local-only sources (not for git) ───────────────────────────
+project-sources/

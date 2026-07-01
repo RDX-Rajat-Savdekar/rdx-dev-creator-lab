@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aura — Script Workspace</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2d3348;
+      --text: #e8eaef;
+      --muted: #8b93a7;
+      --accent: #6c9eff;
+      --accent-dim: #3d5a99;
+      --save: #3dba7a;
+      --warn: #e8a838;
+      --danger: #e85d5d;
+      --mono: "SF Mono", "Fira Code", "Consolas", monospace;
+      --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    [data-theme="light"] {
+      --bg: #f4f5f8;
+      --surface: #ffffff;
+      --border: #d8dce6;
+      --text: #1a1d27;
+      --muted: #5c6370;
+      --accent: #2563eb;
+      --accent-dim: #93c5fd;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1rem;
+      padding: 0.65rem 1rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0;
+      white-space: nowrap;
+    }
+    header h1 span { color: var(--muted); font-weight: 400; }
+    .nav-chapters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      flex: 1;
+    }
+    .nav-chapters button,
+    .toolbar button,
+    .mode-toggle button {
+      font: inherit;
+      font-size: 0.78rem;
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .nav-chapters button:hover,
+    .toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-chapters button.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+    .toolbar { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+    .status {
+      font-size: 0.75rem;
+      color: var(--muted);
+      min-width: 6rem;
+    }
+    .status.dirty { color: var(--warn); }
+    .status.ok { color: var(--save); }
+    .status.err { color: var(--danger); }
+    .banner {
+      display: none;
+      padding: 0.6rem 1rem;
+      background: #3d2a00;
+      color: #ffd88a;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--warn);
+    }
+    .banner.show { display: block; }
+    .banner code { background: rgba(0,0,0,0.25); padding: 0.1rem 0.35rem; border-radius: 4px; }
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 0;
+    }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+    }
+    .pane {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      border-right: 1px solid var(--border);
+    }
+    .pane:last-child { border-right: none; }
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.75rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .pane-header .meta { color: var(--muted); font-weight: 400; font-size: 0.72rem; }
+    .pane-body {
+      flex: 1;
+      overflow: auto;
+      min-height: 0;
+    }
+    .pane-body.split {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+    }
+    textarea.editor {
+      width: 100%;
+      height: 100%;
+      min-height: 12rem;
+      resize: none;
+      border: none;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+    }
+    .preview {
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .preview h1 { font-size: 1.35rem; margin-top: 0; }
+    .preview h2 {
+      font-size: 1.05rem;
+      margin-top: 1.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 5rem;
+    }
+    .preview h3 { font-size: 0.95rem; }
+    .preview table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      margin: 0.75rem 0;
+    }
+    .preview th, .preview td {
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.5rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .preview th { background: var(--surface); }
+    .preview code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--surface);
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+    }
+    .preview blockquote {
+      margin: 0.5rem 0;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--accent-dim);
+      color: var(--muted);
+    }
+    .preview hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    .hidden { display: none !important; }
+    footer {
+      font-size: 0.72rem;
+      color: var(--muted);
+      padding: 0.35rem 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    kbd {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.1rem 0.35rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+  </style>
+</head>
+<body>
+  <div id="banner" class="banner">
+    Server not running — start it with:
+    <code>python Aura/design-video/tools/serve.py</code>
+    then open <code>http://127.0.0.1:8765/</code>
+  </div>
+
+  <header>
+    <h1>Aura <span>script workspace</span> · <a href="/prompter.html" style="color:var(--accent);text-decoration:none;font-weight:500">prompter</a></h1>
+    <nav class="nav-chapters" id="chapterNav" aria-label="Jump to chapter"></nav>
+    <div class="toolbar">
+      <div class="mode-toggle" role="group" aria-label="View mode">
+        <button type="button" data-mode="preview" title="Rendered markdown">Preview</button>
+        <button type="button" data-mode="edit" title="Raw markdown">Edit</button>
+        <button type="button" data-mode="split" title="Edit + preview stacked">Split</button>
+      </div>
+      <button type="button" id="themeBtn" title="Toggle light/dark">Theme</button>
+      <button type="button" id="saveBtn" title="Save both files">Save</button>
+      <span class="status" id="status">Loading…</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="pane" id="paneScript">
+      <div class="pane-header">
+        <span>SCRIPT.md</span>
+        <span class="meta" id="scriptMeta"></span>
+      </div>
+      <div class="pane-body" id="scriptBody">
+        <textarea class="editor hidden" id="scriptEditor" spellcheck="true"></textarea>
+        <div class="preview hidden" id="scriptPreview"></div>
+      </div>
+    </section>
+    <section class="pane" id="paneScene">
+      <div class="pane-header">
+        <span>SCENE-PLAN.md</span>
+        <span class="meta" id="sceneMeta"></span>
+      </div>
+      <div class="pane-body" id="sceneBody">
+        <textarea class="editor hidden" id="sceneEditor" spellcheck="false"></textarea>
+        <div class="preview hidden" id="scenePreview"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span><kbd>⌘/Ctrl</kbd> + <kbd>S</kbd> save</span>
+    <span>Chapter jump scrolls both panes</span>
+    <span id="wordCount"></span>
+  </footer>
+
+  <script>
+    const FILES = { script: "SCRIPT.md", scene: "SCENE-PLAN.md" };
+    const state = {
+      mode: localStorage.getItem("aura-view-mode") || "split",
+      theme: localStorage.getItem("aura-theme") || "dark",
+      dirty: false,
+      loaded: false,
+      scrollLock: false,
+    };
+
+    const els = {
+      banner: document.getElementById("banner"),
+      chapterNav: document.getElementById("chapterNav"),
+      status: document.getElementById("status"),
+      saveBtn: document.getElementById("saveBtn"),
+      themeBtn: document.getElementById("themeBtn"),
+      scriptEditor: document.getElementById("scriptEditor"),
+      sceneEditor: document.getElementById("sceneEditor"),
+      scriptPreview: document.getElementById("scriptPreview"),
+      scenePreview: document.getElementById("scenePreview"),
+      scriptBody: document.getElementById("scriptBody"),
+      sceneBody: document.getElementById("sceneBody"),
+      scriptMeta: document.getElementById("scriptMeta"),
+      sceneMeta: document.getElementById("sceneMeta"),
+      wordCount: document.getElementById("wordCount"),
+    };
+
+    marked.setOptions({ gfm: true, breaks: false });
+
+    function setTheme(t) {
+      state.theme = t;
+      document.documentElement.dataset.theme = t === "light" ? "light" : "";
+      localStorage.setItem("aura-theme", t);
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      localStorage.setItem("aura-view-mode", mode);
+      document.querySelectorAll(".mode-toggle button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.mode === mode);
+      });
+      for (const side of ["script", "scene"]) {
+        const editor = els[`${side}Editor`];
+        const preview = els[`${side}Preview`];
+        const body = els[`${side}Body`];
+        editor.classList.add("hidden");
+        preview.classList.add("hidden");
+        body.classList.remove("split");
+        if (mode === "edit") {
+          editor.classList.remove("hidden");
+        } else if (mode === "preview") {
+          preview.classList.remove("hidden");
+        } else {
+          body.classList.add("split");
+          editor.classList.remove("hidden");
+          preview.classList.remove("hidden");
+        }
+      }
+      renderPreviews();
+    }
+
+    function renderPreviews() {
+      els.scriptPreview.innerHTML = marked.parse(els.scriptEditor.value);
+      els.scenePreview.innerHTML = marked.parse(els.sceneEditor.value);
+      buildChapterNav();
+      updateWordCount();
+    }
+
+    function updateWordCount() {
+      const narration = els.scriptEditor.value.match(/\|[^|\n]+\|/g) || [];
+      const text = els.scriptEditor.value.replace(/[#*`|[\]()>-]/g, " ");
+      const words = text.split(/\s+/).filter(Boolean).length;
+      els.wordCount.textContent = `~${words} words in script (rough)`;
+    }
+
+    function markDirty() {
+      if (!state.loaded) return;
+      state.dirty = true;
+      els.status.textContent = "Unsaved changes";
+      els.status.className = "status dirty";
+    }
+
+    function markSaved() {
+      state.dirty = false;
+      els.status.textContent = "Saved";
+      els.status.className = "status ok";
+      setTimeout(() => {
+        if (!state.dirty) {
+          els.status.textContent = "Up to date";
+          els.status.className = "status";
+        }
+      }, 2000);
+    }
+
+    async function loadFile(name) {
+      const res = await fetch(`/api/md/${name}`);
+      if (!res.ok) throw new Error(`Failed to load ${name}`);
+      const data = await res.json();
+      return data.content;
+    }
+
+    async function saveFile(name, content) {
+      const res = await fetch(`/api/md/${name}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content }),
+      });
+      if (!res.ok) throw new Error(`Failed to save ${name}`);
+    }
+
+    async function loadAll() {
+      try {
+        const [script, scene] = await Promise.all([
+          loadFile(FILES.script),
+          loadFile(FILES.scene),
+        ]);
+        els.scriptEditor.value = script;
+        els.sceneEditor.value = scene;
+        state.loaded = true;
+        renderPreviews();
+        els.status.textContent = "Up to date";
+        els.banner.classList.remove("show");
+      } catch (e) {
+        els.banner.classList.add("show");
+        els.status.textContent = "Offline";
+        els.status.className = "status err";
+        console.error(e);
+      }
+    }
+
+    async function saveAll() {
+      if (!state.loaded) return;
+      els.status.textContent = "Saving…";
+      els.status.className = "status";
+      try {
+        await Promise.all([
+          saveFile(FILES.script, els.scriptEditor.value),
+          saveFile(FILES.scene, els.sceneEditor.value),
+        ]);
+        markSaved();
+      } catch (e) {
+        els.status.textContent = "Save failed";
+        els.status.className = "status err";
+        els.banner.classList.add("show");
+        console.error(e);
+      }
+    }
+
+    function slugForChapter(n) {
+      return `chapter-${n}`;
+    }
+
+    function findChapterHeading(previewEl, chapterNum) {
+      const headings = previewEl.querySelectorAll("h2");
+      const re = new RegExp(`Chapter\\s+${chapterNum}\\b`, "i");
+      for (const h of headings) {
+        if (re.test(h.textContent)) return h;
+      }
+      return null;
+    }
+
+    function scrollBothToChapter(num) {
+      state.scrollLock = true;
+      document.querySelectorAll(".nav-chapters button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.chapter === String(num));
+      });
+      for (const side of ["script", "scene"]) {
+        const preview = els[`${side}Preview`];
+        const body = els[`${side}Body`];
+        const target = findChapterHeading(preview, num);
+        if (target && !preview.classList.contains("hidden")) {
+          body.scrollTop = target.offsetTop - body.offsetTop - 8;
+        } else {
+          const editor = els[`${side}Editor`];
+          const re = new RegExp(`^## Chapter ${num}\\b`, "m");
+          const m = editor.value.match(re);
+          if (m) {
+            const line = editor.value.slice(0, m.index).split("\n").length;
+            editor.scrollTop = (line - 1) * 18;
+          }
+        }
+      }
+      setTimeout(() => { state.scrollLock = false; }, 400);
+    }
+
+    function scrollToSection(label, pattern) {
+      state.scrollLock = true;
+      document.querySelectorAll(".nav-chapters button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.section === label);
+      });
+      for (const side of ["script", "scene"]) {
+        const editor = els[`${side}Editor`];
+        const body = els[`${side}Body`];
+        const preview = els[`${side}Preview`];
+        const re = typeof pattern === "string"
+          ? new RegExp(`^## ${pattern}`, "m")
+          : pattern;
+        const m = editor.value.match(re);
+        if (!m) continue;
+        if (!preview.classList.contains("hidden")) {
+          const headings = preview.querySelectorAll("h2");
+          for (const h of headings) {
+            if (re.test(`## ${h.textContent}`) || h.textContent.includes(pattern)) {
+              body.scrollTop = h.offsetTop - 8;
+              break;
+            }
+          }
+        } else {
+          const line = editor.value.slice(0, m.index).split("\n").length;
+          editor.scrollTop = (line - 1) * 18;
+        }
+      }
+      setTimeout(() => { state.scrollLock = false; }, 400);
+    }
+
+    function buildChapterNav() {
+      els.chapterNav.innerHTML = "";
+      const addBtn = (label, opts) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = label;
+        if (opts.chapter != null) {
+          b.dataset.chapter = String(opts.chapter);
+          b.addEventListener("click", () => scrollBothToChapter(opts.chapter));
+        } else {
+          b.dataset.section = opts.section;
+          b.addEventListener("click", () => scrollToSection(opts.section, opts.pattern));
+        }
+        els.chapterNav.appendChild(b);
+      };
+
+      addBtn("Intro", { section: "intro", pattern: "How to read|Master timeline" });
+      for (let i = 0; i <= 9; i++) addBtn(`Ch ${i}`, { chapter: i });
+      addBtn("Outro", { section: "outro", pattern: "Outro|Next actions" });
+    }
+
+    els.scriptEditor.addEventListener("input", () => {
+      renderPreviews();
+      markDirty();
+    });
+    els.sceneEditor.addEventListener("input", () => {
+      renderPreviews();
+      markDirty();
+    });
+
+    document.querySelectorAll(".mode-toggle button").forEach((b) => {
+      b.addEventListener("click", () => setMode(b.dataset.mode));
+    });
+
+    els.saveBtn.addEventListener("click", saveAll);
+    els.themeBtn.addEventListener("click", () => {
+      setTheme(state.theme === "dark" ? "light" : "dark");
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        e.preventDefault();
+        saveAll();
+      }
+    });
+
+    setTheme(state.theme);
+    setMode(state.mode);
+    loadAll();
+  </script>
+</body>
+</html>
