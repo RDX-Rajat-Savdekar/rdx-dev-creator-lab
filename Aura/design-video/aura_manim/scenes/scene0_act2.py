@@ -9,6 +9,9 @@ Render:
   manim -ql scenes/scene0_act2.py Scene0Act2Layout
   manim -ql scenes/scene0_act2.py Scene0Act2
 
+Full scene (fast iteration — all enabled acts):
+  manim -ql scenes/scene0_full.py Scene0Full
+
 Final (4K · 60 fps — after layout + motion approved):
   ../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act2.py Scene0Act2
 
@@ -109,27 +112,32 @@ class Scene0Act2Layout(Scene):
 # =============================================================================
 
 
+def play_act2(scene: Scene) -> None:
+    """ACT 2 motion — hackathon frame (0:15–0:25)."""
+    left = act2_left_column()
+    time_block = left[0]
+    dates = left[1]
+    team = team_grid()
+    lead_card_mob = lead_card(team)
+    label = act2_pieces()["on_screen_label"]
+
+    # PLAY 1
+    scene.play(FadeIn(time_block, shift=UP * 0.1), run_time=1.0)
+    # PLAY 2
+    scene.play(FadeIn(dates, shift=RIGHT * 0.12), run_time=0.9)
+    # PLAY 3
+    scene.play(FadeIn(team, shift=UP * 0.1), run_time=1.4)
+    scene.wait(1)
+    # PLAY 4 — highlight lead developer (you)
+    scene.play(Indicate(lead_card_mob, color=ACCENT, scale_factor=1.06), run_time=0.6)
+    # PLAY 5
+    scene.play(FadeIn(label, shift=UP * 0.1), run_time=0.5)
+    scene.wait(5.3)
+    # PLAY 6
+    scene.play(FadeOut(left, team, label), run_time=0.7)
+
+
 class Scene0Act2(Scene):
     def construct(self) -> None:
         setup_scene(self)
-        left = act2_left_column()
-        time_block = left[0]
-        dates = left[1]
-        team = team_grid()
-        lead_card_mob = lead_card(team)
-        label = act2_pieces()["on_screen_label"]
-
-        # PLAY 1
-        self.play(FadeIn(time_block, shift=UP * 0.1), run_time=1.0)
-        # PLAY 2
-        self.play(FadeIn(dates, shift=RIGHT * 0.12), run_time=0.9)
-        # PLAY 3
-        self.play(FadeIn(team, shift=UP * 0.1), run_time=1.4)
-        self.wait(1)
-        # PLAY 4 — highlight lead developer (you)
-        self.play(Indicate(lead_card_mob, color=ACCENT, scale_factor=1.06), run_time=0.6)
-        # PLAY 5
-        self.play(FadeIn(label, shift=UP * 0.1), run_time=0.5)
-        self.wait(5.3)
-        # PLAY 6
-        self.play(FadeOut(left, team, label), run_time=0.7)
+        play_act2(self)

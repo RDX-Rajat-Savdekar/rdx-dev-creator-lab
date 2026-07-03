@@ -10,6 +10,9 @@ Render:
   manim -ql scenes/scene0_act3.py Scene0Act3Layout
   manim -ql scenes/scene0_act3.py Scene0Act3
 
+Full scene (fast iteration — all enabled acts):
+  manim -ql scenes/scene0_full.py Scene0Full
+
 Final (4K · 60 fps — after layout + motion approved):
   ../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act3.py Scene0Act3
 
@@ -97,58 +100,63 @@ class Scene0Act3Layout(Scene):
             plop(self, mob, name, wait=3.0)
 
 
+def play_act3(scene: Scene) -> None:
+    """ACT 3 motion — shared codebase lane (0:25–0:35)."""
+    trunk = merge_lane_trunk()
+    header = merge_lane_header(trunk)
+    dividers = merge_lane_dividers()
+    sections = merge_lane_sections()
+    slots = merge_lane_all_slots()
+    note = team_note()
+    label = act3_pieces()["on_screen_label"]
+
+    _shift(trunk, header, dividers, sections, note, label)
+    for slot in slots:
+        _shift(slot["section"], slot["icon"], slot["label"], slot["junction"])
+
+    # PLAY 1 — main trunk
+    scene.play(Create(trunk), FadeIn(header), run_time=0.9)
+
+    # PLAY 2 — split into four sections
+    scene.play(FadeOut(trunk), run_time=0.25)
+    scene.play(Create(dividers), FadeIn(sections), run_time=0.75)
+
+    # PLAY 3–6 — each dev merges onto their section (green pulse)
+    for slot in slots:
+        icon = slot["icon"]
+        section = slot["section"]
+        junction = slot["junction"]
+        label_mob = slot["label"]
+        landed = slot["icon_landed"]
+
+        scene.play(FadeIn(icon, shift=DOWN * 0.15), run_time=0.35)
+        scene.play(icon.animate.move_to(landed), run_time=0.5)
+        scene.play(
+            section.animate.set_color(MERGE_OK),
+            junction.animate.set_color(MERGE_OK),
+            icon.animate.set_stroke(MERGE_OK, width=2.5),
+            Indicate(section, color=MERGE_OK, scale_factor=1.03),
+            run_time=0.45,
+        )
+        scene.play(FadeIn(label_mob, shift=UP * 0.08), run_time=0.3)
+
+    # PLAY 7
+    scene.play(FadeIn(note), FadeIn(label, shift=UP * 0.1), run_time=0.5)
+    scene.wait(4.5)
+
+    # PLAY 8
+    all_mobs = VGroup(
+        header,
+        dividers,
+        sections,
+        note,
+        label,
+        *[mob for slot in slots for mob in (slot["icon"], slot["label"], slot["junction"])],
+    )
+    scene.play(FadeOut(all_mobs), run_time=0.7)
+
+
 class Scene0Act3(Scene):
     def construct(self) -> None:
         setup_scene(self)
-        trunk = merge_lane_trunk()
-        header = merge_lane_header(trunk)
-        dividers = merge_lane_dividers()
-        sections = merge_lane_sections()
-        slots = merge_lane_all_slots()
-        note = team_note()
-        label = act3_pieces()["on_screen_label"]
-
-        _shift(trunk, header, dividers, sections, note, label)
-        for slot in slots:
-            _shift(slot["section"], slot["icon"], slot["label"], slot["junction"])
-
-        # PLAY 1 — main trunk
-        self.play(Create(trunk), FadeIn(header), run_time=0.9)
-
-        # PLAY 2 — split into four sections
-        self.play(FadeOut(trunk), run_time=0.25)
-        self.play(Create(dividers), FadeIn(sections), run_time=0.75)
-
-        # PLAY 3–6 — each dev merges onto their section (green pulse)
-        for slot in slots:
-            icon = slot["icon"]
-            section = slot["section"]
-            junction = slot["junction"]
-            label_mob = slot["label"]
-            landed = slot["icon_landed"]
-
-            self.play(FadeIn(icon, shift=DOWN * 0.15), run_time=0.35)
-            self.play(icon.animate.move_to(landed), run_time=0.5)
-            self.play(
-                section.animate.set_color(MERGE_OK),
-                junction.animate.set_color(MERGE_OK),
-                icon.animate.set_stroke(MERGE_OK, width=2.5),
-                Indicate(section, color=MERGE_OK, scale_factor=1.03),
-                run_time=0.45,
-            )
-            self.play(FadeIn(label_mob, shift=UP * 0.08), run_time=0.3)
-
-        # PLAY 7
-        self.play(FadeIn(note), FadeIn(label, shift=UP * 0.1), run_time=0.5)
-        self.wait(4.5)
-
-        # PLAY 8
-        all_mobs = VGroup(
-            header,
-            dividers,
-            sections,
-            note,
-            label,
-            *[mob for slot in slots for mob in (slot["icon"], slot["label"], slot["junction"])],
-        )
-        self.play(FadeOut(all_mobs), run_time=0.7)
+        play_act3(self)

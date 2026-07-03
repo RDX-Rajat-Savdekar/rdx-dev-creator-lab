@@ -167,110 +167,153 @@ If Content ID claim appears: submit Pixabay license certificate (`solo-piano-doc
 
 ### 2026-07-01 — Design video · Chapter 0 Manim (act-by-act workflow)
 
-**Deliverable:** System design video — Chapter 0 only (`0:00–1:05`)  
-**Status:** Acts **1–3** draft ✅ · Acts 4–6 + `scene0_full.py` assembly pending  
+**Deliverable:** System design video — Chapter 0 (`0:00–1:05`)  
+**Status:** Acts **1–6** draft ✅ · **2160p60 concat** ✅ · VO draft in [`vo/scene0.md`](design-video/vo/scene0.md)  
+**Concat:** [`design-video/output/scene0_chapter0_2160p60.mp4`](design-video/output/scene0_chapter0_2160p60.mp4) (~1:14 measured — trim waits after read-aloud)  
 **Supersedes:** monolith `scene0_problem_REFERENCE.py` + one-shot `scene0_problem-preview.mp4`
 
 #### Goal
 
 Animated Manim ch 0 (not 60s text cards): six beats from `SCRIPT.md` / `SCENE-PLAN.md`, learned and reviewed **one act at a time** before final concat.
 
-#### Locked workflow (milestone)
+#### Locked workflow (milestone — still the standard for ch 1+)
 
 ```
+Plan (vo/sceneN.md PLAY CHECKLISTS) → user edits → generate all acts in one pass
+
 Per act:
-  1. scene0_actN.py — helpers + PLAY CHECKLIST docstring + # PLAY N comments
-  2. Scene0ActNLayout — plop pieces slowly (layout review)
-  3. Scene0ActN — motion (~10–15 s per act)
+  1. sceneN_actM.py — helpers + PLAY CHECKLIST docstring + play_actM(scene, state)
+  2. SceneNActMLayout — plop pieces slowly (layout review)
+  3. SceneNActM — motion (standalone render; fades at end)
   4. -qk --frame_rate 60 when act approved
 
-Shared (when act 2+ reuses visuals):
-  components/team.py   — TEAM roster, team_grid (act 2), team_contribution_lane (act 3)
-  components/labels.py — on_screen_label()
-  icons.py + assets/icons/*.svg — tint at load; diagrams stay Manim shapes
+Shared builders (components/ + toolkit modules):
+  components/team.py, labels.py, device.py, locale_picker.py
+  icons.py + assets/icons/*.svg
+  rejected.py, code_panel.py, broll.py
 
-Assembly (last):
-  scene0_full.py — concat approved act motions only; no new visuals
+Assembly (two modes):
+  sceneN_full.py — play_act chain at -ql for fast iteration (state['chain']=True for continuity)
+  ffmpeg concat — per-act 2160p60 MP4s with ABSOLUTE paths in concat.txt (see mistakes)
 ```
 
-**Do not** import whole previous Scene classes — import **builders** from `components/`.
+**Do not** import whole previous Scene classes — import **`play_actM`** and **builders**.
 
 #### Act status
 
-| Act | File | Scene classes | On-screen label | Status |
-|-----|------|---------------|-----------------|--------|
-| 1 | `scenes/scene0_act1.py` | Layout + Motion | Situational audio gap | ✅ reviewed (room rect, SVG icons, columns) |
-| 2 | `scenes/scene0_act2.py` | Layout + Motion | 24h hackathon · Oct 2025 | ✅ reviewed (clock SVG, 2×2 team grid) |
-| 3 | `scenes/scene0_act3.py` | Layout + Motion | Team-built · shared code | ✅ draft (shared commits lane) |
-| 4 | `scene0_act4.py` | — | Day 0: sphere POC | pending |
-| 5 | `scene0_act5.py` | — | System design · prototype | pending |
-| 6 | `scene0_act6.py` | — | Aura · visionOS · on-device | pending |
+| Act | File | On-screen label | Status |
+|-----|------|-----------------|--------|
+| 1 | `scene0_act1.py` | Situational audio gap | ✅ reviewed |
+| 2 | `scene0_act2.py` | 24h hackathon · Oct 2025 | ✅ reviewed |
+| 3 | `scene0_act3.py` | Team-built · shared code | ✅ draft |
+| 4 | `scene0_act4.py` | Day 0: sphere POC | ✅ draft (sphere pulsates 3×) |
+| 5 | `scene0_act5.py` | System design · prototype + D1 B-roll | ✅ draft (4 s embedded clip) |
+| 6 | `scene0_act6.py` | Aura · visionOS · on-device | ✅ draft |
 
-#### Render commands (from `Aura/design-video/aura_manim/`)
+#### Render commands (from repo root `.venv`)
 
-Preview (while learning):
-
-```bash
-../../.venv/bin/manim -ql scenes/scene0_act1.py Scene0Act1Layout
-../../.venv/bin/manim -ql scenes/scene0_act1.py Scene0Act1
-# … act2, act3 same pattern
-```
-
-Final per act (4K · 60 fps):
+Preview:
 
 ```bash
-../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act1.py Scene0Act1
-../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act2.py Scene0Act2
-../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act3.py Scene0Act3
+cd Aura/design-video/aura_manim
+../../../.venv/bin/manim -ql scenes/scene0_actN.py Scene0ActNLayout
+../../../.venv/bin/manim -ql scenes/scene0_full.py Scene0Full    # whole ch while iterating
 ```
 
-Manim Sideview: `.vscode/settings.json` → `manim-sideview.defaultManimPath` = `${workspaceFolder}/.venv/bin/manim` (fixes bad `python/bin/manim` path).
+Final per act + concat:
 
-#### Files & structure
+```bash
+../../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_actN.py Scene0ActN
+# concat → design-video/output/scene0_chapter0_2160p60.mp4 (see vo/VO-WORKFLOW.md)
+```
+
+#### Files & structure (ch 0)
 
 | Path | Role |
 |------|------|
-| `design-video/aura_manim/theme.py` | Palette (matches 60s) |
-| `design-video/aura_manim/icons.py` | `load_icon()` |
-| `design-video/aura_manim/assets/icons/*.svg` | bell, alert, clock, laptop, mic, palette, … |
-| `design-video/aura_manim/components/team.py` | Single TEAM roster · act 2 grid · act 3 lane |
-| `design-video/aura_manim/components/labels.py` | Bottom-third labels |
-| `design-video/aura_manim/review.py` | `plop()` for layout review |
-| `design-video/aura_manim/scenes/scene0_act{1,2,3}.py` | One act per file |
-| `design-video/aura_manim/scenes/scene0_full.py` | Assembly stub + reuse notes |
-| `design-video/aura_manim/scenes/scene0_problem_REFERENCE.py` | Old 6-act monolith — do not render |
-| `design-video/LEARNING.md` | Manim concepts + `# LEARN:` index |
-| `.gitignore` | `**/media/`, `design-video/output/`, render caches |
+| `design-video/aura_manim/scenes/scene0_act{1…6}.py` | One act per file + `play_actN()` |
+| `design-video/aura_manim/scenes/scene0_full.py` | Full chapter via `play_act` chain |
+| `design-video/aura_manim/broll.py` | Embed `clips/D*.mp4` via PyAV + `ImageMobject` frames |
+| `design-video/aura_manim/components/team.py` | TEAM roster · grid · merge lane |
+| `design-video/vo/scene0.md` | Measured timestamps + VO draft |
+| `design-video/vo/build_act_timestamps.py` | ffprobe act durations → markdown table |
+| `design-video/output/scene0_concat.txt` | ffmpeg list (**absolute paths**) |
 
-#### Mistakes & fixes (ch 0 so far)
+#### Mistakes & fixes (ch 0)
 
 | Issue | Fix |
 |-------|-----|
 | Built all 6 acts in one file | **One act per file** + layout plop before motion |
 | Hand-drawn bell/clock icons | **SVG** via `load_icon()` |
-| Speech/sound overlap in act 1 | **Columns** — bubble above icon, `next_to` buff |
-| Act 2 clock hands looked wrong | **clock.svg** + separate `24h` text |
-| Act 2 role cards cramped | Fixed `CARD_W/H`, icon→label buff `0.38` |
-| Act 3 “All code: Rajat” too bold | Reframed → **team-built · shared code** + shared commit lane |
-| Duplicate team data act 2/3 | **`components/team.py`** single `TEAM` tuple |
-| Manim Sideview path error | Workspace `.vscode/settings.json` |
-| Committed render MP4s | `.gitignore` for `media/`, outputs |
-
-#### Narrative notes (update SCRIPT when VO recorded)
-
-- Act 3 on-screen text ≠ original SCRIPT solo-code line — VO should say team contributed to codebase.
-- Act 2 shows **4** role cards; SCRIPT says “three-person team” — align on read-aloud.
-- Honesty unchanged: prototype, no custom ML / latency / production scale.
+| Act 3 “All code: Rajat” too bold | **Team-built · shared code** + merge lane |
+| Act 5 Resolve placeholder only | **`broll.py`** bakes D1 in Manim (4 s flash) |
+| ffmpeg concat with relative paths in `/tmp` | **Absolute paths** in `output/scene0_concat.txt` |
+| `scene0_full` waited until end | Wire **`scene0_full.py` early** for iteration |
+| `VideoMobject` not in Manim CE | PyAV frames → `ImageMobject` + updater; use `Group` not `VGroup` for images |
 
 #### Still TODO (ch 0)
 
-- [ ] Act 4 — sphere POC (`"red"` → color, loud → scale)
-- [ ] Act 5 — prototype disclaimer + 2 s black hold for Resolve `clips/D1`
-- [ ] Act 6 — Vision Pro silhouette + dual pipeline stub
-- [ ] `scene0_full.py` — wire acts 1–6 after each approved
-- [ ] Read-aloud VO — trim `self.wait()` per act
-- [ ] Optional: act 2→3 `Transform(team_grid(), team_contribution_lane())` for continuity
-- [ ] Update `SCRIPT.md` act 3 (+ act 2 team count) to match visuals
+- [ ] Read-aloud VO — trim `self.wait()` per act (target ~1:05 vs ~1:14 today)
+- [ ] Update `SCRIPT.md` act 3 line to match team-built visuals
+- [ ] Record VO + Resolve assembly
+
+---
+
+### 2026-07-02 — Design video · Standardized pipeline + Chapter 1
+
+**Deliverable:** Repeatable workflow for all chapters; ch 1 first full implementation  
+**Status:** Ch 0 concat ✅ · Ch 1 code ✅ (layout review pending) · VO system ✅
+
+#### What we standardized
+
+| Layer | Convention | Where documented |
+|-------|------------|------------------|
+| **Planning** | PLAY CHECKLIST in `vo/sceneN.md` → user edits → **one-pass code gen** | `vo/scene1.md` (template: `vo/_TEMPLATE.md`) |
+| **Acts** | `sceneN_actM.py` + `SceneNActMLayout` + `SceneNActM` + **`play_actM(scene, state)`** | `scenes/scene0_act*.py`, `scene1_act*.py` |
+| **Full preview** | `sceneN_full.py` with `ENABLED_ACTS` + `state['chain']=True` for acts that share a diagram | `scene0_full.py`, `scene1_full.py` |
+| **VO** | Measured timestamps from **2160p60 renders**, not SCENE-PLAN targets | `vo/sceneN.md`, `build_act_timestamps.py` |
+| **Final assembly** | Per-act `-qk` → **ffmpeg concat** (`-c copy`) — faster than re-rendering `SceneNFull` at 4K | `vo/VO-WORKFLOW.md` |
+| **B-roll in Manim** | `broll.play_broll()` — PyAV decode, frame updater (not Resolve-only) | `broll.py` · act 5 |
+| **Swift on screen** | `code_snippets/*.swift` + `code_panel.swift_panel()` + line highlight | `code_panel.py` · ch 1 act 4 |
+| **Rejected paths** | `rejected.py` — ghost `DashedLine`, `strikethrough_line`, reason chips | ch 1 acts 2–3 |
+| **Icons** | MIT stroke SVGs in `assets/icons/` — e.g. `vision-pro.svg` | `icons.py` · `components/device.py` |
+
+#### Chapter 1 shipped (code)
+
+| Act | File | Label |
+|-----|------|-------|
+| 1 | `scene1_act1.py` | Decision 1: on-device only |
+| 2 | `scene1_act2.py` | Temptation: cloud ASR |
+| 3 | `scene1_act3.py` | Rejected: privacy + latency |
+| 4 | `scene1_act4.py` | SFSpeechRecognizer + snippet |
+| 5 | `scene1_act5.py` | Locale picker (7 langs) + metrics |
+
+**New toolkit:** `components/device.py`, `components/locale_picker.py`, `rejected.py`, `code_panel.py`, `code_snippets/on_device_speech.swift`
+
+**Ch 1 continuity:** acts 1→3 share device on screen via `state['chain']` in `scene1_full.py`.
+
+#### Render entry points
+
+```bash
+cd Aura/design-video/aura_manim
+../../../.venv/bin/manim -ql scenes/scene1_actN.py Scene1ActNLayout   # layout
+../../../.venv/bin/manim -ql scenes/scene1_full.py Scene1Full         # whole ch
+python Aura/design-video/vo/build_act_timestamps.py --chapter 1 --markdown  # after -qk
+```
+
+#### Still TODO
+
+- [ ] Ch 1 layout review (`Scene1ActNLayout` plops)
+- [ ] Ch 1 `-qk` per act + concat + `vo/scene1.md` VO draft
+- [ ] Ch 2 planning (`vo/scene2.md` from `_TEMPLATE.md`)
+- [ ] `pipeline.py`, `thread_lane.py` — before ch 3 (not built yet)
+
+#### Lessons
+
+1. **Plan in `vo/sceneN.md` before code** — avoids rework; user edits PLAY CHECKLISTS, then one `go`.
+2. **Two assembly paths:** `SceneNFull` for timing iteration; **ffmpeg concat** for final 4K when acts are locked.
+3. **SCRIPT.md lags visuals** — `vo/sceneN.md` is VO source of truth after first render.
+4. **Journal + LEARNING + vo/** — agents read files, not chat.
 
 ---
 
@@ -318,4 +361,4 @@ First pass rendered all six beats in `Scene0Problem` before layout review workfl
 
 ---
 
-*Last updated: 2026-07-01 (ch 0 acts 1–3 · components/ workflow)*
+*Last updated: 2026-07-02 (ch 0 complete · ch 1 code · vo/ pipeline · toolkit v1)*

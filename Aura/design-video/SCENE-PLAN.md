@@ -251,6 +251,10 @@ Music bed: documentary track @ 0.05–0.07 under VO (same as 60s).
 | 2026-07-01 | Sphere POC in ch 0 | First Vision Pro pipeline shakedown |
 | 2026-07-01 | B-roll sparse in ch 1 | Keep architecture diagram readable |
 | 2026-07-01 | ch 0–2 script before Manim render | 3b1b rule |
+| 2026-07-02 | Act-by-act + `sceneN_full` + ffmpeg concat | ch 0 shipped; faster iteration than 4K full render |
+| 2026-07-02 | B-roll baked in Manim (`broll.py`) | D1 in ch 0 act 5; full-chapter preview without Resolve |
+| 2026-07-02 | `vo/sceneN.md` before code gen | PLAY CHECKLISTS → user edit → one-pass implement (ch 1) |
+| 2026-07-02 | `code_panel.py` + `code_snippets/` | Swift evidence reused across chapters |
 
 ---
 

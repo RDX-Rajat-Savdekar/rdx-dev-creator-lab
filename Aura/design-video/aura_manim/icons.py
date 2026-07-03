@@ -21,10 +21,15 @@ CLOCK = "clock"
 LAPTOP = "laptop"
 MIC = "mic"
 PALETTE = "palette"
+VISION_PRO = "vision-pro"
+CLOUD = "cloud"
+MAIL = "mail"
+SOUND_ANALYSIS = "sound-analysis"
+CURSOR = "cursor"
 
 
 def load_icon(name: str, *, color: str, height: float = 0.55) -> SVGMobject:
-    """Load and tint one SVG icon from assets/icons/."""
+    """Load and tint one stroke SVG icon from assets/icons/."""
     path = ICONS_DIR / f"{name}.svg"
     if not path.exists():
         raise FileNotFoundError(f"Missing icon SVG: {path}")
@@ -34,4 +39,23 @@ def load_icon(name: str, *, color: str, height: float = 0.55) -> SVGMobject:
     icon.set(height=height)
     icon.set_stroke(color, width=2.5, opacity=1)
     icon.set_fill(color, opacity=0)
+    return icon
+
+
+def load_filled_icon(
+    name: str,
+    *,
+    color: str,
+    height: float = 0.55,
+    stroke_color: str = "#1e1e28",
+) -> SVGMobject:
+    """Filled SVG glyphs — use when the asset is fill-based (not stroke icons like cursor)."""
+    path = ICONS_DIR / f"{name}.svg"
+    if not path.exists():
+        raise FileNotFoundError(f"Missing icon SVG: {path}")
+
+    icon = SVGMobject(str(path))
+    icon.set(height=height)
+    icon.set_fill(color, opacity=1)
+    icon.set_stroke(stroke_color, width=1.5, opacity=1)
     return icon

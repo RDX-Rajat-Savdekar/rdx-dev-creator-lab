@@ -1,10 +1,10 @@
 # Aura — system design video (10–12 min)
 
-> **Status:** planning · **Target:** 10–12 min · **VO:** Rajat  
+> **Status:** in progress — **ch 0** concat ✅ · **ch 1** code ✅ · **ch 2–9** TBD  
+> **Target:** 10–12 min · **VO:** Rajat  
 > **Visuals:** **Manim** (2D pipelines, code) + **Unity viz** (3D spatial) + Swift snippets + demo B-roll  
-> **Learning:** new concepts → [`LEARNING.md`](LEARNING.md) + `# LEARN:` in code  
-> **Not:** placeholder text cards · **Not:** duplicate of 60s script  
-> **Fact record:** `project-sources/facts/aura.json` · **Journal:** `../journal.md`
+> **Learning:** [`LEARNING.md`](LEARNING.md) + `# LEARN:` in code · **Journal:** [`../journal.md`](../journal.md)  
+> **VO / timestamps:** [`vo/VO-WORKFLOW.md`](vo/VO-WORKFLOW.md) · per chapter [`vo/sceneN.md`](vo/scene0.md)
 
 ---
 
@@ -41,44 +41,49 @@ Copy **minimal** Swift excerpts into `code_snippets/` (not whole files):
 - Header comment: source path in Aura-Vision-Pro repo + line range.
 - Snippets are **evidence** on screen; narration explains *why*.
 
-### Phase 3 — Manim toolkit v0 (incremental, reusable)
+### Phase 3 — Manim toolkit (incremental, reusable)
 
-Start **`aura_manim/`** (shared helpers), not one-off scenes:
+Build in **`aura_manim/`** as chapters need them:
 
-| Module | Purpose | Ship in v0 |
-|--------|---------|------------|
+| Module | Purpose | Status |
+|--------|---------|--------|
 | `theme.py` | Colors, fonts (match 60s) | ✅ |
-| `code_panel.py` | Swift snippet panel + highlight line | ✅ |
-| `pipeline.py` | Boxes + arrows (AVAudioEngine → Speech / SoundAnalysis) | ✅ |
-| `thread_lane.py` | MainActor vs background queue lanes | ✅ |
-| `rejected.py` | “Rejected path” ghosted + strikethrough | ✅ |
+| `review.py` | `plop()` layout review | ✅ |
+| `icons.py` + `assets/icons/*.svg` | `load_icon()` — bell, clock, **vision-pro**, … | ✅ |
+| `components/labels.py` | Bottom-third `on_screen_label()` | ✅ |
+| `components/team.py` | Hackathon roster · grid · merge lane (ch 0) | ✅ |
+| `components/device.py` | Device boundary + Vision Pro (ch 1+) | ✅ |
+| `components/locale_picker.py` | Recognition Language panel (ch 1 act 5) | ✅ |
+| `broll.py` | Embed `Aura/clips/D*.mp4` in Manim | ✅ |
+| `code_panel.py` | Swift `Code` + line highlight | ✅ |
+| `rejected.py` | Ghost path + strikethrough + chips | ✅ |
+| `pipeline.py` | AVAudioEngine → Speech / SoundAnalysis | ch 3 |
+| `thread_lane.py` | MainActor vs background lanes | ch 6 |
 
-Add components **only when scene 2 needs them** — don’t build the whole library upfront.
+`code_snippets/` — minimal Swift excerpts (one concept per file).
 
-**Manim libraries:** No drop-in “system design” pack. Use:
+### Phase 4 — One chapter at a time (standardized 2026-07-02)
 
-- Manim **`Code`** / **`Text`** for snippets ([Manim CE docs](https://docs.manim.community/)).
-- This repo’s pattern: `dsa_toolkit/manim_utils.py` (custom Mobjects), `celestia_presentation/scene*.py` (domain scenes).
-- Optional later: [`manim-slides`](https://github.com/jeertmans/manim-slides) for presenter mode — not required for YouTube.
+```
+1. Draft PLAY CHECKLISTS in vo/sceneN.md (from SCENE-PLAN + SCRIPT)
+2. User edits plan → generate sceneN_act*.py + sceneN_full.py + toolkit gaps
+3. Per act: SceneNActMLayout (-ql plop) → SceneNActM (-ql motion)
+4. Whole chapter: SceneNFull (-ql) for timing / transitions
+5. -qk --frame_rate 60 per approved act
+6. ffmpeg concat → output/sceneN_chapter*_2160p60.mp4 (absolute paths in concat.txt)
+7. vo/sceneN.md — build_act_timestamps.py + VO draft + read-aloud
+8. Trim self.wait() in code; log in journal.md
+```
 
-### Phase 4 — One scene at a time
-
-For each `scenes/sceneN.py`:
-
-1. Storyboard sketch (paper or bullet list).
-2. Implement **one Manim idea** (e.g. dual pipeline split).
-3. Preview: `.venv/bin/manim -ql -r 1280,720 --frame_rate 30 scenes/sceneN.py SceneName`
-4. Adjust **script** if animation feels wrong (3b1b rule).
-5. Log in `../journal.md`.
-
-Render **final** at `-qm` or `-qh` only when VO is locked.
+**Manim path:** `${workspaceFolder}/.venv/bin/manim` from `aura_manim/`.
 
 ### Phase 5 — Voice + assembly
 
-1. Record VO against **final script** (quiet room; punch-ins OK).
-2. DaVinci Resolve: Manim clips + **Unity viz recordings** + VO + demo B-roll.
-3. Music: same Pixabay documentary family, **`--volume 0.05–0.07`** under VO (`add_music.py`).
-4. Chapters in YouTube description (match beat sheet).
+1. Draft VO in **`vo/sceneN.md`** (measured act timestamps, not SCENE-PLAN guesses).
+2. Read aloud over concat MP4; trim **`self.wait()`** in act files.
+3. Record VO (per-act punch-ins OK — align to `vo/sceneN.md` start times).
+4. Resolve: Manim concat + VO + optional Unity viz + music bed.
+5. Music: Pixabay documentary @ **`0.05–0.07`** under VO (`Aura/manim/add_music.py`).
 
 ---
 
@@ -169,6 +174,15 @@ Start with **one** Unity scene when you reach ch 5 or 7 — after Manim toolkit 
 **Previous “no Unity for Aura”** meant: don’t replace Swift/RealityKit truth with a fake Unity *product*.  
 **Revised:** Unity is welcome as a **visualization authoring tool** for spatial beats — with the honesty label above.
 
+## Chapter progress
+
+| Ch | Manim acts | Concat | VO doc | Status |
+|----|------------|--------|--------|--------|
+| 0 | `scene0_act{1…6}.py` + `scene0_full.py` | `output/scene0_chapter0_2160p60.mp4` | [`vo/scene0.md`](vo/scene0.md) | draft VO · trim waits |
+| 1 | `scene1_act{1…5}.py` + `scene1_full.py` | `output/scene1_chapter1_2160p60.mp4` | [`vo/scene1.md`](vo/scene1.md) | draft VO · extend waits (~43 s → ~90 s) |
+| 2 | `scene2_act{1…6}.py` + `scene2_full.py` | `output/scene2_chapter2_2160p60.mp4` | [`vo/scene2.md`](vo/scene2.md) | draft VO · extend waits (~55 s → ~90 s) |
+| 3 | `scene3_act{1…6}.py` + `scene3_full.py` | `output/scene3_chapter3_2160p60.mp4` | [`vo/scene3.md`](vo/scene3.md) | draft VO · extend waits (~57 s → ~110 s) |
+
 ## Chapter outline (~11 min)
 
 | Ch | Time | Title | Honesty / narrative | Code snippet | **Manim** | **Unity viz** |
@@ -219,19 +233,31 @@ Adjust after VO read — timestamps are targets.
 
 ```
 Aura/design-video/
-  README.md
-  LEARNING.md
-  HACKATHON-STORY.md     ← Phase 0 ✅
+  README.md              ← this file · process + progress
+  LEARNING.md            ← Manim/Unity concepts index
+  HACKATHON-STORY.md
   SCRIPT.md              ← ch 0–2 ✅ · ch 3–9 TBD
-  SCENE-PLAN.md          ← timestamps + Manim/Unity/B-roll per beat ✅
-  TOOL_IDEAS.md          ← production tool theories + backlog
-  tools/                 ← script workspace (HTML + serve.py)
+  SCENE-PLAN.md
+  vo/
+    VO-WORKFLOW.md       ← repeatable VO + concat SOP
+    _TEMPLATE.md         ← copy per chapter
+    scene0.md, scene1.md
+    build_act_timestamps.py
+  code_snippets/         ← Swift evidence files
+  tools/                 ← serve.py · prompter
   aura_manim/
-  unity_viz/
-  output/
+    theme.py, icons.py, review.py
+    broll.py, code_panel.py, rejected.py
+    components/          ← labels, team, device, locale_picker
+    scenes/
+      scene0_act{1…6}.py, scene0_full.py
+      scene1_act{1…5}.py, scene1_full.py
+    assets/icons/        ← SVGs incl. vision-pro.svg
+  output/                ← concat MP4s + sceneN_concat.txt
+  unity_viz/             ← (ch 5 / 7)
 ```
 
-Reuse root `.venv` Manim; config copy from `../manim/manim.cfg` (1280×720 or 1920×1080 @ 30 fps for YouTube).
+Reuse repo **`.venv/bin/manim`**. Renders: `aura_manim/media/` (gitignored).
 
 ### Script workspace (read / edit script + scene plan)
 
@@ -259,12 +285,10 @@ See [`TOOL_IDEAS.md`](TOOL_IDEAS.md) for other tooling ideas.
 
 ---
 
-## Next deliverable (pick one)
+## Next deliverable
 
-1. ~~**`HACKATHON-STORY.md`**~~ ✅  
-2. ~~**`SCRIPT.md` ch 0–2**~~ ✅ · **`SCENE-PLAN.md`** ✅  
-3. **`aura_manim/theme.py` + `code_panel.py`** — first Manim toolkit slice with `# LEARN:` comments  
-4. **`SCRIPT.md` ch 3** — after read-aloud of ch 0–2  
-5. **`unity_viz/` README** — when starting ch 5 or 7
-
-Say which number to execute next (one only).
+1. ~~Ch 0 acts + concat~~ ✅ · ~~VO doc~~ ✅ · read-aloud + trim waits  
+2. **Ch 1 layout review** (`Scene1ActNLayout`) → `-qk` → concat → VO draft in `vo/scene1.md`  
+3. **`vo/scene2.md`** plan → ch 2 code (build vs train)  
+4. **`pipeline.py`** before ch 3  
+5. **`SCRIPT.md` ch 3** after ch 0–1 VO lock

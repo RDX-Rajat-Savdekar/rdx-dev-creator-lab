@@ -13,6 +13,9 @@ Render:
   manim -ql scenes/scene0_act1.py Scene0Act1Layout   ← layout plop (step 1)
   manim -ql scenes/scene0_act1.py Scene0Act1          ← motion (step 2)
 
+Full scene (fast iteration — all enabled acts):
+  manim -ql scenes/scene0_full.py Scene0Full
+
 Final (4K · 60 fps — after layout + motion approved):
   ../../.venv/bin/manim -qk --frame_rate 60 scenes/scene0_act1.py Scene0Act1
 
@@ -173,33 +176,38 @@ class Scene0Act1Layout(Scene):
 # =============================================================================
 
 
+def play_act1(scene: Scene) -> None:
+    """ACT 1 motion — noisy room → ? → label (0:00–0:15)."""
+    pieces = act1_pieces()
+    room = pieces["room_frame()"]
+    columns = act1_content_row()
+    label = pieces["on_screen_label"]
+
+    # PLAY 1 — room fades in (see checklist at top of file)
+    scene.play(FadeIn(room), run_time=0.8)
+    # PLAY 2 — three speech+sound columns fade in together
+    scene.play(FadeIn(columns, shift=UP * 0.12), run_time=2.2)
+    scene.wait(0.5)
+
+    # PLAY 3 — columns out → six yellow ? marks in (context lost)
+    q_marks = VGroup(
+        *[
+            question_mark().move_to(src.get_center())
+            for col in columns
+            for src in (col[0], col[1])
+        ]
+    )
+    scene.play(FadeOut(columns), FadeIn(q_marks, scale=0.6), run_time=3)
+    # PLAY 4 — bottom label
+    scene.play(FadeIn(label, shift=UP * 0.1), run_time=0.6)
+    scene.wait(7.2)  # VO hold — trim after read-aloud
+    # PLAY 5 — act end, clear frame for act 2
+    scene.play(FadeOut(room, q_marks, label), run_time=0.9)
+
+
 class Scene0Act1(Scene):
     """ACT 1 story motion — 0:00–0:15 target."""
 
     def construct(self) -> None:
         setup_scene(self)
-        pieces = act1_pieces()
-        room = pieces["room_frame()"]
-        columns = act1_content_row()
-        label = pieces["on_screen_label"]
-
-        # PLAY 1 — room fades in (see checklist at top of file)
-        self.play(FadeIn(room), run_time=0.8)
-        # PLAY 2 — three speech+sound columns fade in together
-        self.play(FadeIn(columns, shift=UP * 0.12), run_time=2.2)
-        self.wait(0.5)
-
-        # PLAY 3 — columns out → six yellow ? marks in (context lost)
-        q_marks = VGroup(
-            *[
-                question_mark().move_to(src.get_center())
-                for col in columns
-                for src in (col[0], col[1])
-            ]
-        )
-        self.play(FadeOut(columns), FadeIn(q_marks, scale=0.6), run_time=3)
-        # PLAY 4 — bottom label
-        self.play(FadeIn(label, shift=UP * 0.1), run_time=0.6)
-        self.wait(7.2)  # VO hold — trim after read-aloud
-        # PLAY 5 — act end, clear frame for act 2
-        self.play(FadeOut(room, q_marks, label), run_time=0.9)
+        play_act1(self)
