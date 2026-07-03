@@ -1,0 +1,1748 @@
+[
+  {
+    "chapter": 0,
+    "act": 1,
+    "key": "0:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/01.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch0_act1.wav",
+    "raw_sec": 14.87,
+    "clean_sec": 14.25,
+    "video_sec": 15.2,
+    "delta": -0.95,
+    "current_wait": 7.2,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "If you are deaf or are deaf, a noise room isn't just loud, you miss what is said and what happened around you. Speech and environment sounds both carry context.",
+      "segments": [
+        {
+          "start": 1.82,
+          "end": 7.28,
+          "text": "If you are deaf or are deaf, a noise room isn't just loud, you miss what is said and"
+        },
+        {
+          "start": 7.28,
+          "end": 8.22,
+          "text": "what happened around you."
+        },
+        {
+          "start": 8.94,
+          "end": 12.26,
+          "text": "Speech and environment sounds both carry context."
+        }
+      ]
+    },
+    "speech_start": 1.82,
+    "speech_end": 12.26,
+    "speech_sec": 10.44,
+    "required_video_sec": 13.26,
+    "delta_align": -1.94,
+    "suggested_wait": 5.3,
+    "hold_extra": 0.0,
+    "action": "trim video ~1.9s (wait\u21925.3s)"
+  },
+  {
+    "chapter": 0,
+    "act": 2,
+    "key": "0:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/02.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch0_act2.wav",
+    "raw_sec": 14.72,
+    "clean_sec": 12.96,
+    "video_sec": 11.4,
+    "delta": 1.56,
+    "current_wait": 5.3,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "That's the problem which is at the 24 hour hackathon in October 20, 25. LA Tech Week at UAC ISI. We are a team of 4 people.",
+      "segments": [
+        {
+          "start": 1.04,
+          "end": 5.78,
+          "text": "That's the problem which is at the 24 hour hackathon in October 20, 25."
+        },
+        {
+          "start": 6.46,
+          "end": 8.6,
+          "text": "LA Tech Week at UAC ISI."
+        },
+        {
+          "start": 9.16,
+          "end": 10.82,
+          "text": "We are a team of 4 people."
+        }
+      ]
+    },
+    "speech_start": 1.04,
+    "speech_end": 10.82,
+    "speech_sec": 9.78,
+    "required_video_sec": 11.82,
+    "delta_align": 0.42,
+    "suggested_wait": null,
+    "hold_extra": 0.42,
+    "action": "extend video ~0.4s"
+  },
+  {
+    "chapter": 0,
+    "act": 3,
+    "key": "0:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/03.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch0_act3.wav",
+    "raw_sec": 13.67,
+    "clean_sec": 13.4,
+    "video_sec": 14.0,
+    "delta": -0.6,
+    "current_wait": 4.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Everyone contributed to the shared codebase. I'll let the development team meet on the Readme design and the on-camera demo one repo for all the four merges.",
+      "segments": [
+        {
+          "start": 1.8,
+          "end": 4.1,
+          "text": "Everyone contributed to the shared codebase."
+        },
+        {
+          "start": 4.6,
+          "end": 10.1,
+          "text": "I'll let the development team meet on the Readme design and the on-camera demo one repo"
+        },
+        {
+          "start": 10.1,
+          "end": 11.42,
+          "text": "for all the four merges."
+        }
+      ]
+    },
+    "speech_start": 1.8,
+    "speech_end": 11.42,
+    "speech_sec": 9.62,
+    "required_video_sec": 12.42,
+    "delta_align": -1.58,
+    "suggested_wait": 2.9,
+    "hold_extra": 0.0,
+    "action": "trim video ~1.6s (wait\u21922.9s)"
+  },
+  {
+    "chapter": 0,
+    "act": 4,
+    "key": "0:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/04.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch0_act4.wav",
+    "raw_sec": 17.24,
+    "clean_sec": 15.68,
+    "video_sec": 14.9,
+    "delta": 0.78,
+    "current_wait": 7.0,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "It was our first build on Vision Pro before aura we shipped a tiny proof of consent. Seret, the speed transfer, speed cloud, etc. This proved the deploy microphone, speed and special rendering before we build the relab.",
+      "segments": [
+        {
+          "start": 0.94,
+          "end": 5.74,
+          "text": "It was our first build on Vision Pro before aura we shipped a tiny proof of consent."
+        },
+        {
+          "start": 6.3,
+          "end": 8.84,
+          "text": "Seret, the speed transfer, speed cloud, etc."
+        },
+        {
+          "start": 9.48,
+          "end": 14.4,
+          "text": "This proved the deploy microphone, speed and special rendering before we build the relab."
+        }
+      ]
+    },
+    "speech_start": 0.94,
+    "speech_end": 14.4,
+    "speech_sec": 13.46,
+    "required_video_sec": 15.4,
+    "delta_align": 0.5,
+    "suggested_wait": null,
+    "hold_extra": 0.5,
+    "action": "extend video ~0.5s"
+  },
+  {
+    "chapter": 0,
+    "act": 5,
+    "key": "0:5",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/05.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch0_act5.wav",
+    "raw_sec": 11.82,
+    "clean_sec": 12.35,
+    "video_sec": 8.6,
+    "delta": 3.75,
+    "current_wait": 3.3,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "This video is the system design story of what we tried, what we cut and what actually shipped in the hackathon.",
+      "segments": [
+        {
+          "start": 1.66,
+          "end": 7.4,
+          "text": "This video is the system design story of what we tried, what we cut and what actually shipped"
+        },
+        {
+          "start": 7.4,
+          "end": 8.26,
+          "text": "in the hackathon."
+        }
+      ]
+    },
+    "speech_start": 1.66,
+    "speech_end": 8.26,
+    "speech_sec": 6.6,
+    "required_video_sec": 9.26,
+    "delta_align": 0.66,
+    "suggested_wait": null,
+    "hold_extra": 0.66,
+    "action": "extend video ~0.7s"
+  },
+  {
+    "chapter": 0,
+    "act": 6,
+    "key": "0:6",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/06.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch0_act6.wav",
+    "raw_sec": 13.33,
+    "clean_sec": 14.17,
+    "video_sec": 10.0,
+    "delta": 4.17,
+    "current_wait": 5.0,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Aura runs on Apple Vision Pro, Live Speech Translation, plus Environmental Sound classification entirely on device.",
+      "segments": [
+        {
+          "start": 2.04,
+          "end": 6.72,
+          "text": "Aura runs on Apple Vision Pro, Live Speech Translation, plus Environmental Sound"
+        },
+        {
+          "start": 6.72,
+          "end": 8.62,
+          "text": "classification entirely on device."
+        }
+      ]
+    },
+    "speech_start": 2.04,
+    "speech_end": 8.62,
+    "speech_sec": 6.58,
+    "required_video_sec": 9.62,
+    "delta_align": -0.38,
+    "suggested_wait": 4.6,
+    "hold_extra": 0.0,
+    "action": "trim video ~0.4s (wait\u21924.6s)"
+  },
+  {
+    "chapter": 1,
+    "act": 1,
+    "key": "1:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/11.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch1_act1.wav",
+    "raw_sec": 8.68,
+    "clean_sec": 9.62,
+    "video_sec": 7.7,
+    "delta": 1.92,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The first decision, everything stays on the device. No cloud speech API, no uploading thought.",
+      "segments": [
+        {
+          "start": 1.4,
+          "end": 4.2,
+          "text": "The first decision, everything stays on the device."
+        },
+        {
+          "start": 4.88,
+          "end": 7.36,
+          "text": "No cloud speech API, no uploading thought."
+        }
+      ]
+    },
+    "speech_start": 1.4,
+    "speech_end": 7.36,
+    "speech_sec": 5.96,
+    "required_video_sec": 8.36,
+    "delta_align": 0.66,
+    "suggested_wait": null,
+    "hold_extra": 0.66,
+    "action": "extend video ~0.7s"
+  },
+  {
+    "chapter": 1,
+    "act": 2,
+    "key": "1:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/12.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch1_act2.wav",
+    "raw_sec": 12.2,
+    "clean_sec": 12.88,
+    "video_sec": 9.05,
+    "delta": 3.83,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The hackathon temptation is to cheat. We send the audio to a network organizer when on device travels, which is faster to demo and often more accurate.",
+      "segments": [
+        {
+          "start": 1.56,
+          "end": 3.62,
+          "text": "The hackathon temptation is to cheat."
+        },
+        {
+          "start": 3.82,
+          "end": 7.12,
+          "text": "We send the audio to a network organizer when on device travels,"
+        },
+        {
+          "start": 7.58,
+          "end": 9.76,
+          "text": "which is faster to demo and often more accurate."
+        }
+      ]
+    },
+    "speech_start": 1.56,
+    "speech_end": 9.76,
+    "speech_sec": 8.2,
+    "required_video_sec": 10.76,
+    "delta_align": 1.71,
+    "suggested_wait": null,
+    "hold_extra": 1.71,
+    "action": "extend video ~1.7s"
+  },
+  {
+    "chapter": 1,
+    "act": 3,
+    "key": "1:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/13.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch1_act3.wav",
+    "raw_sec": 9.0,
+    "clean_sec": 8.66,
+    "video_sec": 9.65,
+    "delta": -0.99,
+    "current_wait": 5.0,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "We did it with that for 2 reasons, privacy and latency. For accessibility, unpredictable delay is as bad as an omitted.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.66,
+          "text": "We did it with that for 2 reasons, privacy and latency."
+        },
+        {
+          "start": 4.16,
+          "end": 7.58,
+          "text": "For accessibility, unpredictable delay is as bad as an omitted."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 7.58,
+    "speech_sec": 7.58,
+    "required_video_sec": 8.58,
+    "delta_align": -1.07,
+    "suggested_wait": 3.9,
+    "hold_extra": 0.0,
+    "action": "trim video ~1.1s (wait\u21923.9s)"
+  },
+  {
+    "chapter": 1,
+    "act": 4,
+    "key": "1:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/14.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch1_act4.wav",
+    "raw_sec": 9.15,
+    "clean_sec": 8.92,
+    "video_sec": 7.45,
+    "delta": 1.47,
+    "current_wait": 4.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "So, we committed to apples on device speech framework, as a speech recognizer with no network fallback in work mode.",
+      "segments": [
+        {
+          "start": 0.76,
+          "end": 3.64,
+          "text": "So, we committed to apples on device speech framework,"
+        },
+        {
+          "start": 4.04,
+          "end": 7.34,
+          "text": "as a speech recognizer with no network fallback in work mode."
+        }
+      ]
+    },
+    "speech_start": 0.76,
+    "speech_end": 7.34,
+    "speech_sec": 6.58,
+    "required_video_sec": 8.34,
+    "delta_align": 0.89,
+    "suggested_wait": null,
+    "hold_extra": 0.89,
+    "action": "extend video ~0.9s"
+  },
+  {
+    "chapter": 1,
+    "act": 5,
+    "key": "1:5",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/15.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch1_act5.wav",
+    "raw_sec": 10.9,
+    "clean_sec": 10.52,
+    "video_sec": 8.9,
+    "delta": 1.62,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Intense original dependencies we made a trade-off of using speech models per language. User would need the language back install in order to use the product.",
+      "segments": [
+        {
+          "start": 0.68,
+          "end": 5.4,
+          "text": "Intense original dependencies we made a trade-off of using speech models per language."
+        },
+        {
+          "start": 5.96,
+          "end": 9.32,
+          "text": "User would need the language back install in order to use the product."
+        }
+      ]
+    },
+    "speech_start": 0.68,
+    "speech_end": 9.32,
+    "speech_sec": 8.64,
+    "required_video_sec": 10.32,
+    "delta_align": 1.42,
+    "suggested_wait": null,
+    "hold_extra": 1.42,
+    "action": "extend video ~1.4s"
+  },
+  {
+    "chapter": 2,
+    "act": 1,
+    "key": "2:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/21.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch2_act1.wav",
+    "raw_sec": 9.0,
+    "clean_sec": 8.98,
+    "video_sec": 8.15,
+    "delta": 0.83,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "We do not train any machine learning model. We chose to integrate Apple level model instead of training a customer.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 2.7,
+          "text": "We do not train any machine learning model."
+        },
+        {
+          "start": 3.32,
+          "end": 7.96,
+          "text": "We chose to integrate Apple level model instead of training a customer."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 7.96,
+    "speech_sec": 7.96,
+    "required_video_sec": 8.96,
+    "delta_align": 0.81,
+    "suggested_wait": null,
+    "hold_extra": 0.81,
+    "action": "extend video ~0.8s"
+  },
+  {
+    "chapter": 2,
+    "act": 2,
+    "key": "2:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/22.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch2_act2.wav",
+    "raw_sec": 12.8,
+    "clean_sec": 10.59,
+    "video_sec": 9.3,
+    "delta": 1.29,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The fuel had recently shaped their strong on-device models, speech for transcription and sound analysis for environmental classification, which is good enough for the prototype.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.9,
+          "text": "The fuel had recently shaped their strong on-device models, speech for transcription and sound analysis"
+        },
+        {
+          "start": 5.9,
+          "end": 9.48,
+          "text": "for environmental classification, which is good enough for the prototype."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 9.48,
+    "speech_sec": 9.48,
+    "required_video_sec": 10.48,
+    "delta_align": 1.18,
+    "suggested_wait": null,
+    "hold_extra": 1.18,
+    "action": "extend video ~1.2s"
+  },
+  {
+    "chapter": 2,
+    "act": 3,
+    "key": "2:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/23.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch2_act3.wav",
+    "raw_sec": 12.46,
+    "clean_sec": 12.74,
+    "video_sec": 9.1,
+    "delta": 3.64,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Lifted the left path which meant collecting the data, label, train, export the core ML and rework which is a multi-week project. We only had 24 hours in the Agatha.",
+      "segments": [
+        {
+          "start": 0.68,
+          "end": 7.04,
+          "text": "Lifted the left path which meant collecting the data, label, train, export the core ML and"
+        },
+        {
+          "start": 7.04,
+          "end": 8.78,
+          "text": "rework which is a multi-week project."
+        },
+        {
+          "start": 8.98,
+          "end": 11.2,
+          "text": "We only had 24 hours in the Agatha."
+        }
+      ]
+    },
+    "speech_start": 0.68,
+    "speech_end": 11.2,
+    "speech_sec": 10.52,
+    "required_video_sec": 12.2,
+    "delta_align": 3.1,
+    "suggested_wait": null,
+    "hold_extra": 3.1,
+    "action": "extend video ~3.1s"
+  },
+  {
+    "chapter": 2,
+    "act": 4,
+    "key": "2:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/24.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch2_act4.wav",
+    "raw_sec": 14.76,
+    "clean_sec": 14.57,
+    "video_sec": 8.6,
+    "delta": 5.97,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Jove was integration engineering, one microphone type fitting into two different consumers. Speech transcription and caption segmentation using sound analysis. And finally, NUI that maintains 19.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.32,
+          "text": "Jove was integration engineering, one microphone type fitting into two different consumers."
+        },
+        {
+          "start": 6.16,
+          "end": 10.44,
+          "text": "Speech transcription and caption segmentation using sound analysis."
+        },
+        {
+          "start": 10.44,
+          "end": 13.54,
+          "text": "And finally, NUI that maintains 19."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 13.54,
+    "speech_sec": 13.54,
+    "required_video_sec": 14.54,
+    "delta_align": 5.94,
+    "suggested_wait": null,
+    "hold_extra": 5.94,
+    "action": "extend video ~5.9s"
+  },
+  {
+    "chapter": 2,
+    "act": 5,
+    "key": "2:5",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/25.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch2_act5.wav",
+    "raw_sec": 12.54,
+    "clean_sec": 11.95,
+    "video_sec": 12.43,
+    "delta": -0.48,
+    "current_wait": 4.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "If you spend the hackathon training the model, we would have no working app. We traded the ML research for a working accessibility prototype and eventually got second place in the hackathon.",
+      "segments": [
+        {
+          "start": 0.62,
+          "end": 3.86,
+          "text": "If you spend the hackathon training the model, we would have no working app."
+        },
+        {
+          "start": 4.12,
+          "end": 9.62,
+          "text": "We traded the ML research for a working accessibility prototype and eventually got second place in the hackathon."
+        }
+      ]
+    },
+    "speech_start": 0.62,
+    "speech_end": 9.62,
+    "speech_sec": 9.0,
+    "required_video_sec": 10.62,
+    "delta_align": -1.81,
+    "suggested_wait": 2.7,
+    "hold_extra": 0.0,
+    "action": "trim video ~1.8s (wait\u21922.7s)"
+  },
+  {
+    "chapter": 2,
+    "act": 6,
+    "key": "2:6",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/26.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch2_act6.wav",
+    "raw_sec": 9.28,
+    "clean_sec": 7.25,
+    "video_sec": 7.9,
+    "delta": -0.65,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "We integrated the Apple's model, the engineering story is everything around them.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.6,
+          "text": "We integrated the Apple's model, the engineering story is everything around them."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 5.6,
+    "speech_sec": 5.6,
+    "required_video_sec": 6.6,
+    "delta_align": -1.3,
+    "suggested_wait": 4.2,
+    "hold_extra": 0.0,
+    "action": "trim video ~1.3s (wait\u21924.2s)"
+  },
+  {
+    "chapter": 3,
+    "act": 1,
+    "key": "3:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/31.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch3_act1.wav",
+    "raw_sec": 11.03,
+    "clean_sec": 9.82,
+    "video_sec": 9.1,
+    "delta": 0.72,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "One microphone tap on the AV audio engine input note. So every buffer flows through a single install tap call back.",
+      "segments": [
+        {
+          "start": 1.4,
+          "end": 4.94,
+          "text": "One microphone tap on the AV audio engine input note."
+        },
+        {
+          "start": 4.94,
+          "end": 8.7,
+          "text": "So every buffer flows through a single install tap call back."
+        }
+      ]
+    },
+    "speech_start": 1.4,
+    "speech_end": 8.7,
+    "speech_sec": 7.3,
+    "required_video_sec": 9.7,
+    "delta_align": 0.6,
+    "suggested_wait": null,
+    "hold_extra": 0.6,
+    "action": "extend video ~0.6s"
+  },
+  {
+    "chapter": 3,
+    "act": 2,
+    "key": "3:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/32.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch3_act2.wav",
+    "raw_sec": 10.6,
+    "clean_sec": 10.77,
+    "video_sec": 8.6,
+    "delta": 2.17,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "This one tab fans out to Apple's pre-spreach framework for transcription and sound analysis for environmental classification which meant parallel on diverse consumers.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.36,
+          "text": "This one tab fans out to Apple's pre-spreach framework for transcription and sound analysis"
+        },
+        {
+          "start": 5.36,
+          "end": 9.4,
+          "text": "for environmental classification which meant parallel on diverse consumers."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 9.4,
+    "speech_sec": 9.4,
+    "required_video_sec": 10.4,
+    "delta_align": 1.8,
+    "suggested_wait": null,
+    "hold_extra": 1.8,
+    "action": "extend video ~1.8s"
+  },
+  {
+    "chapter": 3,
+    "act": 3,
+    "key": "3:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/33.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch3_act3.wav",
+    "raw_sec": 11.69,
+    "clean_sec": 11.39,
+    "video_sec": 9.7,
+    "delta": 1.69,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Here we work, never runs inside the tab. So we dispatch a serial queue, com.or.analysis queue. So the analysis can't stop the real-time audio.",
+      "segments": [
+        {
+          "start": 0.7,
+          "end": 2.9,
+          "text": "Here we work, never runs inside the tab."
+        },
+        {
+          "start": 3.38,
+          "end": 7.56,
+          "text": "So we dispatch a serial queue, com.or.analysis queue."
+        },
+        {
+          "start": 7.92,
+          "end": 10.2,
+          "text": "So the analysis can't stop the real-time audio."
+        }
+      ]
+    },
+    "speech_start": 0.7,
+    "speech_end": 10.2,
+    "speech_sec": 9.5,
+    "required_video_sec": 11.2,
+    "delta_align": 1.5,
+    "suggested_wait": null,
+    "hold_extra": 1.5,
+    "action": "extend video ~1.5s"
+  },
+  {
+    "chapter": 3,
+    "act": 4,
+    "key": "3:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/34.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch3_act4.wav",
+    "raw_sec": 11.2,
+    "clean_sec": 11.97,
+    "video_sec": 7.95,
+    "delta": 4.02,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "In environmental sounds, flap labels, we get on 0.6 confidence and throttle updates to 0.25 seconds.",
+      "segments": [
+        {
+          "start": 1.18,
+          "end": 7.66,
+          "text": "In environmental sounds, flap labels, we get on 0.6 confidence and throttle updates to"
+        },
+        {
+          "start": 7.66,
+          "end": 9.16,
+          "text": "0.25 seconds."
+        }
+      ]
+    },
+    "speech_start": 1.18,
+    "speech_end": 9.16,
+    "speech_sec": 7.98,
+    "required_video_sec": 10.16,
+    "delta_align": 2.21,
+    "suggested_wait": null,
+    "hold_extra": 2.21,
+    "action": "extend video ~2.2s"
+  },
+  {
+    "chapter": 3,
+    "act": 5,
+    "key": "3:5",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/35.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch3_act5.wav",
+    "raw_sec": 12.07,
+    "clean_sec": 7.54,
+    "video_sec": 9.7,
+    "delta": -2.16,
+    "current_wait": 2.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "I added 7 recognition language in the picker, so the user can switch without restarting the whole engine.",
+      "segments": [
+        {
+          "start": 0.94,
+          "end": 6.14,
+          "text": "I added 7 recognition language in the picker, so the user can switch without restarting the"
+        },
+        {
+          "start": 6.14,
+          "end": 6.5,
+          "text": "whole engine."
+        }
+      ]
+    },
+    "speech_start": 0.94,
+    "speech_end": 6.5,
+    "speech_sec": 5.56,
+    "required_video_sec": 7.5,
+    "delta_align": -2.2,
+    "suggested_wait": 1.5,
+    "hold_extra": 0.0,
+    "action": "trim video ~2.2s (wait\u21921.5s)"
+  },
+  {
+    "chapter": 3,
+    "act": 6,
+    "key": "3:6",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/36.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch3_act6.wav",
+    "raw_sec": 8.53,
+    "clean_sec": 9.07,
+    "video_sec": 11.73,
+    "delta": -2.66,
+    "current_wait": 4.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "and risk protection both pipelines were working in the same session.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.12,
+          "text": "and risk protection both pipelines were working in the same session."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 5.12,
+    "speech_sec": 5.12,
+    "required_video_sec": 6.12,
+    "delta_align": -5.61,
+    "suggested_wait": 1.5,
+    "hold_extra": 0.0,
+    "action": "trim video ~5.6s (wait\u21921.5s)"
+  },
+  {
+    "chapter": 4,
+    "act": 1,
+    "key": "4:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/41.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch4_act1.wav",
+    "raw_sec": 12.84,
+    "clean_sec": 12.62,
+    "video_sec": 7.55,
+    "delta": 5.07,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "This recognition returns a formatted string of one continuous term. No pauses, no sentences, no structure. During a live conversation, this becomes an undedeveloped wall of text on the screen.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.54,
+          "text": "This recognition returns a formatted string of one continuous term."
+        },
+        {
+          "start": 5.26,
+          "end": 7.28,
+          "text": "No pauses, no sentences, no structure."
+        },
+        {
+          "start": 7.76,
+          "end": 11.72,
+          "text": "During a live conversation, this becomes an undedeveloped wall of text on the screen."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 11.72,
+    "speech_sec": 11.72,
+    "required_video_sec": 12.72,
+    "delta_align": 5.17,
+    "suggested_wait": null,
+    "hold_extra": 5.17,
+    "action": "extend video ~5.2s"
+  },
+  {
+    "chapter": 4,
+    "act": 2,
+    "key": "4:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/42.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch4_act2.wav",
+    "raw_sec": 13.06,
+    "clean_sec": 13.24,
+    "video_sec": 9.65,
+    "delta": 3.59,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "First layer, Temporal segmentation. When the speaker pauses for longer than 1.1 seconds, we can treat that as any motorance, which is a breadth between thoughts or different speakers.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.14,
+          "text": "First layer, Temporal segmentation."
+        },
+        {
+          "start": 3.34,
+          "end": 8.22,
+          "text": "When the speaker pauses for longer than 1.1 seconds, we can treat that as any motorance,"
+        },
+        {
+          "start": 8.52,
+          "end": 11.28,
+          "text": "which is a breadth between thoughts or different speakers."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 11.28,
+    "speech_sec": 11.28,
+    "required_video_sec": 12.28,
+    "delta_align": 2.63,
+    "suggested_wait": null,
+    "hold_extra": 2.63,
+    "action": "extend video ~2.6s"
+  },
+  {
+    "chapter": 4,
+    "act": 3,
+    "key": "4:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/43.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch4_act3.wav",
+    "raw_sec": 12.46,
+    "clean_sec": 12.63,
+    "video_sec": 9.15,
+    "delta": 3.48,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Second layer, gramatical splitting, abbreviation likes doctor, an example, strain tag. So we can only break on real sentence boundaries. One utterance in and clean sentence, step out.",
+      "segments": [
+        {
+          "start": 0.62,
+          "end": 5.58,
+          "text": "Second layer, gramatical splitting, abbreviation likes doctor, an example, strain tag."
+        },
+        {
+          "start": 6.1,
+          "end": 8.04,
+          "text": "So we can only break on real sentence boundaries."
+        },
+        {
+          "start": 8.58,
+          "end": 10.9,
+          "text": "One utterance in and clean sentence, step out."
+        }
+      ]
+    },
+    "speech_start": 0.62,
+    "speech_end": 10.9,
+    "speech_sec": 10.28,
+    "required_video_sec": 11.9,
+    "delta_align": 2.75,
+    "suggested_wait": null,
+    "hold_extra": 2.75,
+    "action": "extend video ~2.8s"
+  },
+  {
+    "chapter": 4,
+    "act": 4,
+    "key": "4:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/44.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch4_act4.wav",
+    "raw_sec": 23.76,
+    "clean_sec": 19.51,
+    "video_sec": 9.9,
+    "delta": 9.61,
+    "current_wait": 2.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Just one blob after an utterance to sentence chunks that you can actually read while someone is talking. The tool has split, fix the readability and it holds with multiple speakers.",
+      "segments": [
+        {
+          "start": 1.14,
+          "end": 6.98,
+          "text": "Just one blob after an utterance to sentence chunks that you can actually read while someone"
+        },
+        {
+          "start": 6.98,
+          "end": 7.5,
+          "text": "is talking."
+        },
+        {
+          "start": 8.16,
+          "end": 12.22,
+          "text": "The tool has split, fix the readability and it holds with multiple speakers."
+        }
+      ]
+    },
+    "speech_start": 1.14,
+    "speech_end": 12.22,
+    "speech_sec": 11.08,
+    "required_video_sec": 13.22,
+    "delta_align": 3.32,
+    "suggested_wait": null,
+    "hold_extra": 3.32,
+    "action": "extend video ~3.3s"
+  },
+  {
+    "chapter": 5,
+    "act": 1,
+    "key": "5:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/51.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch5_act1.wav",
+    "raw_sec": 15.08,
+    "clean_sec": 15.05,
+    "video_sec": 8.1,
+    "delta": 6.95,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Reality kit runs at 90Hz. Hooking captions we have view attachment means shift UI would run really layout on every frame. Layout costs tied directly to the render loop. We mark this path as a result.",
+      "segments": [
+        {
+          "start": 0.76,
+          "end": 2.78,
+          "text": "Reality kit runs at 90Hz."
+        },
+        {
+          "start": 3.12,
+          "end": 8.76,
+          "text": "Hooking captions we have view attachment means shift UI would run really layout on every frame."
+        },
+        {
+          "start": 9.74,
+          "end": 12.32,
+          "text": "Layout costs tied directly to the render loop."
+        },
+        {
+          "start": 12.76,
+          "end": 14.82,
+          "text": "We mark this path as a result."
+        }
+      ]
+    },
+    "speech_start": 0.76,
+    "speech_end": 14.82,
+    "speech_sec": 14.06,
+    "required_video_sec": 15.82,
+    "delta_align": 7.72,
+    "suggested_wait": null,
+    "hold_extra": 7.72,
+    "action": "extend video ~7.7s"
+  },
+  {
+    "chapter": 5,
+    "act": 2,
+    "key": "5:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/52.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch5_act2.wav",
+    "raw_sec": 14.44,
+    "clean_sec": 14.16,
+    "video_sec": 9.6,
+    "delta": 4.56,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Offscreen bake, we render the caption in 502 high, snap short to a texture and compose it on lightweight cord in the scene. This debounces rebakes 200ms, so we don't trash the chip.",
+      "segments": [
+        {
+          "start": 1.02,
+          "end": 6.36,
+          "text": "Offscreen bake, we render the caption in 502 high, snap short to a texture and compose"
+        },
+        {
+          "start": 6.36,
+          "end": 8.3,
+          "text": "it on lightweight cord in the scene."
+        },
+        {
+          "start": 8.94,
+          "end": 13.12,
+          "text": "This debounces rebakes 200ms, so we don't trash the chip."
+        }
+      ]
+    },
+    "speech_start": 1.02,
+    "speech_end": 13.12,
+    "speech_sec": 12.1,
+    "required_video_sec": 14.12,
+    "delta_align": 4.52,
+    "suggested_wait": null,
+    "hold_extra": 4.52,
+    "action": "extend video ~4.5s"
+  },
+  {
+    "chapter": 5,
+    "act": 3,
+    "key": "5:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/53.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch5_act3.wav",
+    "raw_sec": 10.65,
+    "clean_sec": 10.22,
+    "video_sec": 9.0,
+    "delta": 1.22,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Same caption content different in the path.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.48,
+          "text": "Same caption content different in the path."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 3.48,
+    "speech_sec": 3.48,
+    "required_video_sec": 4.48,
+    "delta_align": -4.52,
+    "suggested_wait": 1.5,
+    "hold_extra": 0.0,
+    "action": "trim video ~4.5s (wait\u21921.5s)"
+  },
+  {
+    "chapter": 5,
+    "act": 4,
+    "key": "5:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/54.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch5_act4.wav",
+    "raw_sec": 9.73,
+    "clean_sec": 9.61,
+    "video_sec": 7.5,
+    "delta": 2.11,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "What we actually shift in the demo? A 2D heads up display, OLA, not the full-world space-check-trap path.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 2.36,
+          "text": "What we actually shift in the demo?"
+        },
+        {
+          "start": 2.68,
+          "end": 7.52,
+          "text": "A 2D heads up display, OLA, not the full-world space-check-trap path."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 7.52,
+    "speech_sec": 7.52,
+    "required_video_sec": 8.52,
+    "delta_align": 1.02,
+    "suggested_wait": null,
+    "hold_extra": 1.02,
+    "action": "extend video ~1.0s"
+  },
+  {
+    "chapter": 6,
+    "act": 1,
+    "key": "6:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/61.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch6_act1.wav",
+    "raw_sec": 9.96,
+    "clean_sec": 10.46,
+    "video_sec": 8.1,
+    "delta": 2.36,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The region's sound delegates fire on the background threats, not the main actor. ML results arrive while the tap keeps running on the audio threat from chapter 3.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.44,
+          "text": "The region's sound delegates fire on the background threats, not the main actor."
+        },
+        {
+          "start": 5.12,
+          "end": 9.46,
+          "text": "ML results arrive while the tap keeps running on the audio threat from chapter 3."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 9.46,
+    "speech_sec": 9.46,
+    "required_video_sec": 10.46,
+    "delta_align": 2.36,
+    "suggested_wait": null,
+    "hold_extra": 2.36,
+    "action": "extend video ~2.4s"
+  },
+  {
+    "chapter": 6,
+    "act": 2,
+    "key": "6:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/62.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch6_act2.wav",
+    "raw_sec": 12.42,
+    "clean_sec": 12.51,
+    "video_sec": 9.15,
+    "delta": 3.36,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The published property that derives with TI must mutate on main actor. We wrap captions update in task main actor. So the panel references shape.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.12,
+          "text": "The published property that derives with TI must mutate on main actor."
+        },
+        {
+          "start": 5.58,
+          "end": 8.96,
+          "text": "We wrap captions update in task main actor."
+        },
+        {
+          "start": 9.68,
+          "end": 11.44,
+          "text": "So the panel references shape."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 11.44,
+    "speech_sec": 11.44,
+    "required_video_sec": 12.44,
+    "delta_align": 3.29,
+    "suggested_wait": null,
+    "hold_extra": 3.29,
+    "action": "extend video ~3.3s"
+  },
+  {
+    "chapter": 6,
+    "act": 3,
+    "key": "6:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/63.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch6_act3.wav",
+    "raw_sec": 10.99,
+    "clean_sec": 10.64,
+    "video_sec": 9.35,
+    "delta": 1.29,
+    "current_wait": 2.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "That's why the live caption can refresh on screen where classification keeps streaming. UI works what hops on to the main. The tap never wait.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.52,
+          "text": "That's why the live caption can refresh on screen where classification keeps streaming."
+        },
+        {
+          "start": 6.18,
+          "end": 8.02,
+          "text": "UI works what hops on to the main."
+        },
+        {
+          "start": 8.52,
+          "end": 9.56,
+          "text": "The tap never wait."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 9.56,
+    "speech_sec": 9.56,
+    "required_video_sec": 10.56,
+    "delta_align": 1.21,
+    "suggested_wait": null,
+    "hold_extra": 1.21,
+    "action": "extend video ~1.2s"
+  },
+  {
+    "chapter": 7,
+    "act": 1,
+    "key": "7:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/71.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch7_act1.wav",
+    "raw_sec": 9.17,
+    "clean_sec": 10.1,
+    "video_sec": 8.15,
+    "delta": 1.95,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "On, we tried to pin each sound to the direction it came from. Markers in the world where the audio seemed to originate.",
+      "segments": [
+        {
+          "start": 0.66,
+          "end": 4.58,
+          "text": "On, we tried to pin each sound to the direction it came from."
+        },
+        {
+          "start": 5.04,
+          "end": 8.28,
+          "text": "Markers in the world where the audio seemed to originate."
+        }
+      ]
+    },
+    "speech_start": 0.66,
+    "speech_end": 8.28,
+    "speech_sec": 7.62,
+    "required_video_sec": 9.28,
+    "delta_align": 1.13,
+    "suggested_wait": null,
+    "hold_extra": 1.13,
+    "action": "extend video ~1.1s"
+  },
+  {
+    "chapter": 7,
+    "act": 2,
+    "key": "7:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/72.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch7_act2.wav",
+    "raw_sec": 10.99,
+    "clean_sec": 11.04,
+    "video_sec": 8.75,
+    "delta": 2.29,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The first problem, Vision Pro gives direction from the mic, not the exact coordinate. The pin is the casework which is which meant drift and feel so.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 5.36,
+          "text": "The first problem, Vision Pro gives direction from the mic, not the exact coordinate."
+        },
+        {
+          "start": 5.86,
+          "end": 10.06,
+          "text": "The pin is the casework which is which meant drift and feel so."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 10.06,
+    "speech_sec": 10.06,
+    "required_video_sec": 11.06,
+    "delta_align": 2.31,
+    "suggested_wait": null,
+    "hold_extra": 2.31,
+    "action": "extend video ~2.3s"
+  },
+  {
+    "chapter": 7,
+    "act": 3,
+    "key": "7:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/73.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch7_act3.wav",
+    "raw_sec": 11.33,
+    "clean_sec": 10.66,
+    "video_sec": 8.1,
+    "delta": 2.56,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Second, for accessibility, an urgent sound behind you might never enter your field of view. A baby crying pin outside your gaze is a mystery.",
+      "segments": [
+        {
+          "start": 0.84,
+          "end": 5.74,
+          "text": "Second, for accessibility, an urgent sound behind you might never enter your field of view."
+        },
+        {
+          "start": 6.02,
+          "end": 9.54,
+          "text": "A baby crying pin outside your gaze is a mystery."
+        }
+      ]
+    },
+    "speech_start": 0.84,
+    "speech_end": 9.54,
+    "speech_sec": 8.7,
+    "required_video_sec": 10.54,
+    "delta_align": 2.44,
+    "suggested_wait": null,
+    "hold_extra": 2.44,
+    "action": "extend video ~2.4s"
+  },
+  {
+    "chapter": 7,
+    "act": 4,
+    "key": "7:4",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/74.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch7_act4.wav",
+    "raw_sec": 14.42,
+    "clean_sec": 15.58,
+    "video_sec": 17.83,
+    "delta": -2.25,
+    "current_wait": 2.0,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "So, we put it to an Iron Man style HF display. Caption and sound levels are on the panel that stays in the view. Head relative not world hunted. That's what's in the demo shows.",
+      "segments": [
+        {
+          "start": 0.68,
+          "end": 4.04,
+          "text": "So, we put it to an Iron Man style HF display."
+        },
+        {
+          "start": 4.38,
+          "end": 7.48,
+          "text": "Caption and sound levels are on the panel that stays in the view."
+        },
+        {
+          "start": 8.16,
+          "end": 10.2,
+          "text": "Head relative not world hunted."
+        },
+        {
+          "start": 11.02,
+          "end": 12.54,
+          "text": "That's what's in the demo shows."
+        }
+      ]
+    },
+    "speech_start": 0.68,
+    "speech_end": 12.54,
+    "speech_sec": 11.86,
+    "required_video_sec": 13.54,
+    "delta_align": -4.29,
+    "suggested_wait": 1.5,
+    "hold_extra": 0.0,
+    "action": "trim video ~4.3s (wait\u21921.5s)"
+  },
+  {
+    "chapter": 7,
+    "act": 5,
+    "key": "7:5",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/75.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch7_act5.wav",
+    "raw_sec": 8.96,
+    "clean_sec": 9.74,
+    "video_sec": 7.55,
+    "delta": 2.19,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "We still compute the azimuth direction in the audio path for analysis but we don't ship it in the directional markers in the UI.",
+      "segments": [
+        {
+          "start": 1.2,
+          "end": 6.08,
+          "text": "We still compute the azimuth direction in the audio path for analysis but we don't"
+        },
+        {
+          "start": 6.08,
+          "end": 8.06,
+          "text": "ship it in the directional markers in the UI."
+        }
+      ]
+    },
+    "speech_start": 1.2,
+    "speech_end": 8.06,
+    "speech_sec": 6.86,
+    "required_video_sec": 9.06,
+    "delta_align": 1.51,
+    "suggested_wait": null,
+    "hold_extra": 1.51,
+    "action": "extend video ~1.5s"
+  },
+  {
+    "chapter": 7,
+    "act": 6,
+    "key": "7:6",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/76.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch7_act6.wav",
+    "raw_sec": 9.83,
+    "clean_sec": 9.63,
+    "video_sec": 7.5,
+    "delta": 2.13,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Separately, we build the spatial heads up type prototype. Texture were baked into the 6.2i in reality kit and this is what we demoed in the video.",
+      "segments": [
+        {
+          "start": 0.96,
+          "end": 3.74,
+          "text": "Separately, we build the spatial heads up type prototype."
+        },
+        {
+          "start": 3.98,
+          "end": 8.68,
+          "text": "Texture were baked into the 6.2i in reality kit and this is what we demoed in the video."
+        }
+      ]
+    },
+    "speech_start": 0.96,
+    "speech_end": 8.68,
+    "speech_sec": 7.72,
+    "required_video_sec": 9.68,
+    "delta_align": 2.18,
+    "suggested_wait": null,
+    "hold_extra": 2.18,
+    "action": "extend video ~2.2s"
+  },
+  {
+    "chapter": 8,
+    "act": 1,
+    "key": "8:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/81.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch8_act1.wav",
+    "raw_sec": 16.49,
+    "clean_sec": 16.4,
+    "video_sec": 8.1,
+    "delta": 8.3,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "There was a hackathon prototype, one user, one headset and no benchmarks. We demoed the live captions and found alerts qualitatively. We did not measure any thermal battery or latency as we would have if it was a production",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.68,
+          "text": "There was a hackathon prototype, one user, one headset and no benchmarks."
+        },
+        {
+          "start": 5.42,
+          "end": 9.42,
+          "text": "We demoed the live captions and found alerts qualitatively."
+        },
+        {
+          "start": 9.82,
+          "end": 15.3,
+          "text": "We did not measure any thermal battery or latency as we would have if it was a production"
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 15.3,
+    "speech_sec": 15.3,
+    "required_video_sec": 16.3,
+    "delta_align": 8.2,
+    "suggested_wait": null,
+    "hold_extra": 8.2,
+    "action": "extend video ~8.2s"
+  },
+  {
+    "chapter": 8,
+    "act": 2,
+    "key": "8:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/82.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch8_act2.wav",
+    "raw_sec": 14.74,
+    "clean_sec": 14.97,
+    "video_sec": 8.65,
+    "delta": 6.32,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "The same core pipeline could grow into a product, local bundles in CDN, observability, multi user fleet metrics. This means the same core pipeline but different ops envelope.",
+      "segments": [
+        {
+          "start": 0.96,
+          "end": 7.16,
+          "text": "The same core pipeline could grow into a product, local bundles in CDN, observability,"
+        },
+        {
+          "start": 7.72,
+          "end": 8.9,
+          "text": "multi user fleet metrics."
+        },
+        {
+          "start": 9.54,
+          "end": 13.62,
+          "text": "This means the same core pipeline but different ops envelope."
+        }
+      ]
+    },
+    "speech_start": 0.96,
+    "speech_end": 13.62,
+    "speech_sec": 12.66,
+    "required_video_sec": 14.62,
+    "delta_align": 5.97,
+    "suggested_wait": null,
+    "hold_extra": 5.97,
+    "action": "extend video ~6.0s"
+  },
+  {
+    "chapter": 8,
+    "act": 3,
+    "key": "8:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/83.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch8_act3.wav",
+    "raw_sec": 10.52,
+    "clean_sec": 9.3,
+    "video_sec": 8.55,
+    "delta": 0.75,
+    "current_wait": 5.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "We never claim any latent supersentage, production, user metrics or benchmark artifacts. The demo is a proof of concept.",
+      "segments": [
+        {
+          "start": 0.92,
+          "end": 5.86,
+          "text": "We never claim any latent supersentage, production, user metrics or benchmark artifacts."
+        },
+        {
+          "start": 6.44,
+          "end": 7.78,
+          "text": "The demo is a proof of concept."
+        }
+      ]
+    },
+    "speech_start": 0.92,
+    "speech_end": 7.78,
+    "speech_sec": 6.86,
+    "required_video_sec": 8.78,
+    "delta_align": 0.23,
+    "suggested_wait": null,
+    "hold_extra": 0.0,
+    "action": "ok"
+  },
+  {
+    "chapter": 9,
+    "act": 1,
+    "key": "9:1",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/91.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch9_act1.wav",
+    "raw_sec": 11.84,
+    "clean_sec": 11.52,
+    "video_sec": 7.7,
+    "delta": 3.82,
+    "current_wait": 4.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "To summarize, we built one tap that serves on device speech and sound analysis, caption and alerts in view. This is the pipeline. We built another 24 hours.",
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 6.22,
+          "text": "To summarize, we built one tap that serves on device speech and sound analysis, caption"
+        },
+        {
+          "start": 6.22,
+          "end": 7.4,
+          "text": "and alerts in view."
+        },
+        {
+          "start": 8.2,
+          "end": 9.1,
+          "text": "This is the pipeline."
+        },
+        {
+          "start": 9.4,
+          "end": 10.56,
+          "text": "We built another 24 hours."
+        }
+      ]
+    },
+    "speech_start": 0.0,
+    "speech_end": 10.56,
+    "speech_sec": 10.56,
+    "required_video_sec": 11.56,
+    "delta_align": 3.86,
+    "suggested_wait": null,
+    "hold_extra": 3.86,
+    "action": "extend video ~3.9s"
+  },
+  {
+    "chapter": 9,
+    "act": 2,
+    "key": "9:2",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/92.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch9_act2.wav",
+    "raw_sec": 8.17,
+    "clean_sec": 7.71,
+    "video_sec": 7.05,
+    "delta": 0.66,
+    "current_wait": 4.0,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Links are in the description, the GitHub, the full demo video and the short demo video.",
+      "segments": [
+        {
+          "start": 0.78,
+          "end": 5.78,
+          "text": "Links are in the description, the GitHub, the full demo video and the short demo video."
+        }
+      ]
+    },
+    "speech_start": 0.78,
+    "speech_end": 5.78,
+    "speech_sec": 5.0,
+    "required_video_sec": 6.78,
+    "delta_align": -0.27,
+    "suggested_wait": null,
+    "hold_extra": 0.0,
+    "action": "ok"
+  },
+  {
+    "chapter": 9,
+    "act": 3,
+    "key": "9:3",
+    "raw": "Aura/design-video/aura_manim/media/audio/audio_record_aura/93.m4a",
+    "processed": "Aura/design-video/aura_manim/media/audio/processed/ch9_act3.wav",
+    "raw_sec": 5.06,
+    "clean_sec": 5.75,
+    "video_sec": 7.25,
+    "delta": -1.5,
+    "current_wait": 4.5,
+    "pad_sec_each_end": 1.0,
+    "transcript": {
+      "text": "Finally, we won the second place in the Hackett Farm.",
+      "segments": [
+        {
+          "start": 0.94,
+          "end": 3.02,
+          "text": "Finally, we won the second place in the Hackett Farm."
+        }
+      ]
+    },
+    "speech_start": 0.94,
+    "speech_end": 3.02,
+    "speech_sec": 2.08,
+    "required_video_sec": 4.02,
+    "delta_align": -3.23,
+    "suggested_wait": 1.5,
+    "hold_extra": 0.0,
+    "action": "trim video ~3.2s (wait\u21921.5s)"
+  }
+]

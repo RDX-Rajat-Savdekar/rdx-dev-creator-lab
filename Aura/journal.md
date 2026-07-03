@@ -2,8 +2,9 @@
 
 > **Purpose:** Record how each video was made — process, mistakes, final decisions — so future sessions (and agents) don’t re-learn the same lessons.
 >
-> **Scope:** Portfolio videos for **Aura** living under `Aura/`. One section per deliverable.
+> **Scope:** **Aura** portfolio videos only. Generic process for all resume projects: [`docs/video-production/`](../docs/video-production/README.md)
 >
+> **Reusable process (all projects):** [`docs/video-production/`](../docs/video-production/README.md)  
 > **Related:** `project-sources/projects/aura-visionos/COMPLETENESS.md` · `60s-beat-sheet.md` · `project-sources/VIDEO-PRODUCTION-LEARNING.md`
 
 ---
@@ -15,11 +16,123 @@ After each video ship (or major draft):
 1. Add a dated entry under **Entries** (copy the template at the bottom).
 2. Log **what we tried**, **what went wrong**, **what we shipped**.
 3. Point to **files** (scripts, outputs, licenses) — not just chat memory.
-4. Update `COMPLETENESS.md` checklist row + session log.
+4. Update `COMPLETENESS.md` checklist row + session log when applicable.
+5. If the process changed materially, update [`docs/video-production/`](../docs/video-production/README.md) — not only this journal.
 
 ---
 
 ## Entries
+
+### 2026-07-03 — Design video · Chapters 0–9 complete + VO mux pipeline (shipped)
+
+**Deliverable:** Full system design video with Rajat VO, chapter banners, no Resolve  
+**Status:** ✅ Draft complete — `aura_design_video_2160p60_vo.mp4`  
+**Final file:** [`design-video/output/aura_design_video_2160p60_vo.mp4`](design-video/output/aura_design_video_2160p60_vo.mp4) (**553.5 s** · ~9.2 min)  
+**Playbook:** [`docs/video-production/`](../docs/video-production/README.md) · Aura entry [`projects/aura-design-video.md`](../docs/video-production/projects/aura-design-video.md)
+
+#### Goal
+
+10-chapter Manim explainer (ch 0–9): hackathon story, on-device architecture, segmentation, HUD, scale, outro — with **phone-recorded VO** synced to 4K acts without manual NLE.
+
+#### What we shipped
+
+| Chapter | YouTube chapter | Acts | VO export |
+|---------|-----------------|------|-----------|
+| 0 | The problem | 6 | `scene0_chapter0_2160p60_vo.mp4` |
+| 1 | On-device only | 5 | `scene1_chapter1_2160p60_vo.mp4` |
+| 2 | Build vs train | 6 | `scene2_chapter2_2160p60_vo.mp4` |
+| 3 | One tap, dual pipeline | 6 | `scene3_chapter3_2160p60_vo.mp4` |
+| 4 | Segmentation | 4 | `scene4_chapter4_2160p60_vo.mp4` |
+| 5 | Texture HUD vs 90 Hz | 4 | `scene5_chapter5_2160p60_vo.mp4` |
+| 6 | MainActor bridge | 3 | `scene6_chapter6_2160p60_vo.mp4` |
+| 7 | Iron Man HUD | 6 | `scene7_chapter7_2160p60_vo.mp4` |
+| 8 | Scale | 3 | `scene8_chapter8_2160p60_vo.mp4` |
+| 9 | Outro | 3 | `scene9_chapter9_2160p60_vo.mp4` |
+
+Ch 6–9 built last: `scale.py`, `outro.py`, learnings in `LEARNING.md` / `PROCESS-REVIEW.md`. Video ends at ch 9 (no ch 10).
+
+#### Final pipeline (locked — use playbook for details)
+
+```
+MANIM (act-by-act)
+  vo/sceneN.md PLAY CHECKLIST → sceneN_actM.py → -ql layout QA → -qk 4K acts
+  → ffmpeg concat → sceneN_chapterN_2160p60.mp4
+
+VO RECORD (phone)
+  build_teleprompter.py → serve.py + prompter.html (Record tab + synced act video)
+  → audio_record_aura/{chapter}{act}.m4a  (46 clips)
+
+AUDIO CLEAN + TRANSCRIBE
+  process_vo_audio.py  (silence trim, loudnorm, 1s pad)
+  → --transcribe (Whisper in design-video/.venv) → vo_clips.json
+
+FINAL MUX (no Resolve)
+  mux_chapter_vo.py --all --banner
+    · vo_video_fit: strip FadeOut tail, HOLD last visible frame to WAV length
+    · chapter_banners: 2s title card per chapter
+  → build_full_film.py → aura_design_video_2160p60_vo.mp4
+```
+
+**One-command refresh after re-recording VO:**
+
+```bash
+Aura/design-video/.venv/bin/python Aura/design-video/tools/process_vo_audio.py --skip-process --transcribe
+Aura/design-video/.venv/bin/python Aura/design-video/tools/mux_chapter_vo.py --all --banner
+Aura/design-video/.venv/bin/python Aura/design-video/tools/build_full_film.py
+```
+
+#### Journey / mistakes (this sprint)
+
+| Phase | What happened | Fix |
+|-------|---------------|-----|
+| VO alignment | Compared full WAV length; ~2s pad skew; suggested Resolve | Whisper `speech_end`; automated ffmpeg mux |
+| Black while speaking | `tpad` extended **last frame after FadeOut** (= black) | `vo_video_fit.py` — content end before fade; freeze last pane |
+| Blank tail after b-roll | Acts with `play_broll` + trailing `scene.wait` | Parser holds last b-roll frame, strips blank wait |
+| Resolve unknown | User can't use NLE | `mux_chapter_vo.py` + `build_full_film.py` |
+| Chapter boundaries | Viewer needs context between chapters | `chapter_banners.py` — 2s card from `vo/sceneN.md` YouTube title |
+| ch2 inbox audio | User unsure if Core ML beat was recorded / mislabeled | Transcript verified: `22.m4a` = act2 inbox, `23.m4a` = act3 train path ✅ |
+| Stale docs | `inbox.py` said "act 3" | Fixed to act 2; journal + playbook |
+
+#### Tools added this sprint
+
+| Tool | Role |
+|------|------|
+| `process_vo_audio.py` | Clean phone VO + optional Whisper |
+| `sync_vo_alignment.py` | hold_extensions / wait suggestions from transcripts |
+| `mux_chapter_vo.py` | Per-act VO mux + optional banner |
+| `vo_video_fit.py` | Hold-frame logic (strip black tails) |
+| `chapter_banners.py` | 2s chapter title cards |
+| `build_full_film.py` | Concat all `_vo` chapters |
+| `build_teleprompter.py` | TELEPROMPTER.md + JSON |
+| `serve.py` + `prompter.html` | LAN teleprompter + Record tab |
+| `extend_act_holds.py` | Optional ffmpeg hold extension (pre-mux path) |
+
+#### Artifacts
+
+| Path | Role |
+|------|------|
+| `docs/video-production/` | **Repo-wide portfolio playbook** |
+| `playbook/` | Redirect → docs/video-production |
+| `vo/vo_clips.json` | 46 clips · durations · transcripts |
+| `media/audio/processed/chN_actM.wav` | Cleaned VO |
+| `media/banners/chN_2160p60.mp4` | Chapter intros |
+| `output/aura_design_video_2160p60_vo.mp4` | **Ship candidate** |
+
+#### Still TODO (optional)
+
+- [ ] YouTube upload + chapter timestamps in description
+- [ ] Spot-check acts flagged in `vo/AUDIO-ALIGNMENT.md` (e.g. ch3 act6 short speech)
+- [ ] Re-render acts with `adjust_waits.py` if hold-frame freeze feels too static in places
+- [ ] Background music pass (not in scope yet — video is VO-only)
+
+#### Lessons
+
+1. **Never extend video without checking what's on the last frame** — FadeOut makes black.
+2. **Whisper is for speech bounds**, not just captions — enables automated sync.
+3. **Playbook + journal** — agents start at `playbook/README.md`, not chat history.
+4. **Per-act VO files** + ffmpeg mux beats per-sentence Resolve alignment for this format.
+
+---
 
 ### 2026-07-01 — 60s recruiter clip (`aura-60s-with-music.mp4`)
 
@@ -361,4 +474,4 @@ First pass rendered all six beats in `Scene0Problem` before layout review workfl
 
 ---
 
-*Last updated: 2026-07-02 (ch 0 complete · ch 1 code · vo/ pipeline · toolkit v1)*
+*Last updated: 2026-07-03 (design video ch 0–9 + VO mux shipped · playbook/ formalized)*

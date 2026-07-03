@@ -88,6 +88,40 @@ Architecture “we cut this” visuals: **`DashedLine`** ghost arrow, **`striket
 **`MUTED` stays for:** strokes, dividers, plop tags, arrow lines — not sentences on screen.  
 **See:** `typography.py` · `theme.SUBTEXT` · `theme.SUBTEXT_SIZE`.
 
+### body_text + disable_ligatures (ch 6+)
+**`typography.body_text()`** is the required API for any sentence on screen. It sets **`disable_ligatures=True`** so Manim does not glue words (`dumpsat`, `differentrender`).  
+**Never** put `body_text` inside a scaled `VGroup` — size the plate or font instead.  
+**See:** `MANIM-STANDARDS.md` · ch 4–5 used private helpers (frozen).
+
+### layout primitives (ch 6+)
+**`components.layout`:** **`fit_center(group)`** centers in frame; **`flow_lr(a, b, c)`** arranges left→right then centers; **`arrow_between(left, right)`** after layout.  
+**Anti-pattern:** `move_to(ORIGIN)` + `next_to(RIGHT)` chain → right-edge clip.  
+**See:** `components/layout.py` · `PROCESS-REVIEW.md`.
+
+### Frame QA from partial_movie_files
+After `-ql` render, **`tools/extract_act_frames.py`** pulls stills from `partial_movie_files/` → `vo/review_frames/`. Agent inspects PNGs before user review.  
+**See:** `AGENTS.md` · `MANIM-STANDARDS.md` checklist.
+
+### adjust_waits (VO pacing)
+**`tools/adjust_waits.py --chapter N --add 2.0`** bulk-edits `scene.wait()` in act files after read-aloud. Visual-first: ship short, extend holds later.  
+**See:** `MANIM-STANDARDS.md` § Pacing.
+
+### arrow_between sizing (ch 6–7)
+**Never `get_tip().scale(...)`** on layout arrows — tips balloon on short spans. Use **`tip_length=0.16–0.2`**, **`max_tip_length_to_length_ratio≈0.28–0.38`**, **`stroke_width=2.8–3.2`**, and **wider card spacing** instead.  
+**See:** `components/layout.py` → `arrow_between()` · ch 6 `published_rule_diagram`.
+
+### HUD FOV pivot (ch 7)
+Iron Man HUD cone pivots at **`head[0].get_right()`** (head **right edge**), not head center — matches gaze-forward FOV. Use a **large radius** (~3.45) so panel + tag fit inside the arc without overlap.  
+**See:** `components/hud_pivot.py` · `scene7_act4.py`.
+
+### Panel settle scale (ch 7 act 4 — approved exception)
+After slide-in, **`panel.animate.move_to(rest).scale(0.82)`** + tag positioned **after** scale is an approved exception to “never scale groups with readable text” — gives a settle beat without crush-scaling the whole diagram.  
+**See:** `scene7_act4.py` · `MANIM-STANDARDS.md`.
+
+### extract_act_frames — short partials
+Clips **&lt; 2 s** in `partial_movie_files/` cannot seek to end-of-file; extractor uses **mid-frame** instead of EOF to avoid PyAV seek errors on short holds.  
+**See:** `tools/extract_act_frames.py`.
+
 ---
 
 ## Unity (visualization-only for Aura)
@@ -126,17 +160,18 @@ Export Unity clips via **Recorder** package or OBS — same role as Manim MP4 ou
 | **ffmpeg** | Per-act 2160p60 concat (`output/sceneN_concat.txt`, absolute paths) |
 | **VO docs** | `vo/sceneN.md` — measured timestamps + draft narration |
 
-### Standard chapter pipeline (2026-07-02)
+### Standard chapter pipeline (2026-07-03, ch 6+)
 
 ```
-1. vo/sceneN.md — PLAY CHECKLISTS (plan) → user edits → code gen
-2. sceneN_actM.py — Layout plop → motion → play_actM
-3. sceneN_full.py — -ql iteration
-4. -qk per act → ffmpeg concat → vo/sceneN.md timestamps + read-aloud
-5. Record VO → Resolve (optional music bed)
+1. vo/sceneN.md — PLAY CHECKLISTS + VO seed (before code)
+2. sceneN_actM.py — compose typography + layout primitives
+3. -ql SceneNActMLayout → extract_act_frames.py → vision QA
+4. -ql SceneNActM → SceneNFull
+5. User review — story / pacing (not pixels)
+6. -qk per act → concat → read-aloud → adjust_waits.py → re-render
 ```
 
-Log decisions in [`../journal.md`](../journal.md).
+See [`MANIM-STANDARDS.md`](MANIM-STANDARDS.md) · [`AGENTS.md`](AGENTS.md) · [`PROCESS-REVIEW.md`](PROCESS-REVIEW.md).
 
 ---
 
@@ -152,3 +187,5 @@ Log decisions in [`../journal.md`](../journal.md).
 | 2026-07-02 | there_and_back pulse | `scene0_act4.py` |
 | 2026-07-02 | rejected path, code_panel | `rejected.py` · `code_panel.py` · ch 1 |
 | 2026-07-02 | typography SUBTEXT vs MUTED | `typography.py` · `theme.py` |
+| 2026-07-03 | body_text, layout, frame QA, adjust_waits | `MANIM-STANDARDS.md` · ch 6+ |
+| 2026-07-03 | arrow_between sizing, HUD FOV pivot, panel settle | ch 6–7 · `hud_pivot.py` · `layout.py` |

@@ -19,6 +19,7 @@ CLIPS_DIR = Path(__file__).resolve().parents[2] / "clips"
 D1_LIVE_CAPTIONS = CLIPS_DIR / "D1_live-en-captions.mp4"
 D4_SIREN = CLIPS_DIR / "D4_siren-emergency-vehicle.mp4"
 D5_CLAPPING = CLIPS_DIR / "D5_clapping.mp4"
+D2_SECOND_SPEAKER = CLIPS_DIR / "D2_second-speaker.mp4"
 D3_WHISPER = CLIPS_DIR / "D3_whisper-detected.mp4"
 D6_JAPANESE = CLIPS_DIR / "D6_japanese-locale.mp4"
 

@@ -1,0 +1,120 @@
+=== Chapter 0 — The problem ===
+
+If you're deaf or hard of hearing, a noisy room isn't just loud — you miss what was said and what happened around you. Speech and environmental sounds both carry context.
+
+That's the problem we chased at a twenty-four-hour hackathon in October twenty twenty-five — LA Tech Week at USC ISI. Three-person team.
+
+Everyone contributed to the shared codebase. I led development; teammates owned README, design, and the on-camera demo. One repo — four merges.
+
+It was also our first build on Vision Pro. Before Aura, we shipped a tiny proof of concept: say “red,” the sphere turns red; speak louder, it grows. That proved deploy, microphone, speech, and spatial rendering — before we built the real app.
+
+This video is the system design story — what we tried, what we cut, and what actually shipped. Hackathon prototype — not a production app.
+
+Aura runs on Apple Vision Pro: live speech transcription plus environmental sound classification — entirely on-device.
+
+
+=== Chapter 1 — On-device only ===
+
+First decision: everything stays on the device. No cloud speech API — no uploading audio.
+
+The hackathon temptation is to cheat — send audio to a network recognizer when on-device struggles. Faster to demo, often more accurate.
+
+We rejected that. Audio leaving Vision Pro kills privacy — latency becomes whatever the network feels like. For accessibility, unpredictable delay is as bad as wrong text.
+
+So we committed to Apple's on-device Speech framework — SFSpeechRecognizer — with no network fallback in the code.
+
+Trade-off: speech models are per locale — users need the language pack installed. Product constraint, not a bug. Zero external dependencies — Swift, Apple frameworks, about fifteen hundred lines.
+
+
+=== Chapter 2 — Build vs train ===
+
+Second decision: we did not train any machine-learning model. I need to say that clearly because the demo looks like "ML magic."
+
+Apple had recently shipped strong on-device models: Speech for transcription, SoundAnalysis for environmental classes — hundreds of built-in labels. Good enough to prove the product idea.
+
+The left path — collect data, label sounds, train, export Core ML, debug — is a multi-week project. We had twenty-four hours.
+
+My job wasn't training. It was integration engineering: one microphone tap feeding two consumers, realtime discipline, caption segmentation, UI that doesn't choke at ninety hertz.
+
+If we'd spent the hackathon training, we'd have a model slide and no working app. We traded ML research for a working accessibility prototype — and placed second.
+
+Honest scope: I integrated Apple's models. The engineering story is everything around them.
+
+
+=== Chapter 3 — One tap, dual pipeline ===
+
+One microphone tap on the AVAudioEngine input node — every buffer flows through a single installTap callback.
+
+That one tap fans out to Apple's Speech framework for transcription and SoundAnalysis for environmental classes — parallel on-device consumers.
+
+Heavy work never runs inside the tap. We dispatch to a serial queue — com.aura.AnalysisQueue — so analysis can't stall realtime audio.
+
+Environmental sounds flap labels. We gate on 0.6 confidence and throttle updates to 0.25 seconds.
+
+Seven recognition languages in the picker — switch without restarting the engine. Demo flashes Japanese locale live.
+
+Live English captions and whisper detection — both pipelines working in the same session.
+
+
+=== Chapter 4 — Segmentation ===
+
+Speech recognition returns a formatted string — one continuous dump. No pauses, no sentences, no structure. During a live conversation it becomes an unreadable wall of text on screen.
+
+First layer: temporal segmentation. When the speaker pauses longer than 1.1 seconds, we treat that as a new utterance — a breath between thoughts or between speakers.
+
+Second layer: grammatical splitting. Abbreviations like Dr. and e.g. stay intact — we only break on real sentence boundaries. One utterance in, clean sentence chips out.
+
+Before: one blob. After: utterance-to-sentence chunks you can actually read while someone is talking. The two-layer split fixed readability — and it holds up with multiple speakers.
+
+
+=== Chapter 5 — Texture HUD vs 90 Hz ===
+
+RealityKit runs at 90 Hz. Hooking captions via ViewAttachment means SwiftUI re-layout on every frame — layout cost tied directly to the render loop. We marked this path rejected.
+
+Off-screen bake: render captions in SwiftUI, snapshot to a texture, composite on a lightweight RK quad in the scene. Debounce rebakes to 100 milliseconds so partial transcripts don't thrash the GPU.
+
+Same caption content — different render path. Per-frame layout jitters the HUD; the baked texture stays pinned. Watch the left panel wobble while the right stays stable.
+
+What we actually shipped in the demo: a 2D HUD overlay — not the full world-space texture path. Honest about the gap between prototype and production.
+
+
+=== Chapter 6 — MainActor bridge ===
+
+Speech and sound delegates fire on background threads — not on MainActor. ML results arrive while the tap keeps running on the audio thread from chapter three.
+
+Any @Published property that drives SwiftUI must mutate on MainActor. We wrap caption updates in Task { @MainActor in } so the panel refreshes safely.
+
+That's why live captions can refresh on screen while classification keeps streaming — UI work hops to main; the tap never waits.
+
+
+=== Chapter 7 — Iron Man HUD ===
+
+Early on we tried pinning each sound to the direction it came from — markers in the world where audio seemed to originate.
+
+First problem: Vision Pro gives direction from the mic, not an exact coordinate. The pin is guesswork — it drifts and feels wrong.
+
+Second — for accessibility — an urgent sound behind you might never enter your field of view. A baby crying pinned outside your gaze is a missed alert.
+
+So we pivoted to an Iron Man–style HUD — captions and sound labels on a panel that stays in view. Head-relative, not world-hunted. That's what the demo shows.
+
+We still compute azimuth in the audio path for analysis, but we don't ship directional markers in the UI.
+
+Separately we built a spatial HUD prototype — texture-baked SwiftUI in RealityKit — demoed on video. Honest caveat: committed HEAD doesn't wire ImmersiveView into the app entry. Unity clips here are explainers only — Aura ships in Swift.
+
+
+=== Chapter 8 — Scale ===
+
+This was a hackathon prototype — one user, one headset, no benchmarks. We demoed live captions and sound alerts qualitatively; we did not measure thermal, battery, or latency.
+
+The same core pipeline could grow into a product — locale bundles on CDN, observability, multi-user fleet metrics. That is a different ops envelope, not what we shipped in twenty-four hours.
+
+We never claim latency percentages, production user metrics, or benchmark artifacts. The demo is proof of concept — not a performance study.
+
+
+=== Chapter 9 — Outro ===
+
+One tap — on-device speech and sound analysis — captions and alerts in view. That is the pipeline we built in twenty-four hours.
+
+Links are in the description — starting with the GitHub repo at github.com slash RDX-Rajat-Savdekar slash Aura-Vision-Pro. The sixty-second clip and full hackathon demo are there too.
+
+Second place at LA Tech Week — October twenty twenty-five. Thanks for watching.

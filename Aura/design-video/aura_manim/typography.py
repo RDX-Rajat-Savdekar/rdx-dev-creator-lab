@@ -24,6 +24,39 @@ from theme import (
 )
 
 
+def body_text(
+    text: str,
+    *,
+    font_size: int = 16,
+    color: str = WHITE_TEXT,
+    width: float | None = None,
+    line_spacing: float = 1.15,
+    weight=None,
+) -> Text:
+    """Readable copy on dark panels — ch 6+ default for any sentence viewers read.
+
+    Always uses ``disable_ligatures=True`` to avoid glued words (``dumpsat``).
+    Do **not** put ``body_text`` inside a scaled ``VGroup`` — size the plate instead.
+    """
+    kwargs: dict = dict(
+        font=FONT,
+        font_size=font_size,
+        color=color,
+        disable_ligatures=True,
+        line_spacing=line_spacing,
+    )
+    if width is not None:
+        kwargs["width"] = width
+    if weight is not None:
+        kwargs["weight"] = weight
+    return Text(text, **kwargs)
+
+
+def caption_line(text: str, *, color: str = SUBTEXT, font_size: int = CAPTION_SIZE) -> Text:
+    """Short tag above a panel (``formattedString → UI``). Same spacing rules as ``body_text``."""
+    return body_text(text, font_size=font_size, color=color)
+
+
 def subtext(
     text: str,
     *,
@@ -31,19 +64,18 @@ def subtext(
     color: str = SUBTEXT,
 ) -> Text:
     """Secondary readable line on dark panels."""
-    return Text(text, font=FONT, font_size=font_size, color=color)
+    return body_text(text, font_size=font_size, color=color)
 
 
 def caption(text: str) -> Text:
     """Short annotation (e.g. timeline footnotes)."""
-    return Text(text, font=FONT, font_size=CAPTION_SIZE, color=SUBTEXT)
+    return caption_line(text)
 
 
 def chip_label(text: str, *, accent: bool = False) -> Text:
     """Small keyword under a diagram node."""
-    return Text(
+    return body_text(
         text,
-        font=FONT,
         font_size=CHIP_SIZE,
         color=ACCENT if accent else SUBTEXT,
     )
@@ -51,9 +83,8 @@ def chip_label(text: str, *, accent: bool = False) -> Text:
 
 def node_label(text: str, *, accent: bool = False) -> Text:
     """Text inside a pipeline / fork node box."""
-    return Text(
+    return body_text(
         text,
-        font=FONT,
         font_size=NODE_SIZE,
         color=WHITE_TEXT if accent else SUBTEXT,
     )
@@ -61,4 +92,4 @@ def node_label(text: str, *, accent: bool = False) -> Text:
 
 def title_line(text: str, *, font_size: int = BODY_SIZE) -> Text:
     """Primary line inside a card."""
-    return Text(text, font=FONT, font_size=font_size, color=WHITE_TEXT, weight=BOLD)
+    return body_text(text, font_size=font_size, color=WHITE_TEXT, weight=BOLD)

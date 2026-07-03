@@ -1,30 +1,26 @@
 # Manim Animations
 
-A single [uv](https://docs.astral.sh/uv/) Python project (`manimations`) containing two
-independent [Manim](https://www.manim.community/) animation sub-projects.
+A single [uv](https://docs.astral.sh/uv/) Python project (`manimations`) for **portfolio / resume explainer videos** — multiple independent Manim sub-projects.
+
+> **New agent?** Start at [`docs/video-production/README.md`](docs/video-production/README.md) — generic pipeline for all projects.
 
 ## Repository layout
 
 ```
 .
+├── docs/video-production/    ← Portfolio video playbook (generic)
 ├── pyproject.toml            # uv project root (shared deps: manim >= 0.19)
 ├── uv.lock
 ├── .python-version
 │
 ├── dsa_toolkit/              # Reusable DSA / system-design animation toolkit
-│   ├── manim_utils.py        #   the library: Base_DSA_Scene, LinkedList, helpers
-│   ├── scenes.py             #   "Intro to Linked Lists" + test scenes
-│   ├── title_card_scene.py   #   scrambled-title card scenes
-│   ├── code_snippets/        #   source shown on-screen inside animations
-│   └── manim.cfg
+├── celestia_presentation/    # CelestiaVR technical-decision presentation
 │
-└── celestia_presentation/    # CelestiaVR technical-decision presentation (6 scenes)
-    ├── scene0.py … scene5.py #   logo, skybox, magnitude filter, coord pipeline,
-    │                         #   B-V color/twinkle, constellation graph/octree
-    ├── build_scene1.py       #   render + ffmpeg-stitch helper for Scene 1
-    ├── data/                 #   JSON fixtures generated/shown by the scenes
-    ├── notes/                #   per-scene narration + render-command notes
-    └── manim.cfg
+└── Aura/                       # Aura Vision Pro portfolio videos
+    ├── design-video/           # Long Manim explainer + VO toolchain
+    ├── manim/                  # 60s recruiter clip
+    ├── journal.md              # Aura production history
+    └── clips/ · music/
 ```
 
 ## How to run

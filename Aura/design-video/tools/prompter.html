@@ -225,18 +225,99 @@
       padding: 0.3rem 1rem;
       border-top: 1px solid var(--border);
     }
+
+    /* —— Record + video sync —— */
+    #recordView {
+      flex: 1;
+      min-height: 0;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #recordView.active { display: flex; }
+    .record-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      align-items: center;
+      padding: 0.45rem 1rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+    }
+    .record-video-wrap {
+      background: #000;
+      flex-shrink: 0;
+      position: relative;
+      max-height: min(42vh, 360px);
+    }
+    #syncVideo {
+      width: 100%;
+      max-height: min(42vh, 360px);
+      display: block;
+      background: #000;
+    }
+    .video-meta {
+      position: absolute;
+      left: 0.5rem;
+      bottom: 0.5rem;
+      font-size: 0.68rem;
+      font-family: var(--mono);
+      color: #c5ced8;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .video-missing {
+      padding: 2rem 1rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .record-body {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 1rem 1.5rem;
+      gap: 1rem;
+      text-align: center;
+    }
+    .record-body .narration { font-size: clamp(1.1rem, 4.5vw, 1.65rem); }
+    .record-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    .record-actions button { min-width: 4.2rem; padding: 0.55rem 0.75rem; }
+    @media (min-width: 900px) {
+      #recordView.active {
+        flex-direction: row;
+      }
+      .record-video-wrap {
+        width: 48%;
+        max-height: none;
+        border-right: 1px solid var(--border);
+      }
+      #syncVideo { max-height: calc(100vh - 8rem); height: 100%; }
+      .record-body { width: 52%; justify-content: center; }
+    }
   </style>
 </head>
 <body>
   <div id="banner" class="banner">
-    Run <code>python Aura/design-video/tools/serve.py</code> then reload.
+    Prompter could not load script data.
+    <strong>Open via the server</strong> (not the HTML file directly):
+    <code>http://127.0.0.1:8765/prompter.html</code>
+    — stop any old server (<code>lsof -ti :8765 | xargs kill</code>), then
+    <code>python Aura/design-video/tools/serve.py</code> and reload.
   </div>
 
   <header>
     <h1>VO Prompter · <a href="/">workspace</a></h1>
     <div class="mode-tabs">
-      <button type="button" id="btnPace" class="active">Pace trainer</button>
-      <button type="button" id="btnScroll">Teleprompter</button>
+      <button type="button" id="btnPace" class="active">Pace</button>
+      <button type="button" id="btnRecord">Record</button>
+      <button type="button" id="btnScroll">Scroll</button>
     </div>
     <div class="controls">
       <label>Chapter
@@ -280,6 +361,45 @@
       </div>
     </div>
 
+    <div id="recordView">
+      <div class="record-toolbar">
+        <label>Video
+          <select id="videoScope">
+            <option value="act" selected>Per act</option>
+            <option value="chapter">Full chapter</option>
+          </select>
+        </label>
+        <label>Quality
+          <select id="videoQuality">
+            <option value="480p15" selected>480p (phone)</option>
+            <option value="2160p60">4K act</option>
+            <option value="vo">4K + holds</option>
+          </select>
+        </label>
+        <label><input type="checkbox" id="autoPlayVideo" checked /> Auto-play</label>
+        <label><input type="checkbox" id="loopVideo" checked /> Loop</label>
+      </div>
+      <div class="record-video-wrap">
+        <video id="syncVideo" playsinline webkit-playsinline controls preload="metadata"></video>
+        <div class="video-meta" id="videoMeta">—</div>
+      </div>
+      <div class="record-body">
+        <div class="pace-meta">
+          <span><strong id="recChLabel">Ch 0</strong></span>
+          <span>Act <strong id="recActNum">1</strong></span>
+          <span><strong id="recWordNum">0</strong>w · ~<strong id="recTargetSec">0</strong>s</span>
+        </div>
+        <p class="narration" id="recNarration">Loading…</p>
+        <div class="hints" id="recHints"></div>
+        <div class="record-actions">
+          <button type="button" id="recPrevBtn">← Prev</button>
+          <button type="button" id="recPlayBtn" class="primary">▶ Video</button>
+          <button type="button" id="recRestartBtn">↺ Restart</button>
+          <button type="button" id="recNextBtn">Next →</button>
+        </div>
+      </div>
+    </div>
+
     <div id="scrollView">
       <div class="scroll-stage" id="scrollStage">
         <div class="scroll-text" id="scrollText"></div>
@@ -293,8 +413,8 @@
   </main>
 
   <footer>
-    Pace: <kbd>Space</kbd> next · <kbd>Shift+Space</kbd> prev · <kbd>P</kbd> auto ·
-    Teleprompter: scroll mode for recording · Export for phone apps
+    Pace: <kbd>Space</kbd> next · Record: video + script for phone VO ·
+    Phone: same Wi‑Fi → <code>http://&lt;mac-ip&gt;:8765/prompter.html</code> → Record tab
   </footer>
 
   <script>
@@ -312,6 +432,10 @@
       done: new Set(),
       scrollY: 0,
       scrolling: false,
+      videoCatalog: null,
+      videoScope: "act",
+      videoQuality: "480p15",
+      chapterVariant: "2160p60",
     };
 
     const els = {
@@ -333,19 +457,131 @@
       segmentBar: document.getElementById("segmentBar"),
       scrollText: document.getElementById("scrollText"),
       scrollStage: document.getElementById("scrollStage"),
+      recordView: document.getElementById("recordView"),
+      syncVideo: document.getElementById("syncVideo"),
+      videoMeta: document.getElementById("videoMeta"),
+      videoScope: document.getElementById("videoScope"),
+      videoQuality: document.getElementById("videoQuality"),
+      autoPlayVideo: document.getElementById("autoPlayVideo"),
+      loopVideo: document.getElementById("loopVideo"),
+      recNarration: document.getElementById("recNarration"),
+      recHints: document.getElementById("recHints"),
+      recChLabel: document.getElementById("recChLabel"),
+      recActNum: document.getElementById("recActNum"),
+      recWordNum: document.getElementById("recWordNum"),
+      recTargetSec: document.getElementById("recTargetSec"),
     };
 
     els.ringFg.style.strokeDasharray = CIRC;
     els.ringFg.style.strokeDashoffset = CIRC;
+    els.syncVideo.loop = true;
+
+    function actCatalogEntry(chapter, act) {
+      if (!state.videoCatalog) return null;
+      return state.videoCatalog.acts.find(
+        (a) => a.chapter === chapter && a.act === act
+      );
+    }
+
+    function videoUrlForLine(line) {
+      if (!line) return null;
+      if (state.videoScope === "chapter") {
+        if (state.videoQuality === "480p15") {
+          return `/api/videos/chapter?chapter=${line.chapter}&variant=480p15`;
+        }
+        const q = state.videoQuality === "vo" ? "2160p60_vo" : "2160p60";
+        return `/api/videos/chapter?chapter=${line.chapter}&variant=${q}`;
+      }
+      const q = state.videoQuality;
+      return `/api/videos/act?chapter=${line.chapter}&act=${line.act}&quality=${q}`;
+    }
+
+    async function loadVideoCatalog() {
+      try {
+        const res = await fetch("/api/videos/catalog");
+        if (res.ok) state.videoCatalog = await res.json();
+      } catch (e) {
+        console.warn("video catalog", e);
+      }
+    }
+
+    function updateVideoMeta(line) {
+      if (!line) {
+        els.videoMeta.textContent = "—";
+        return;
+      }
+      const entry = actCatalogEntry(line.chapter, line.act);
+      const clipDur = entry?.duration ? `${entry.duration}s clip` : "";
+      const scope = state.videoScope === "chapter" ? "chapter" : "act";
+      const start =
+        state.videoScope === "chapter" && entry
+          ? ` · seek ${entry.chapter_start}s`
+          : "";
+      els.videoMeta.textContent = `ch${line.chapter} act${line.act} · ${scope} · ${state.videoQuality}${start}${clipDur ? " · " + clipDur : ""}`;
+    }
+
+    function syncVideoToLine(line, { autoplay } = {}) {
+      if (!line) return;
+      updateVideoMeta(line);
+      const url = videoUrlForLine(line);
+      if (!url) return;
+
+      const shouldPlay = autoplay ?? els.autoPlayVideo.checked;
+      const entry = actCatalogEntry(line.chapter, line.act);
+
+      const afterLoad = () => {
+        if (state.videoScope === "chapter" && entry) {
+          els.syncVideo.currentTime = entry.chapter_start || 0;
+        } else {
+          els.syncVideo.currentTime = 0;
+        }
+        if (shouldPlay) {
+          els.syncVideo.play().catch(() => {});
+        }
+      };
+
+      if (els.syncVideo.dataset.src === url) {
+        afterLoad();
+        return;
+      }
+
+      els.syncVideo.dataset.src = url;
+      els.syncVideo.src = url;
+      els.syncVideo.load();
+      els.syncVideo.onloadedmetadata = afterLoad;
+    }
+
+    function playVideoFromStart() {
+      const line = currentLine();
+      if (!line) return;
+      syncVideoToLine(line, { autoplay: true });
+    }
 
     async function loadLines() {
       const wpm = state.wpm;
-      const res = await fetch(`/api/script/lines?wpm=${wpm}`);
-      if (!res.ok) throw new Error("API failed");
-      const data = await res.json();
-      state.lines = data.lines;
-      rebuildChapterFilter(data.chapters);
+      const tryLoad = async (url) => {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return res.json();
+      };
+      let data =
+        (await tryLoad(`/api/script/lines?wpm=${wpm}`)) ||
+        (await tryLoad(`/api/vo/teleprompter.json?wpm=${wpm}`));
+      if (!data || !data.lines || !data.lines.length) {
+        els.banner.classList.add("show");
+        els.narrationText.textContent = "Could not load narration. See yellow banner above.";
+        return;
+      }
+      state.lines = data.lines.map((ln) => ({
+        ...ln,
+        target_seconds: ln.word_count
+          ? Math.round((ln.word_count / wpm) * 60 * 10) / 10
+          : ln.target_seconds || 0,
+      }));
+      rebuildChapterFilter(data.chapters || []);
       applyFilter();
+      els.banner.classList.remove("show");
+      if (state.mode === "record") syncVideoToLine(currentLine(), { autoplay: false });
     }
 
     function rebuildChapterFilter(chapters) {
@@ -369,6 +605,7 @@
       state.index = Math.min(state.index, Math.max(0, state.filtered.length - 1));
       state.done.clear();
       renderPace();
+      renderRecord();
       renderScrollText();
       buildSegments();
     }
@@ -384,11 +621,13 @@
     function renderPace() {
       const line = currentLine();
       if (!line) {
-        els.narrationText.textContent = "No narration lines in SCRIPT.md for this chapter yet.";
+        els.narrationText.textContent = "No narration lines yet. Run build_teleprompter.py or fill SCRIPT.md.";
         return;
       }
       els.narrationText.textContent = line.narration;
-      els.chLabel.textContent = `Ch ${line.chapter} — ${line.chapter_title}`;
+      els.chLabel.textContent = line.act
+        ? `Ch ${line.chapter} · Act ${line.act} — ${line.chapter_title}`
+        : `Ch ${line.chapter} — ${line.chapter_title}`;
       els.lineNum.textContent = String(state.index + 1);
       els.lineTotal.textContent = String(state.filtered.length);
       els.wordNum.textContent = String(line.word_count);
@@ -410,7 +649,31 @@
 
       resetTimer();
       updateSegments();
-      startTick();
+      if (state.mode !== "record") startTick();
+      if (state.mode === "record") renderRecord();
+    }
+
+    function renderRecord() {
+      const line = currentLine();
+      if (!line) {
+        els.recNarration.textContent = "No lines — pick a chapter filter.";
+        return;
+      }
+      els.recNarration.textContent = line.narration;
+      els.recChLabel.textContent = line.act
+        ? `Ch ${line.chapter} · ${line.chapter_title}`
+        : `Ch ${line.chapter}`;
+      els.recActNum.textContent = String(line.act || state.index + 1);
+      els.recWordNum.textContent = String(line.word_count);
+      els.recTargetSec.textContent = String(line.target_seconds);
+      els.recHints.innerHTML = "";
+      if (line.on_screen) {
+        const c = document.createElement("span");
+        c.className = "hint-chip onscreen";
+        c.textContent = `On screen: ${line.on_screen}`;
+        els.recHints.appendChild(c);
+      }
+      syncVideoToLine(line, { autoplay: els.autoPlayVideo.checked });
     }
 
     function buildSegments() {
@@ -539,15 +802,43 @@
     function setMode(mode) {
       state.mode = mode;
       document.getElementById("btnPace").classList.toggle("active", mode === "pace");
+      document.getElementById("btnRecord").classList.toggle("active", mode === "record");
       document.getElementById("btnScroll").classList.toggle("active", mode === "scroll");
       els.paceView.classList.toggle("hidden", mode !== "pace");
+      els.recordView.classList.toggle("active", mode === "record");
       els.scrollView.classList.toggle("active", mode === "scroll");
       if (mode === "scroll") stopAuto();
       else if (mode === "pace" && currentLine()) startTick();
+      else if (mode === "record") {
+        stopAuto();
+        renderRecord();
+      }
     }
 
     document.getElementById("btnPace").addEventListener("click", () => setMode("pace"));
+    document.getElementById("btnRecord").addEventListener("click", () => setMode("record"));
     document.getElementById("btnScroll").addEventListener("click", () => setMode("scroll"));
+    document.getElementById("recPrevBtn").addEventListener("click", () => { stopAuto(); prevLine(); });
+    document.getElementById("recNextBtn").addEventListener("click", () => { stopAuto(); nextLine(); });
+    document.getElementById("recPlayBtn").addEventListener("click", () => {
+      els.syncVideo.paused ? els.syncVideo.play() : els.syncVideo.pause();
+    });
+    document.getElementById("recRestartBtn").addEventListener("click", playVideoFromStart);
+
+    els.videoScope.addEventListener("change", () => {
+      state.videoScope = els.videoScope.value;
+      els.syncVideo.dataset.src = "";
+      if (state.mode === "record") renderRecord();
+    });
+    els.videoQuality.addEventListener("change", () => {
+      state.videoQuality = els.videoQuality.value;
+      els.syncVideo.dataset.src = "";
+      if (state.mode === "record") renderRecord();
+    });
+    els.loopVideo.addEventListener("change", () => {
+      els.syncVideo.loop = els.loopVideo.checked;
+    });
+
     document.getElementById("prevBtn").addEventListener("click", () => { stopAuto(); prevLine(); });
     document.getElementById("nextBtn").addEventListener("click", () => { stopAuto(); nextLine(); });
     document.getElementById("playBtn").addEventListener("click", () => {
@@ -598,7 +889,10 @@
       if (e.key === "p" || e.key === "P") { state.auto ? stopAuto() : startAuto(); }
     });
 
-    loadLines().catch(() => els.banner.classList.add("show"));
+    loadVideoCatalog().then(() => loadLines()).catch((e) => {
+      console.error(e);
+      els.banner.classList.add("show");
+    });
   </script>
 </body>
 </html>

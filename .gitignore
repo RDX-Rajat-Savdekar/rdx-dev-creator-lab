@@ -27,6 +27,10 @@ wheels/
 # Outputs we ignore: previews, assemblies, Sideview renders
 Aura/design-video/output/
 Aura/design-video/aura_manim/media/
+Aura/design-video/vo/review_frames/
+
+# Phone / processed audio (regenerate via process_vo_audio.py)
+Aura/design-video/aura_manim/media/audio/
 
 # ── Aura · 60s recruiter clip ────────────────────────────────────────────────
 Aura/manim/media/

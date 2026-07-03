@@ -265,7 +265,7 @@ PLAY CHECKLIST — Scene2Act6 (motion · target ~15 s)
 |--------|---------|
 | `components/fork.py` | **Vertical split** two-branch decision diagram (ch 2, maybe ch 7) |
 | `components/timeline_bar.py` | weeks vs hours comparison bar ✅ |
-| `components/inbox.py` | Mail icon + badge + cursor click + message expand (act 3 skit) |
+| [`components/inbox.py`](../aura_manim/components/inbox.py) | Mail icon + badge + cursor click + message expand (act 2 skit) |
 | `components/pipeline_stub.py` | 5-node teaser; superseded by `pipeline.py` in ch 3 |
 | `broll.py` | Add D4+D5 montage helper |
 | `assets/icons/mail.svg` | Inbox glyph (stroke, Lucide-style) |

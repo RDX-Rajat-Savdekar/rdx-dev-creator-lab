@@ -1,4 +1,4 @@
-"""Mail inbox skit — chapter 2 act 3 (Apple Core ML announcement)."""
+"""Mail inbox skit — chapter 2 act 2 (Apple Core ML announcement)."""
 
 from __future__ import annotations
 

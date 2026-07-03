@@ -3,6 +3,8 @@
 Manim animation deck explaining the technical decisions behind the CelestiaVR
 stargazing project. Each `sceneN.py` holds the clips for one scene.
 
+> Portfolio pipeline docs: [`../docs/video-production/projects/celestia-presentation.md`](../docs/video-production/projects/celestia-presentation.md)
+
 | Scene | File | Topic |
 |---|---|---|
 | 0 | `scene0.py` | Celestia logo / title |

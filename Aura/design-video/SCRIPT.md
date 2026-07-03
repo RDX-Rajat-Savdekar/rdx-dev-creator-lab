@@ -127,6 +127,12 @@ Copy when video is final; times will shift after VO.
 
 *Runtime ~12:45 after ch 0 + ch 7 additions — trim on read-aloud or tighten ch 8–9 in edit.*
 
+**Links**
+
+- GitHub: https://github.com/RDX-Rajat-Savdekar/Aura-Vision-Pro
+- 60 s demo: https://www.youtube.com/clip/UgkxpRDpwatHZPRf5Oyjow0mAWBwYbVKn7rI
+- Full hackathon demo: https://www.youtube.com/watch?v=HbW9F2zjmLQ
+
 ---
 
 ## Read-aloud notes (ch 0–2)

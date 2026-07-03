@@ -1,10 +1,12 @@
 # Aura — system design video (10–12 min)
 
-> **Status:** in progress — **ch 0** concat ✅ · **ch 1** code ✅ · **ch 2–9** TBD  
-> **Target:** 10–12 min · **VO:** Rajat  
+> **Status:** **ch 0–9 shipped** (VO mux draft) · [`output/aura_design_video_2160p60_vo.mp4`](output/aura_design_video_2160p60_vo.mp4)  
+> **Target:** 10–12 min · **VO:** Rajat (phone + ffmpeg mux)  
 > **Visuals:** **Manim** (2D pipelines, code) + **Unity viz** (3D spatial) + Swift snippets + demo B-roll  
+> **Process playbook (all projects):** [`../../docs/video-production/README.md`](../../docs/video-production/README.md)  
 > **Learning:** [`LEARNING.md`](LEARNING.md) + `# LEARN:` in code · **Journal:** [`../journal.md`](../journal.md)  
-> **VO / timestamps:** [`vo/VO-WORKFLOW.md`](vo/VO-WORKFLOW.md) · per chapter [`vo/sceneN.md`](vo/scene0.md)
+> **VO / timestamps:** [`vo/VO-WORKFLOW.md`](vo/VO-WORKFLOW.md) · [`vo/AUDIO-WORKFLOW.md`](vo/AUDIO-WORKFLOW.md)  
+> **Ch 6+ standards:** [`MANIM-STANDARDS.md`](MANIM-STANDARDS.md) · [`AGENTS.md`](AGENTS.md) · [`PROCESS-REVIEW.md`](PROCESS-REVIEW.md)
 
 ---
 
@@ -48,32 +50,41 @@ Build in **`aura_manim/`** as chapters need them:
 | Module | Purpose | Status |
 |--------|---------|--------|
 | `theme.py` | Colors, fonts (match 60s) | ✅ |
+| `typography.py` | `body_text`, `caption_line`, `subtext` (ch 6+) | ✅ |
+| `components/layout.py` | `fit_center`, `flow_lr`, `labeled_card` (ch 6+) | ✅ |
 | `review.py` | `plop()` layout review | ✅ |
 | `icons.py` + `assets/icons/*.svg` | `load_icon()` — bell, clock, **vision-pro**, … | ✅ |
 | `components/labels.py` | Bottom-third `on_screen_label()` | ✅ |
+| `components/split_layout.py` | Visual top + Swift code bottom | ✅ ch 3+ |
+| `components/workflow.py` | Staged pipeline diagram | ✅ |
 | `components/team.py` | Hackathon roster · grid · merge lane (ch 0) | ✅ |
 | `components/device.py` | Device boundary + Vision Pro (ch 1+) | ✅ |
 | `components/locale_picker.py` | Recognition Language panel (ch 1 act 5) | ✅ |
 | `broll.py` | Embed `Aura/clips/D*.mp4` in Manim | ✅ |
 | `code_panel.py` | Swift `Code` + line highlight | ✅ |
 | `rejected.py` | Ghost path + strikethrough + chips | ✅ |
-| `pipeline.py` | AVAudioEngine → Speech / SoundAnalysis | ch 3 |
-| `thread_lane.py` | MainActor vs background lanes | ch 6 |
+| `components/pipeline.py` | Full dual-pipeline (ch 3+) | ✅ |
+| `components/pipeline_stub.py` | Simplified pipeline (ch 2 only) | ✅ |
+| `components/segmentation.py` | Ch 4 captions (frozen) | ✅ |
+| `components/texture_bake.py` | Ch 5 HUD bake (frozen) | ✅ |
+| `tools/extract_act_frames.py` | partial_movie → PNG layout QA | ✅ |
+| `tools/adjust_waits.py` | Bulk `scene.wait()` per chapter | ✅ |
 
 `code_snippets/` — minimal Swift excerpts (one concept per file).
 
-### Phase 4 — One chapter at a time (standardized 2026-07-02)
+### Phase 4 — One chapter at a time (ch 6+ uses MANIM-STANDARDS)
 
 ```
-1. Draft PLAY CHECKLISTS in vo/sceneN.md (from SCENE-PLAN + SCRIPT)
-2. User edits plan → generate sceneN_act*.py + sceneN_full.py + toolkit gaps
-3. Per act: SceneNActMLayout (-ql plop) → SceneNActM (-ql motion)
-4. Whole chapter: SceneNFull (-ql) for timing / transitions
-5. -qk --frame_rate 60 per approved act
-6. ffmpeg concat → output/sceneN_chapter*_2160p60.mp4 (absolute paths in concat.txt)
-7. vo/sceneN.md — build_act_timestamps.py + VO draft + read-aloud
-8. Trim self.wait() in code; log in journal.md
+1. Draft PLAY CHECKLISTS + VO seed in vo/sceneN.md (before code)
+2. sceneN_act*.py — compose typography + layout; copy _TEMPLATE_act.py
+3. -ql SceneNActMLayout → extract_act_frames.py → vision QA checklist
+4. -ql SceneNActM → SceneNFull for timing
+5. User review — story / pacing (not pixel QA)
+6. -qk --frame_rate 60 per act → ffmpeg concat
+7. Read-aloud → adjust_waits.py → re-render → build_act_timestamps.py
 ```
+
+**Ch 0–5:** frozen renders; do not refactor. See [`PROCESS-REVIEW.md`](PROCESS-REVIEW.md).
 
 **Manim path:** `${workspaceFolder}/.venv/bin/manim` from `aura_manim/`.
 
@@ -182,6 +193,8 @@ Start with **one** Unity scene when you reach ch 5 or 7 — after Manim toolkit 
 | 1 | `scene1_act{1…5}.py` + `scene1_full.py` | `output/scene1_chapter1_2160p60.mp4` | [`vo/scene1.md`](vo/scene1.md) | draft VO · extend waits (~43 s → ~90 s) |
 | 2 | `scene2_act{1…6}.py` + `scene2_full.py` | `output/scene2_chapter2_2160p60.mp4` | [`vo/scene2.md`](vo/scene2.md) | draft VO · extend waits (~55 s → ~90 s) |
 | 3 | `scene3_act{1…6}.py` + `scene3_full.py` | `output/scene3_chapter3_2160p60.mp4` | [`vo/scene3.md`](vo/scene3.md) | draft VO · extend waits (~57 s → ~110 s) |
+| 4 | `scene4_act{1…4}.py` + `scene4_full.py` | `output/scene4_chapter4_2160p60.mp4` | [`vo/scene4.md`](vo/scene4.md) | draft VO · extend waits (~36 s → ~90 s) |
+| 5 | `scene5_act{1…4}.py` + `scene5_full.py` | `output/scene5_chapter5_2160p60.mp4` | [`vo/scene5.md`](vo/scene5.md) | draft VO · extend waits (~34 s → ~90 s) |
 
 ## Chapter outline (~11 min)
 

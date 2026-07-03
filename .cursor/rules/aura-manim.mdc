@@ -1,0 +1,32 @@
+---
+description: Aura design-video Manim standards (ch 6+) — layout QA, typography, components
+globs: Aura/design-video/aura_manim/**/*
+alwaysApply: false
+---
+
+# Aura Manim (ch 6+)
+
+Read `Aura/design-video/AGENTS.md` and `Aura/design-video/MANIM-STANDARDS.md` before editing scenes or components.
+
+## Mandatory before user handoff
+
+1. `manim -ql` render changed acts
+2. `python Aura/design-video/tools/extract_act_frames.py --scene sceneN_actM`
+3. Vision-check PNGs against MANIM-STANDARDS frame checklist
+4. Fix and re-render until pass
+
+## Code
+
+- Readable copy: `typography.body_text()` / `caption_line()` — not raw `Text`
+- Diagrams: `components.layout.flow_lr` + `fit_center`; arrows after layout
+- Never scale groups containing readable `Text`
+- New chapter visuals: compose primitives; no private `_foo_text()` helpers
+- `vo/sceneN.md` PLAY CHECKLIST + VO seed at act creation
+
+## Frozen
+
+Do not refactor `scene0`–`scene5` act files or their chapter components (`segmentation`, `texture_bake`).
+
+## Pacing
+
+Default `scene.wait(5.5)`; user bulk-adjusts via `tools/adjust_waits.py` after read-aloud.
