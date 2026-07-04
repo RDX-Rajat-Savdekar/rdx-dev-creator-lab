@@ -38,5 +38,9 @@ Aura/output/
 # MP3 beds only — commit README + *-license.txt (Pixabay proof for YouTube)
 Aura/music/*.mp3
 
+# ── Channel intro (Sharingan bumper) ─────────────────────────────────────────
+channel-intro/output/
+channel-intro/media/
+
 # ── Project notes / local-only sources (not for git) ───────────────────────────
 project-sources/
