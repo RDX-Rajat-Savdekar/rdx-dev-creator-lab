@@ -25,22 +25,24 @@ wheels/
 # ── Aura · design video (scene0_actN workflow) ───────────────────────────────
 # Source we keep: aura_manim/scenes/, icons, assets/icons/*.svg, theme.py
 # Outputs we ignore: previews, assemblies, Sideview renders
-Aura/design-video/output/
-Aura/design-video/aura_manim/media/
-Aura/design-video/vo/review_frames/
+projects/aura/design-video/output/
+projects/aura/design-video/aura_manim/media/
+projects/aura/design-video/vo/review_frames/
+**/review_frames/
 
 # Phone / processed audio (regenerate via process_vo_audio.py)
-Aura/design-video/aura_manim/media/audio/
+projects/aura/design-video/aura_manim/media/audio/
 
 # ── Aura · 60s recruiter clip ────────────────────────────────────────────────
-Aura/manim/media/
-Aura/output/
+projects/aura/manim/media/
+projects/aura/output/
 # MP3 beds only — commit README + *-license.txt (Pixabay proof for YouTube)
-Aura/music/*.mp3
+projects/aura/music/*.mp3
+**/music/*.mp3
 
 # ── Channel intro (Sharingan bumper) ─────────────────────────────────────────
-channel-intro/output/
-channel-intro/media/
+projects/channel-intro/output/
+projects/channel-intro/media/
 
 # ── Project notes / local-only sources (not for git) ───────────────────────────
 project-sources/
