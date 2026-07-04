@@ -22,7 +22,7 @@ export const Transformations: React.FC = () => {
   const scale = interpolate(
     frame,
     [15, 45, 75],
-    [1, 1.5, 1],
+    [1, 3, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
@@ -56,7 +56,7 @@ export const Transformations: React.FC = () => {
       {/* The Animation Area */}
       <div className="relative w-full h-[300px] flex items-center justify-center border-y border-slate-900 bg-slate-950/40">
         {/* Horizontal movement track indicator */}
-        <div className="absolute w-[600px] h-[2px] bg-slate-800 border-dashed border-t border-slate-700/50 flex justify-between px-2 text-[10px] text-slate-600">
+        <div className="absolute w-[600px] h-[20px] bg-slate-800 border-dashed border-t border-slate-700/50 flex justify-between px-2 text-[10px] text-slate-600">
           <span>Start (-300px)</span>
           <span>Center (0px)</span>
           <span>End (300px)</span>
@@ -94,8 +94,8 @@ export const Transformations: React.FC = () => {
               {translateX.toFixed(1)}px
             </span>
             <div className="w-16 h-1 bg-slate-950 mx-auto rounded-full overflow-hidden mt-1">
-              <div 
-                className="h-full bg-sky-500" 
+              <div
+                className="h-full bg-sky-500"
                 style={{ width: `${((translateX + 300) / 600) * 100}%` }}
               />
             </div>
@@ -107,8 +107,8 @@ export const Transformations: React.FC = () => {
               {scale.toFixed(2)}x
             </span>
             <div className="w-16 h-1 bg-slate-950 mx-auto rounded-full overflow-hidden mt-1">
-              <div 
-                className="h-full bg-purple-500" 
+              <div
+                className="h-full bg-purple-500"
                 style={{ width: `${((scale - 1) / 0.5) * 100}%` }}
               />
             </div>
@@ -120,8 +120,8 @@ export const Transformations: React.FC = () => {
               {rotation.toFixed(0)}°
             </span>
             <div className="w-16 h-1 bg-slate-950 mx-auto rounded-full overflow-hidden mt-1">
-              <div 
-                className="h-full bg-pink-500" 
+              <div
+                className="h-full bg-pink-500"
                 style={{ width: `${(rotation / 360) * 100}%` }}
               />
             </div>

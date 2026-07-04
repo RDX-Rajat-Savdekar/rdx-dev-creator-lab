@@ -11,10 +11,10 @@ export const PulsingServer: React.FC = () => {
   const { fps, durationInFrames } = useVideoConfig();
 
   // Pulse timing: complete one heartbeat every 1.5 seconds
-  const pulseDurationSeconds = 1.5;
+  const pulseDurationSeconds = 0.5;
   const pulseFrames = pulseDurationSeconds * fps;
   const pulseRadian = (frame / pulseFrames) * 2 * Math.PI;
-  
+
   // Math.sin oscillates between -1 and 1. 
   // Let's shift it to oscillate between 0 and 1:
   const sinValue = Math.sin(pulseRadian);
@@ -151,8 +151,8 @@ export const PulsingServer: React.FC = () => {
               {(normalizedPulse * 100).toFixed(1)}%
             </span>
             <div className="w-16 h-1 bg-slate-950 mx-auto rounded-full overflow-hidden mt-1">
-              <div 
-                className="h-full bg-emerald-500" 
+              <div
+                className="h-full bg-emerald-500"
                 style={{ width: `${normalizedPulse * 100}%` }}
               />
             </div>
@@ -160,7 +160,7 @@ export const PulsingServer: React.FC = () => {
 
           <div className="flex flex-col gap-1">
             <span className="text-slate-500 text-[10px]">GLOW RADIUS</span>
-            <span className="text-base font-semibold text-teal-400">
+            <span className="text-base font-semibold text-teal-400" >
               {shadowSpread.toFixed(1)}px
             </span>
           </div>
