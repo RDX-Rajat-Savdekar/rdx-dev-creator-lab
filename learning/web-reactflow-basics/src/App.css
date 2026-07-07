@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Fira+Code:wght@400;500;700&display=swap');
+
+:root {
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  
+  --bg-gradient: radial-gradient(circle at top left, #0e0e22, #05050b);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-active: rgba(0, 229, 255, 0.4);
+  
+  --color-cyan: #00e5ff;
+  --color-magenta: #ff0077;
+  --color-purple: #bd00ff;
+  --color-green: #00ff66;
+  --color-orange: #ffaa00;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #05050b;
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* 🖥️ Unified Dashboard Flex Layout */
+.reactflow-dashboard {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: row;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Sidebar panel */
+.flow-sidebar {
+  width: 380px;
+  height: 100%;
+  background: rgba(10, 10, 20, 0.85);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.flow-sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.flow-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--color-cyan);
+  background: rgba(0, 229, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.flow-sidebar-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.flow-sidebar-header p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Actions panels */
+.flow-actions-section {
+  padding: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.flow-actions-section h2,
+.telemetry-logger h2 {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #cbd5e1;
+  margin: 0 0 16px 0;
+}
+
+.flow-buttons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-button-tour {
+  background: var(--color-cyan);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  color: #05050b;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+}
+
+.action-button-tour:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+}
+
+.action-button-tour:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.action-button-tour.secondary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  color: #cbd5e1;
+  box-shadow: none;
+}
+
+.action-button-tour.secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Diagnostics terminal logger */
+.telemetry-logger {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.logger-terminal {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #38bdf8;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+.log-line {
+  margin-bottom: 8px;
+  word-break: break-all;
+}
+
+/* React Flow Canvas Viewport */
+.flow-canvas-container {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  background: #030307;
+}
+
+.flow-viewport {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ======================================= */
+/* 🧩 CUSTOM FLOW GRAPH NODES STYLING      */
+/* ======================================= */
+.custom-flow-node {
+  width: 250px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.25s ease;
+  font-family: var(--font-sans);
+  color: #cbd5e1;
+  box-sizing: border-box;
+}
+
+.custom-flow-node:hover {
+  border-color: var(--color-border-active);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0, 229, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.node-icon-wrapper {
+  width: 30px;
+  height: 30px;
+  border: 1px solid;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.node-title-group {
+  flex: 1;
+}
+
+.node-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.node-subtitle {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.node-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.node-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.node-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.node-metric-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.node-metric-value {
+  font-weight: 700;
+}
+
+/* Progress bar inside nodes */
+.node-progress-container {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+.node-progress-bar {
+  height: 100%;
+  width: 0%;
+  transition: all 0.3s ease;
+}
+
+/* Custom handles connection nodes */
+.flow-handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: #05050b !important;
+  border: 2px solid var(--color-cyan) !important;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+.flow-handle:hover {
+  background: var(--color-cyan) !important;
+  box-shadow: 0 0 8px var(--color-cyan) !important;
+  transform: scale(1.2) !important;
+}
+
+.target-handle {
+  border-color: var(--color-cyan) !important;
+}
+
+.source-handle {
+  border-color: var(--color-green) !important;
+}
+
+/* React Flow controls */
+.react-flow__controls-button {
+  background: rgba(12, 12, 22, 0.8) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: #cbd5e1 !important;
+  fill: #cbd5e1 !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+.react-flow__minimap {
+  background: rgba(10, 10, 20, 0.8) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+/* instructions overlay */
+.flow-canvas-instructions {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(12, 12, 22, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #cbd5e1;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Neon utilities */
+.color-cyan { color: var(--color-cyan) !important; }
+.color-green { color: var(--color-green) !important; }
+.color-magenta { color: var(--color-magenta) !important; }
+
+/* Custom Scrollbars */
+.logger-terminal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.logger-terminal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.logger-terminal::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.logger-terminal::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
