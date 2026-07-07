@@ -5,7 +5,11 @@
 
 import { Config } from "@remotion/cli/config";
 import { enableTailwind } from '@remotion/tailwind-v4';
+import { enableSkia } from "@remotion/skia/enable";
 
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
-Config.overrideWebpackConfig(enableTailwind);
+Config.setChromiumOpenGlRenderer("angle");
+Config.overrideWebpackConfig((currentConfig) => {
+  return enableSkia(enableTailwind(currentConfig));
+});

@@ -20,6 +20,20 @@ Project-specific details: per-project journals (e.g. [`Aura/journal.md`](../../A
 
 ---
 
+## Remotion production
+
+| Mistake | Fix |
+|---------|-----|
+| CSS transitions (`transition: all`) in elements | Non-pure animation flickering. Drive styles purely via `interpolate` or `spring` mapped to `useCurrentFrame()`. |
+| Importing media files from outside the project sandbox | Dev server throws `404`. Copy assets to the local `public/` directory and load them via the `staticFile()` helper. |
+| Underscores `_` in composition IDs | Compiler crash. Use alphanumeric keys and hyphens `-` only. |
+| Raw arrow symbols (`->`) in JSX | Webpack parse crash. Wrap in curly braces `{"->"}` or use HTML entities `&rarr;`. |
+| Nested Canvas wrappers in `@remotion/skia` | Reconciler loop crash (`Should not already be working`). Render elements directly as children of Remotion's `<SkiaCanvas>`. |
+| Raw TS library checks in node_modules (`react-native` types) | Compilation crash. Add stubs file `src/react-native-stubs.d.ts` and set `"noUnusedLocals": false` in `tsconfig.json`. |
+| WebGL context failure in Chromium headless render | `failed to create webgl context: err 0`. Set `Config.setChromiumOpenGlRenderer("angle")` in `remotion.config.ts`. |
+
+---
+
 ## VO and pacing
 
 | Mistake | Fix |

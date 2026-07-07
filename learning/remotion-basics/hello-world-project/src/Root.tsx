@@ -11,6 +11,12 @@ import { DatabaseCluster } from "./Stage2_Springs/DatabaseCluster";
 import { RequestRouter } from "./Stage3_SVG/RequestRouter";
 import { SharinganIntro, sharinganSchema } from "./Stage3_SVG/SharinganIntro";
 import { TechExplainer } from "./Stage4_Audio/TechExplainer";
+import { SystemDashboard, systemDashboardSchema } from "./Stage5_Data/SystemDashboard";
+import { PersonalizedCard, personalizedCardSchema } from "./Stage6_Automation/PersonalizedCard";
+import { CylinderDatabase, cylinderDatabaseSchema } from "./Stage7_3D/CylinderDatabase";
+import { MonolithToMicroservices } from "./Stage8_Transitions/MonolithToMicroservices";
+import { SortingVisualizer } from "./Stage9_Player/SortingVisualizer";
+import { SkiaLoadBalancer, skiaLoadBalancerSchema } from "./Stage10_Skia/SkiaLoadBalancer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -51,6 +57,88 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1920}
         height={1080}
+      />
+
+      <Composition
+        id="stage5-system-dashboard"
+        component={SystemDashboard}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={systemDashboardSchema}
+        defaultProps={{
+          chartLabel: "API GATEWAY (US-EAST)",
+          chartGlowColor: "#06b6d4",
+          alertThreshold: 125,
+          showGridLines: true,
+        }}
+      />
+
+      <Composition
+        id="stage6-personalized-card"
+        component={PersonalizedCard}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={personalizedCardSchema}
+        defaultProps={{
+          userName: "Rajat Savdekar",
+          contributions: 2580,
+          linesWritten: 128379,
+          favLang: "TypeScript C#",
+          favoriteHexColor: "#a855f7",
+        }}
+      />
+
+      <Composition
+        id="stage7-cylinder-database"
+        component={CylinderDatabase}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={cylinderDatabaseSchema}
+        defaultProps={{
+          cylinderGlowColor: "#6366f1",
+          rotationSpeed: 1.2,
+          panelOpacity: 0.4,
+          stackLevels: 3,
+        }}
+      />
+
+      <Composition
+        id="stage8-monolith-to-microservices"
+        component={MonolithToMicroservices}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      <Composition
+        id="stage9-sorting-visualizer"
+        component={SortingVisualizer}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      <Composition
+        id="stage10-skia-load-balancer"
+        component={SkiaLoadBalancer}
+        durationInFrames={200}
+        fps={30}
+        width={1920}
+        height={1080}
+        schema={skiaLoadBalancerSchema}
+        defaultProps={{
+          particleCount: 200,
+          particleColor: "#0a6c97",
+          loadBalancerColor: "#4e4f74",
+        }}
       />
       <Composition
         id="stage2-bounce-in"
