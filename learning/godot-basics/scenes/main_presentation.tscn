@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://b8y7d8s2c1t"]
+
+[ext_resource type="Script" uid="uid://xdsepm3kn622" path="res://scripts/main_presentation.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://con253tjm0qb" path="res://scripts/orbit_camera.gd" id="2_camera"]
+[ext_resource type="Script" uid="uid://cgpe2a3g80n3k" path="res://scripts/star_field.gd" id="3_stars"]
+
+[sub_resource type="Environment" id="Environment_env"]
+background_mode = 1
+background_color = Color(2.256129e-09, 1.504086e-09, 0.058500327, 1)
+glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.15
+
+[node name="MainPresentation" type="Node3D" unique_id=1934510821]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1958996274]
+environment = SubResource("Environment_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=812382817]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 0, 0)
+light_color = Color(0.9, 0.95, 1, 1)
+light_energy = 0.5
+
+[node name="OrbitCamera" type="Camera3D" parent="." unique_id=1450835052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+script = ExtResource("2_camera")
+min_distance = 3.0
+max_distance = 40.0
+
+[node name="StarField" type="Node3D" parent="." unique_id=1080996715]
+script = ExtResource("3_stars")
+star_count = 8000
+
+[node name="ControlUI" type="CanvasLayer" parent="." unique_id=1720290161]
+
+[node name="Panel" type="Panel" parent="ControlUI" unique_id=2046050563]
+custom_minimum_size = Vector2(300, 370)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 390.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlUI/Panel" unique_id=360050649]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlUI/Panel/MarginContainer" unique_id=1562103524]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=1908281647]
+layout_mode = 2
+text = "Celestia VR Skybox"
+horizontal_alignment = 1
+
+[node name="Separator" type="HSeparator" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=1370585697]
+layout_mode = 2
+
+[node name="LabelLayout" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=18082044]
+layout_mode = 2
+text = "Skybox Projection:"
+
+[node name="HBoxButtons" type="HBoxContainer" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=1920934037]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnSphere" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxButtons" unique_id=374196843]
+focus_mode = 0
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sphere"
+
+[node name="BtnFlat" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxButtons" unique_id=1730056340]
+focus_mode = 0
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Net"
+
+[node name="BtnCube" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxButtons" unique_id=296126599]
+focus_mode = 0
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cube"
+
+[node name="HBoxMag" type="HBoxContainer" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=1992288406]
+layout_mode = 2
+
+[node name="LabelMag" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxMag" unique_id=477135390]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mag Cutoff:"
+
+[node name="LabelMagVal" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxMag" unique_id=1168781154]
+layout_mode = 2
+text = "6.0"
+
+[node name="SliderMag" type="HSlider" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=1189833293]
+layout_mode = 2
+min_value = 1.0
+max_value = 7.0
+step = 0.1
+value = 6.0
+
+[node name="HBoxTwinkle" type="HBoxContainer" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=590154347]
+layout_mode = 2
+
+[node name="LabelTwinkle" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxTwinkle" unique_id=1213989200]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Twinkle Speed:"
+
+[node name="LabelTwinkleVal" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxTwinkle" unique_id=80059111]
+layout_mode = 2
+text = "3.0"
+
+[node name="SliderTwinkle" type="HSlider" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=1415177513]
+layout_mode = 2
+max_value = 10.0
+step = 0.1
+value = 3.0
+
+[node name="BtnMenu" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer" unique_id=12140505]
+focus_mode = 0
+layout_mode = 2
+text = "Back to Menu"
+
+[node name="LabelControls" type="Label" parent="ControlUI" unique_id=2006085503]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Controls:
+* Left-Click + Drag: Orbit Camera
+* Right-Click + Drag: Pan View
+* Scroll Wheel: Zoom In/Out"
+horizontal_alignment = 2

@@ -1,0 +1,146 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8y7d8s2c1t"]
+
+[ext_resource type="Script" path="res://scripts/main_presentation.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/orbit_camera.gd" id="2_camera"]
+[ext_resource type="Script" path="res://scripts/star_field.gd" id="3_stars"]
+
+[sub_resource type="Environment" id="Environment_env"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+glow_enabled = true
+glow_intensity = 0.8
+glow_strength = 1.0
+glow_bloom = 0.15
+
+[node name="MainPresentation" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 0, 0)
+light_color = Color(0.9, 0.95, 1, 1)
+light_energy = 0.5
+
+[node name="OrbitCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+script = ExtResource("2_camera")
+min_distance = 3.0
+max_distance = 40.0
+
+[node name="StarField" type="Node3D" parent="."]
+script = ExtResource("3_stars")
+star_count = 800
+
+[node name="ControlUI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="ControlUI"]
+custom_minimum_size = Vector2(300, 320)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 340.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlUI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlUI/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Celestia VR Skybox"
+horizontal_alignment = 1
+
+[node name="Separator" type="HSeparator" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelLayout" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Skybox Projection:"
+
+[node name="HBoxButtons" type="HBoxContainer" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnSphere" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sphere"
+
+[node name="BtnFlat" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Net"
+
+[node name="BtnCube" type="Button" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cube"
+
+[node name="HBoxMag" type="HBoxContainer" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelMag" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxMag"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mag Cutoff:"
+
+[node name="LabelMagVal" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxMag"]
+layout_mode = 2
+text = "6.0"
+
+[node name="SliderMag" type="HSlider" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 7.0
+step = 0.1
+value = 6.0
+
+[node name="HBoxTwinkle" type="HBoxContainer" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelTwinkle" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxTwinkle"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Twinkle Speed:"
+
+[node name="LabelTwinkleVal" type="Label" parent="ControlUI/Panel/MarginContainer/VBoxContainer/HBoxTwinkle"]
+layout_mode = 2
+text = "3.0"
+
+[node name="SliderTwinkle" type="HSlider" parent="ControlUI/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 0.0
+max_value = 10.0
+step = 0.1
+value = 3.0
+
+[node name="LabelControls" type="Label" parent="ControlUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Controls:
+* Left-Click + Drag: Orbit Camera
+* Right-Click + Drag: Pan View
+* Scroll Wheel: Zoom In/Out"
+horizontal_alignment = 2

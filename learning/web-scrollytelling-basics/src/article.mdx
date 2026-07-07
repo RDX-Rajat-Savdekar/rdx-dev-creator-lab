@@ -1,0 +1,132 @@
+# 3D Microservices & Orchestration Explainer
+
+Scroll down to walk through each concept step-by-step. The 3D view on the right will react to your scroll position!
+
+---
+
+<div className="scrolly-section" data-stage="1">
+  ## 🖥️ Stage 1: Scene & Materials
+  
+  In Three.js, directional and ambient lights act on metallic surfaces. Applying `metalness={0.9}` and `roughness={0.15}` to cabinet materials renders sleek reflective server blades.
+  
+  ```tsx
+  <mesh>
+    <boxGeometry args={[2.2, 3.4, 1.8]} />
+    <meshStandardMaterial 
+      color="#0d0d18" 
+      metalness={0.9} 
+      roughness={0.15} 
+    />
+  </mesh>
+  ```
+</div>
+
+<div className="scrolly-section" data-stage="2">
+  ## 🎛️ Stage 2: useFrame Loops & Clicks
+  
+  The `useFrame()` hook executes animations at 60fps inside the WebGL loop. React states update pointer hooks dynamically to scale meshes and change emissive colors.
+  
+  ```tsx
+  useFrame((state, delta) => {
+    // Rotate core on tick
+    coreRef.current.rotation.y += delta * 0.4;
+    
+    // Spring lerp scale values
+    const target = clicked ? 1.3 : 1.0;
+    groupRef.current.scale.lerp(
+      new Vector3(target, target, target),
+      0.15
+    );
+  });
+  ```
+</div>
+
+<div className="scrolly-section" data-stage="3">
+  ## 💿 Stage 3: Coordinate Layout Math
+  
+  Database cluster rings are generated dynamically. Using trigonometry (sine and cosine distribution), we space cylinder elements evenly around a radius.
+  
+  ```tsx
+  const radius = 2.8;
+  {dbNodes.map((node, index) => {
+    const angle = (index * 2 * Math.PI) / count;
+    const x = Math.cos(angle) * radius;
+    const z = Math.sin(angle) * radius;
+    
+    return <DatabaseNode position={[x, 0, z]} />;
+  })}
+  ```
+</div>
+
+<div className="scrolly-section" data-stage="4">
+  ## ☸️ Stage 4: Camera Target Focus
+  
+  Clicking on a pod cube changes our camera target offset. Inside the loop, the camera and Drei's `OrbitControls` target coordinates smooth-interpolate (lerp) directly to focus on the selected node.
+  
+  ```tsx
+  useFrame((state) => {
+    // Smooth lerp camera
+    state.camera.position.lerp(targetCam, 0.08);
+    
+    // Smooth lerp pivot center
+    controlsRef.current.target.lerp(targetLook, 0.08);
+  });
+  ```
+</div>
+
+<div className="scrolly-section" data-stage="5">
+  ## ⚡ Stage 5: Traffic Particle Flows
+  
+  Combines elements to represent complete systems. Particle meshes containing point lights increment their segment boundaries and lerp coordinates sequentially to simulate API requests flying between endpoints.
+  
+  ```tsx
+  useFrame((state, delta) => {
+    packets.forEach((packet) => {
+      packet.progress += delta * speed;
+      
+      // Segmented lerp calculations
+      if (progress < 1.0) {
+        mesh.position.lerpVectors(ingress, lb, progress);
+      } else {
+        mesh.position.lerpVectors(lb, worker, t);
+      }
+    });
+  });
+  ```
+</div>
+
+<div className="scrolly-section" data-stage="6">
+  ## 🧬 Stage 6: Creative Shader Sandbox
+  
+  Custom shaders let you bypass standard materials, manipulating vertex coordinates programmatically and executing procedural math equations on pixel fragment colors.
+  
+  ```glsl
+  // Vertex Shader displacement
+  pos += normal * sin(pos.y * 4.0 + uTime * uWaveSpeed);
+  
+  // Fragment Shader color shift
+  float r = 0.5 + 0.5 * sin(uTime * uColorSpeed);
+  gl_FragColor = vec4(r, g, b, 1.0);
+  ```
+</div>
+
+<div className="scrolly-section" data-stage="7">
+  ## ⚡ Stage 7: Cache Validation & ETag Strategies
+  
+  Caching cuts database load and improves speed. We visualize three request routing pathways:
+  
+  1.  **Cache Miss (Red)**: The request bypasses the cache, queries the origin Database, writes data to the Cache, and returns to the client.
+  2.  **Cache Hit (Green)**: The data is found in-memory (Redis/Memcached) and returned instantly, saving database latency.
+  3.  **ETag Validation (Purple)**: The client checks if its cached resource is still fresh by sending an ETag identifier. The server validates the ETag, confirms no modifications, and returns a super-lightweight `304 Not Modified` header response.
+  
+  ```tsx
+  // ETag Validation check
+  const clientTag = req.headers['if-none-match'];
+  if (clientTag === currentResourceTag) {
+    res.status(304).send(); // No body, headers only
+  } else {
+    res.setHeader('ETag', currentResourceTag);
+    res.status(200).send(payload);
+  }
+  ```
+</div>
