@@ -18,7 +18,7 @@ interface Pod {
 
 function App() {
   const [activeStage, setActiveStage] = useState<number>(1);
-  
+
   // Interactive metrics for Stage 2 (Load Balancer)
   const [lbClicked, setLbClicked] = useState(false);
   const [lbHovered, setLbHovered] = useState(false);
@@ -56,8 +56,8 @@ function App() {
             >
               <div className="stage-num">{stage.id}</div>
               <div>
-                <div style={{ fontSize: '13px', fontWeight: 700 }}>{stage.title}</div>
-                <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>{stage.desc}</div>
+                <div style={{ fontSize: '20px', fontWeight: 700 }}>{stage.title}</div>
+                <div style={{ fontSize: '15px', color: '#64748b', marginTop: '2px' }}>{stage.desc}</div>
               </div>
             </button>
           ))}
@@ -69,8 +69,8 @@ function App() {
             <>
               <h2>Stage 1: Scene & Materials</h2>
               <p>
-                In Three.js, directional and ambient lights act on metallic surfaces. 
-                Applying <code>metalness={0.9}</code> and <code>roughness={0.15}</code> to 
+                In Three.js, directional and ambient lights act on metallic surfaces.
+                Applying <code>metalness={0.9}</code> and <code>roughness={0.15}</code> to
                 cabinet materials renders sleek reflective server blades.
               </p>
               <div className="code-box">
@@ -100,7 +100,7 @@ function App() {
             <>
               <h2>Stage 2: useFrame Loops & Clicks</h2>
               <p>
-                The <code>useFrame()</code> hook executes animations at 60fps inside the WebGL loop. 
+                The <code>useFrame()</code> hook executes animations at 60fps inside the WebGL loop.
                 React states update pointer hooks dynamically to scale meshes and change emissive colors.
               </p>
               <div className="code-box">
@@ -137,8 +137,8 @@ function App() {
             <>
               <h2>Stage 3: Coordinate Layout math</h2>
               <p>
-                Database cluster rings are generated dynamically. Using trigonometry 
-                (sine and cosine distribution), we space cylinder elements evenly 
+                Database cluster rings are generated dynamically. Using trigonometry
+                (sine and cosine distribution), we space cylinder elements evenly
                 around a radius.
               </p>
               <div className="code-box">
@@ -168,8 +168,8 @@ function App() {
             <>
               <h2>Stage 4: Camera Target Focus</h2>
               <p>
-                Clicking on a pod cube changes our camera target offset. Inside the loop, the camera 
-                and Drei's <code>OrbitControls</code> target coordinates smooth-interpolate (lerp) 
+                Clicking on a pod cube changes our camera target offset. Inside the loop, the camera
+                and Drei's <code>OrbitControls</code> target coordinates smooth-interpolate (lerp)
                 directly to focus on the selected node.
               </p>
               <div className="code-box">
@@ -181,7 +181,7 @@ function App() {
   controlsRef.current.target.lerp(targetLook, 0.08);
 });`}</pre>
               </div>
-              
+
               <h2>Pod Metadata</h2>
               {selectedPod ? (
                 <div className="metrics-grid">
@@ -216,8 +216,8 @@ function App() {
             <>
               <h2>Stage 5: Traffic Particle Flows</h2>
               <p>
-                Combines elements to represent complete systems. Particle meshes containing point lights 
-                increment their segment boundaries and lerp coordinates sequentially to simulate 
+                Combines elements to represent complete systems. Particle meshes containing point lights
+                increment their segment boundaries and lerp coordinates sequentially to simulate
                 API requests flying between endpoints.
               </p>
               <div className="code-box">
@@ -254,17 +254,17 @@ function App() {
         <Canvas camera={{ position: [0, 0, 7.5], fov: 45 }}>
           {activeStage === 1 && <Stage1_ServerRack />}
           {activeStage === 2 && (
-            <Stage2_LoadBalancer 
+            <Stage2_LoadBalancer
               onInteraction={(clicked, hovered) => {
                 setLbClicked(clicked);
                 setLbHovered(hovered);
-              }} 
+              }}
             />
           )}
           {activeStage === 3 && <Stage3_DatabaseRing />}
           {activeStage === 4 && (
-            <Stage4_KubernetesGrid 
-              onPodSelect={(pod) => setSelectedPod(pod)} 
+            <Stage4_KubernetesGrid
+              onPodSelect={(pod) => setSelectedPod(pod)}
             />
           )}
           {activeStage === 5 && <Stage5_TrafficFlow />}
@@ -274,8 +274,8 @@ function App() {
         <div className="instructions-overlay">
           <div className="pulse-dot"></div>
           <span>
-            {activeStage === 4 
-              ? 'Click pod to focus. Left-Click + Drag to rotate, Scroll to zoom.' 
+            {activeStage === 4
+              ? 'Click pod to focus. Left-Click + Drag to rotate, Scroll to zoom.'
               : 'Interactive 3D Viewport. Left-Click + Drag to rotate.'}
           </span>
         </div>

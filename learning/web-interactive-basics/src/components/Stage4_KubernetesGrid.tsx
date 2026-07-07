@@ -81,12 +81,12 @@ export const Stage4_KubernetesGrid: React.FC<KubernetesGridProps> = ({ onPodSele
         maxDistance={12}
       />
 
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 10, 5]} intensity={0.8} color="#ffffff" />
-      <pointLight position={[-5, -5, 5]} intensity={0.4} color="#bd00ff" />
+      <ambientLight intensity={0.65} />
+      <directionalLight position={[0, 0, 10]} intensity={1.5} color="#ffffff" />
+      <pointLight position={[-5, -5, 5]} intensity={0.8} color="#bd00ff" />
 
       {/* Grid Floor Mesh */}
-      <gridHelper args={[15, 15, '#1e1e2d', '#0c0c16']} position={[0, -2.5, 0]} />
+      <gridHelper args={[15, 15, '#3f3f5c', '#1c1c2e']} position={[0, -2.5, 0]} />
 
       {/* Render 3x3 array of pods */}
       {pods.map((pod) => {
@@ -159,10 +159,10 @@ const PodItem: React.FC<PodItemProps> = ({ pod, x, y, isSelected, onClick }) => 
       >
         <boxGeometry args={[0.8, 0.8, 0.8]} />
         <meshStandardMaterial
-          color={isSelected ? '#00ff66' : hovered ? '#00e5ff' : '#0e0e18'}
-          metalness={0.9}
-          roughness={0.15}
-          emissive={isSelected ? '#002208' : hovered ? '#002230' : '#000000'}
+          color={isSelected ? '#00ff66' : hovered ? '#00e5ff' : '#616a94'}
+          metalness={0.15}
+          roughness={0.4}
+          emissive={isSelected ? '#002208' : hovered ? '#002230' : '#1c1f30'}
         />
       </mesh>
 
@@ -173,7 +173,7 @@ const PodItem: React.FC<PodItemProps> = ({ pod, x, y, isSelected, onClick }) => 
           color={activeColor} 
           wireframe 
           transparent
-          opacity={isSelected || hovered ? 0.6 : 0.1}
+          opacity={isSelected || hovered ? 0.8 : 0.3}
         />
       </mesh>
 

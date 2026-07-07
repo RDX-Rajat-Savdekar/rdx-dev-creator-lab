@@ -33,7 +33,7 @@ export const Stage2_LoadBalancer: React.FC<LoadBalancerProps> = ({ onInteraction
 
     // 2. Smooth scale lerp (physic-like spring transition)
     if (groupRef.current) {
-      const targetScale = clicked ? 1.3 : 1.0;
+      const targetScale = clicked ? 2 : 1.0;
       const currentScale = groupRef.current.scale.x;
       const lerpedScale = currentScale + (targetScale - currentScale) * 0.15;
       groupRef.current.scale.set(lerpedScale, lerpedScale, lerpedScale);
@@ -59,13 +59,13 @@ export const Stage2_LoadBalancer: React.FC<LoadBalancerProps> = ({ onInteraction
   return (
     <group ref={groupRef}>
       <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 10, 5]} intensity={1.0} color="#00e5ff" />
+      <directionalLight position={[5, 10, 5]} intensity={10} color="#a215e4ff" />
 
       {/* Outer Glow Point Light */}
-      <pointLight 
-        position={[0, 0, 0]} 
-        intensity={hovered ? 2.5 : 1.2} 
-        color={hovered ? '#ff0077' : '#00e5ff'} 
+      <pointLight
+        position={[0, 0, 0]}
+        intensity={hovered ? 2.5 : 1.2}
+        color={hovered ? '#ff0077' : '#00e5ff'}
         distance={4}
       />
 
@@ -89,8 +89,8 @@ export const Stage2_LoadBalancer: React.FC<LoadBalancerProps> = ({ onInteraction
       {/* Orbital Ring 1 */}
       <mesh ref={ring1Ref}>
         <torusGeometry args={[1.4, 0.04, 16, 100]} />
-        <meshStandardMaterial 
-          color={clicked ? '#bd00ff' : '#00ff66'} 
+        <meshStandardMaterial
+          color={clicked ? '#bd00ff' : '#00ff66'}
           metalness={0.8}
           roughness={0.2}
         />
@@ -98,11 +98,11 @@ export const Stage2_LoadBalancer: React.FC<LoadBalancerProps> = ({ onInteraction
 
       {/* Orbital Ring 2 */}
       <mesh ref={ring2Ref}>
-        <torusGeometry args={[1.65, 0.02, 12, 100]} />
-        <meshStandardMaterial 
-          color="#ffffff" 
-          metalness={0.9}
-          roughness={0.1}
+        <torusGeometry args={[1.65, 0.04, 12, 100]} />
+        <meshStandardMaterial
+          color="#ffffff"
+          metalness={0.5}
+          roughness={0.5}
           transparent
           opacity={0.6}
         />

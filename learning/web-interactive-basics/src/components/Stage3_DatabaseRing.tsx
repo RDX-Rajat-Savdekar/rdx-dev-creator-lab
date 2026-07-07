@@ -17,7 +17,7 @@ const DatabaseNode: React.FC<DatabaseNodeProps> = ({ position, isPrimary, name }
     if (meshRef.current) {
       const targetY = hovered ? 0.3 : 0;
       meshRef.current.position.y = meshRef.current.position.y + (targetY - meshRef.current.position.y) * 0.2;
-      
+
       // Gentle spin
       meshRef.current.rotation.y += 0.01;
     }
@@ -58,10 +58,10 @@ const DatabaseNode: React.FC<DatabaseNodeProps> = ({ position, isPrimary, name }
         <torusGeometry args={[0.55, 0.03, 16, 64]} />
         <meshBasicMaterial color={nodeColor} transparent opacity={hovered ? 1.0 : 0.4} />
       </mesh>
-      <pointLight 
-        position={[0, -0.5, 0]} 
-        intensity={hovered ? 1.5 : 0.4} 
-        color={nodeColor} 
+      <pointLight
+        position={[0, -0.5, 0]}
+        intensity={hovered ? 1.5 : 0.4}
+        color={nodeColor}
         distance={1.5}
       />
     </group>
@@ -82,7 +82,7 @@ export const Stage3_DatabaseRing: React.FC = () => {
   // Rotate the entire cluster slowly
   useFrame((state, delta) => {
     if (clusterRef.current) {
-      clusterRef.current.rotation.y += delta * 0.12;
+      clusterRef.current.rotation.y += delta * 0.4;
     }
   });
 
