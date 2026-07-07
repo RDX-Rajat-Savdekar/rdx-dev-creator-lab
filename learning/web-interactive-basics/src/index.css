@@ -256,3 +256,72 @@ body {
   50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 12px var(--color-cyan); }
   100% { transform: scale(0.9); opacity: 0.6; }
 }
+
+/* Custom slider and toggle inputs for Stage 6 */
+.controls-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.control-label span {
+  color: var(--color-cyan);
+}
+
+.slider-input {
+  width: 100%;
+  height: 6px;
+  background: #111122;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  accent-color: var(--color-cyan);
+}
+
+.toggle-group {
+  display: flex;
+  background: #06060c;
+  border-radius: 6px;
+  padding: 4px;
+  border: 1px solid var(--color-border);
+}
+
+.toggle-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #64748b;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+  background: rgba(0, 229, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}

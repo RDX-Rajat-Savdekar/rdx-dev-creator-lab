@@ -11,7 +11,7 @@ interface Packet {
 
 export const Stage5_TrafficFlow: React.FC = () => {
   const groupRef = useRef<Group>(null);
-  
+
   // 1. Coordinates of structural network nodes
   const ingressPos = useMemo(() => new Vector3(-4, 1.8, 0), []);
   const lbPos = useMemo(() => new Vector3(-1, 0, 0), []);
@@ -68,9 +68,9 @@ export const Stage5_TrafficFlow: React.FC = () => {
 
   return (
     <group ref={groupRef}>
-      <ambientLight intensity={0.35} />
+      <ambientLight intensity={2} />
       <directionalLight position={[10, 10, 5]} intensity={0.8} color="#ffffff" />
-      <pointLight position={[0, 0, 3]} intensity={0.5} color="#00e5ff" />
+      <pointLight position={[0, 0, 3]} intensity={2} color="#00e5ff" />
 
       {/* Network cabling lines between node endpoints */}
       <ConnectionLine start={ingressPos} end={lbPos} color="#ff0077" />

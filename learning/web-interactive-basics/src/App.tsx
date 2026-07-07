@@ -5,6 +5,7 @@ import { Stage2_LoadBalancer } from './components/Stage2_LoadBalancer';
 import { Stage3_DatabaseRing } from './components/Stage3_DatabaseRing';
 import { Stage4_KubernetesGrid } from './components/Stage4_KubernetesGrid';
 import { Stage5_TrafficFlow } from './components/Stage5_TrafficFlow';
+import { Stage6_CreativeSandbox } from './components/Stage6_CreativeSandbox';
 import './App.css';
 
 interface Pod {
@@ -18,7 +19,7 @@ interface Pod {
 
 function App() {
   const [activeStage, setActiveStage] = useState<number>(1);
-
+  
   // Interactive metrics for Stage 2 (Load Balancer)
   const [lbClicked, setLbClicked] = useState(false);
   const [lbHovered, setLbHovered] = useState(false);
@@ -26,12 +27,18 @@ function App() {
   // Interactive metrics for Stage 4 (Kubernetes Grid)
   const [selectedPod, setSelectedPod] = useState<Pod | null>(null);
 
+  // Parameters for Stage 6 (Creative Sandbox)
+  const [waveSpeed, setWaveSpeed] = useState<number>(1.0);
+  const [colorSpeed, setColorSpeed] = useState<number>(1.0);
+  const [isKnot, setIsKnot] = useState<boolean>(true);
+
   const stages = [
     { id: 1, title: 'Server Rack Cabinet', desc: 'Scene setup, lighting, & materials' },
     { id: 2, title: 'Interactive Load Balancer', desc: 'useFrame loops & click/hover triggers' },
     { id: 3, title: 'Sharded Database Ring', desc: 'Trigonometry & circular layouts' },
     { id: 4, title: 'Kubernetes Pod Grid', desc: 'Orbit controls & camera target focus' },
     { id: 5, title: 'Traffic Packet Flow', desc: 'Full integration & particle streams' },
+    { id: 6, title: 'Creative Shader Sandbox', desc: 'Custom shaders & 3D MSDF text' },
   ];
 
   return (
@@ -56,8 +63,8 @@ function App() {
             >
               <div className="stage-num">{stage.id}</div>
               <div>
-                <div style={{ fontSize: '20px', fontWeight: 700 }}>{stage.title}</div>
-                <div style={{ fontSize: '15px', color: '#64748b', marginTop: '2px' }}>{stage.desc}</div>
+                <div style={{ fontSize: '13px', fontWeight: 700 }}>{stage.title}</div>
+                <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>{stage.desc}</div>
               </div>
             </button>
           ))}
@@ -69,8 +76,8 @@ function App() {
             <>
               <h2>Stage 1: Scene & Materials</h2>
               <p>
-                In Three.js, directional and ambient lights act on metallic surfaces.
-                Applying <code>metalness={0.9}</code> and <code>roughness={0.15}</code> to
+                In Three.js, directional and ambient lights act on metallic surfaces. 
+                Applying <code>metalness={0.9}</code> and <code>roughness={0.15}</code> to 
                 cabinet materials renders sleek reflective server blades.
               </p>
               <div className="code-box">
@@ -100,7 +107,7 @@ function App() {
             <>
               <h2>Stage 2: useFrame Loops & Clicks</h2>
               <p>
-                The <code>useFrame()</code> hook executes animations at 60fps inside the WebGL loop.
+                The <code>useFrame()</code> hook executes animations at 60fps inside the WebGL loop. 
                 React states update pointer hooks dynamically to scale meshes and change emissive colors.
               </p>
               <div className="code-box">
@@ -135,10 +142,10 @@ function App() {
 
           {activeStage === 3 && (
             <>
-              <h2>Stage 3: Coordinate Layout math</h2>
+              <h2>Stage 3: Coordinate Layout Math</h2>
               <p>
-                Database cluster rings are generated dynamically. Using trigonometry
-                (sine and cosine distribution), we space cylinder elements evenly
+                Database cluster rings are generated dynamically. Using trigonometry 
+                (sine and cosine distribution), we space cylinder elements evenly 
                 around a radius.
               </p>
               <div className="code-box">
@@ -168,8 +175,8 @@ function App() {
             <>
               <h2>Stage 4: Camera Target Focus</h2>
               <p>
-                Clicking on a pod cube changes our camera target offset. Inside the loop, the camera
-                and Drei's <code>OrbitControls</code> target coordinates smooth-interpolate (lerp)
+                Clicking on a pod cube changes our camera target offset. Inside the loop, the camera 
+                and Drei's <code>OrbitControls</code> target coordinates smooth-interpolate (lerp) 
                 directly to focus on the selected node.
               </p>
               <div className="code-box">
@@ -181,7 +188,7 @@ function App() {
   controlsRef.current.target.lerp(targetLook, 0.08);
 });`}</pre>
               </div>
-
+              
               <h2>Pod Metadata</h2>
               {selectedPod ? (
                 <div className="metrics-grid">
@@ -216,8 +223,8 @@ function App() {
             <>
               <h2>Stage 5: Traffic Particle Flows</h2>
               <p>
-                Combines elements to represent complete systems. Particle meshes containing point lights
-                increment their segment boundaries and lerp coordinates sequentially to simulate
+                Combines elements to represent complete systems. Particle meshes containing point lights 
+                increment their segment boundaries and lerp coordinates sequentially to simulate 
                 API requests flying between endpoints.
               </p>
               <div className="code-box">
@@ -246,6 +253,78 @@ function App() {
               </div>
             </>
           )}
+
+          {activeStage === 6 && (
+            <>
+              <h2>Stage 6: Custom Shader Materials</h2>
+              <p>
+                Custom shaders let you bypass standard materials, manipulating vertex coordinates 
+                programmatically and executing procedural math equations on pixel fragment colors.
+              </p>
+              <div className="code-box">
+                <pre>{`// Vertex Shader displacement
+pos += normal * sin(pos.y * 4.0 + uTime * uWaveSpeed);
+
+// Fragment Shader color shift
+float r = 0.5 + 0.5 * sin(uTime * uColorSpeed);
+gl_FragColor = vec4(r, g, b, 1.0);`}</pre>
+              </div>
+
+              <h2>Shader Control Panel</h2>
+              <div className="controls-section">
+                {/* Wave Speed Slider */}
+                <div className="control-group">
+                  <div className="control-label">
+                    WAVE SPEED <span>{waveSpeed.toFixed(1)}x</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    step="0.1"
+                    value={waveSpeed}
+                    onChange={(e) => setWaveSpeed(parseFloat(e.target.value))}
+                    className="slider-input"
+                  />
+                </div>
+
+                {/* Color Speed Slider */}
+                <div className="control-group">
+                  <div className="control-label">
+                    COLOR MORPH SPEED <span>{colorSpeed.toFixed(1)}x</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    step="0.1"
+                    value={colorSpeed}
+                    onChange={(e) => setColorSpeed(parseFloat(e.target.value))}
+                    className="slider-input"
+                  />
+                </div>
+
+                {/* Geometry Selector */}
+                <div className="control-group">
+                  <span className="control-label">3D GEOMETRY SHAPE</span>
+                  <div className="toggle-group">
+                    <button
+                      className={`toggle-btn ${isKnot ? 'active' : ''}`}
+                      onClick={() => setIsKnot(true)}
+                    >
+                      TORUS KNOT
+                    </button>
+                    <button
+                      className={`toggle-btn ${!isKnot ? 'active' : ''}`}
+                      onClick={() => setIsKnot(false)}
+                    >
+                      SPHERE
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -254,28 +333,37 @@ function App() {
         <Canvas camera={{ position: [0, 0, 7.5], fov: 45 }}>
           {activeStage === 1 && <Stage1_ServerRack />}
           {activeStage === 2 && (
-            <Stage2_LoadBalancer
+            <Stage2_LoadBalancer 
               onInteraction={(clicked, hovered) => {
                 setLbClicked(clicked);
                 setLbHovered(hovered);
-              }}
+              }} 
             />
           )}
           {activeStage === 3 && <Stage3_DatabaseRing />}
           {activeStage === 4 && (
-            <Stage4_KubernetesGrid
-              onPodSelect={(pod) => setSelectedPod(pod)}
+            <Stage4_KubernetesGrid 
+              onPodSelect={(pod) => setSelectedPod(pod)} 
             />
           )}
           {activeStage === 5 && <Stage5_TrafficFlow />}
+          {activeStage === 6 && (
+            <Stage6_CreativeSandbox
+              waveSpeed={waveSpeed}
+              colorSpeed={colorSpeed}
+              isKnot={isKnot}
+            />
+          )}
         </Canvas>
 
         {/* Viewport Interactivity Instructions */}
         <div className="instructions-overlay">
           <div className="pulse-dot"></div>
           <span>
-            {activeStage === 4
-              ? 'Click pod to focus. Left-Click + Drag to rotate, Scroll to zoom.'
+            {activeStage === 4 
+              ? 'Click pod to focus. Left-Click + Drag to rotate, Scroll to zoom.' 
+              : activeStage === 6
+              ? 'Drag to rotate, Scroll to zoom. Use sliders to tweak shaders.'
               : 'Interactive 3D Viewport. Left-Click + Drag to rotate.'}
           </span>
         </div>
