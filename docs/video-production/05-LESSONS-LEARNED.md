@@ -34,6 +34,17 @@ Project-specific details: per-project journals (e.g. [`Aura/journal.md`](../../A
 
 ---
 
+## Motion Canvas production
+
+| Mistake | Fix |
+|---------|-----|
+| Using `delay(seconds)` to pause the animation timeline | TypeScript compiler error. Use `waitFor(seconds)` for simple pauses; `delay` is a timing helper that expects both a duration and a callback task to run. |
+| Importing `fork()` from `@motion-canvas/core` for concurrent background tasks | Module build crash. Use `spawn(() => generator)` (and `join` or `cancel` if needed) to run parallel, non-blocking visual animations like heartbeats or packet routers. |
+| Writing instant text swaps `.text('val')` or fill resets `.fill('#col')` inside `yield* all(...)` | TypeScript type assignment crash. Instant property updates that lack duration arguments do not return a `ThreadGenerator`. Set them instantly outside/before the `all(...)` block. |
+| Assuming subsequent stages are missing when opening the preview editor | Motion Canvas arranges scenes sequentially on the main timeline. Click `Zoom to fit` (or press `F`) and drag the playhead past the first scene's duration threshold. |
+
+---
+
 ## VO and pacing
 
 | Mistake | Fix |
